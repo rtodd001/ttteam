@@ -1,17 +1,23 @@
 import React , {useState, Component} from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
+
 class App extends Component{
   constructor(props){
     super(props);
     this.state = {
       error : null,
       isLoaded: false,
+      mess: "Press to connect",
       items: []
     }
   }
 
   componentDidMount(){
+    this.fetchData()
+  }
+
+  fetchData(){
     fetch("http://localhost:5000/")
     .then(response => response.json())
     .then(
@@ -29,7 +35,15 @@ class App extends Component{
       }
     )
   }
+
+  onPress = () => {
+    this.setState({
+      mess : this.state.items[0].data
+    })
+  }
+
   render(){
+  
     console.log(this.state)
     const { error, isLoaded, items } = this.state;
     //help
@@ -40,9 +54,8 @@ class App extends Component{
       return <View><Text>Loading...</Text></View>
     } return (
       <View style={styles.container}>
-        
-        {/* <Button title ="Press Me!" onPress={() => outputText = this.state().items[0]}/> */}
-        <Text>{items[0].data}</Text>
+        <Text>{this.state.mess}</Text>
+        <Button title ="Press Me!" onPress={() => this.onPress()}/>
       </View>
     );
   }
