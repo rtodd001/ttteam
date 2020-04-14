@@ -18,6 +18,10 @@ class App extends Component{
   }
 
   fetchData(){
+    //For mobile, you have to put your own IP instead of using local host
+    //you can find the correct IP in the bottom lef of the metro bundler by
+    //the QR code. Replace <IP> below with yours
+    //fetch("http://<IP>:5000/")
     fetch("http://localhost:5000/")
     .then(response => response.json())
     .then(
