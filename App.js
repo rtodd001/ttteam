@@ -13,7 +13,7 @@ class App extends Component{
 
   componentDidMount(){
     fetch("http://localhost:5000/")
-    .then(res => res.json)
+    .then(response => response.json())
     .then(
       (result) => {
         this.setState({
