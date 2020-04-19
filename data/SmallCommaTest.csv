@@ -1,8 +1,8 @@
-ID,name,category,main_category,currency,deadline,goal,launched,pledged,state,backers,country,usd pledged,usd_pledged_real,usd_goal_real
-1799979574,"Pebble Time - Awesome Smartwatch, No Compromises",Product Design,Design,USD,3/28/2015,500000,2/24/2015 15:44,20338986.27,successful,78471,US,20338986.27,20338986.27,500000
-2103598555,"Pebble 2, Time 2 + All-New Pebble Core",Product Design,Design,USD,6/30/2016,1000000,5/24/2016 15:49,12779843.49,successful,66673,US,12779843.49,12779843.49,1000000
-647013276,"THE 7th CONTINENT – What Goes Up, Must Come Down.",Tabletop Games,Games,USD,10/19/2017,40000,9/26/2017 20:00,7072757,successful,43733,US,1574139.5,7072757,40000
-450099426,"The Everyday Backpack, Tote, and Sling",Product Design,Design,USD,9/10/2016,500000,7/13/2016 0:47,6565782.5,successful,26359,US,1462611,6565782.5,500000
-557230947,"Bring Reading Rainbow Back for Every Child, Everywhere!",Web,Technology,USD,7/2/2014,1000000,5/28/2014 15:05,5408916.95,successful,105857,US,5408916.95,5408916.95,1000000
-545167048,"Gravity: The Weighted Blanket for Sleep, Stress and Anxiety",Product Design,Design,USD,5/31/2017,21500,4/26/2017 16:46,4729263.13,successful,23805,US,477133,4729263.13,21500
-984184212,"Nebia Shower - Better experience, 70% less water",Product Design,Design,USD,9/11/2015,100000,8/11/2015 6:27,3126114.96,successful,8559,US,3126114.96,3126114.96,100000
+name
+"Pebble Time - Awesome Smartwatch, No Compromises"
+"Pebble 2, Time 2 + All-New Pebble Core"
+"THE 7th CONTINENT – What Goes Up, Must Come Down."
+"The Everyday Backpack, Tote, and Sling"
+"Bring Reading Rainbow Back for Every Child, Everywhere!"
+"Gravity: The Weighted Blanket for Sleep, Stress and Anxiety"
+"Nebia Shower - Better experience, 70% less water"
