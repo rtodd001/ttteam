@@ -3,7 +3,7 @@ const axios = require('axios')
 
 const getCSV = () => {
     var str = [];
-    var url = 'https://raw.githubusercontent.com/rtodd001/ttteam/rtodd/data/CommaTest.csv'
+    var url = 'https://raw.githubusercontent.com/rtodd001/ttteam/rtodd/data/test.csv'
     axios.get(url).then(res => {
         str.push(res.data);
     })
