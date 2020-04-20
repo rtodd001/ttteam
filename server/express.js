@@ -26,7 +26,7 @@ app.get('/search', (req, res) => {
         //console.log(key, req.query[key])
     }
     let found = search.searchCSV(keys, values, data)
-    //console.log(found)
+    console.log(found)
     res.status(200).json({"item":[{"data": found}]})
     
 });
