@@ -1,6 +1,12 @@
 const searchCSV = (keys, values, data) =>{
     let column = []
     console.log(keys, values)
+    for(let i = 0; i < values.length;i++){
+        if(values[i]=== ''){
+            values.splice(i,1)
+            keys.splice(i,1)
+        }
+    }
     for(let i = 0; i < keys.length; i++){
         //console.log("outer", keys[i])
         for(let j = 0; j < 15; j++){
