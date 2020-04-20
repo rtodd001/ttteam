@@ -68,7 +68,6 @@ const [backers, setBackers] = useState('');
                 // var url = new URL('http://192.168.1.8:5000/search')
                 var url = new URL('http://localhost:5000/search')
                 var params = {'main_category':category, 'backers':backers, 'state':state} // or:
-                // var params = {'main_category':'Food','state':'failed'}
                 // var params = [['main_category', category],['state', 'failed']]      
                 url.search = new URLSearchParams(params).toString();            
                 fetch(url)
