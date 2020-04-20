@@ -30,7 +30,9 @@ class App extends Component{
     //fetch("http://<IP>:5000/")
     if(prevState.click !== this.state.click){
       console.log("Fetching")
-      fetch("http://192.168.1.8:5000/")
+      fetch("http://192.168.1.8:5000/",{
+        key: 'ID'
+      })
       .then(response => response.json())
       .then(
         (result) => {
