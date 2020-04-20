@@ -3,11 +3,11 @@ import {Button, Text, View, StyleSheet} from 'react-native';
 
 const HomeScreen = ({navigation}) => {
     return <View>
-        <Text style={styles.title}>Welcome!</Text>
+        <Text style={styles.title}>KickStarter Projects Analytics</Text>
 
         <Button
             title="Search"
-            onPress={() => navigation.navigate('Results')}
+            onPress={() => navigation.navigate('Search')}
         />
 
     </View>

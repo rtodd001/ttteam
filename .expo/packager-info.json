@@ -1,10 +1,10 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
-  "webpackServerPort": null
+  "expoServerPort": 19000,
+  "packagerPort": 19003,
+  "packagerPid": 28071,
+  "expoServerNgrokUrl": "https://py-79a.anonymous.ttteam.exp.direct",
+  "packagerNgrokUrl": "https://packager.py-79a.anonymous.ttteam.exp.direct",
+  "ngrokPid": 28107,
+  "webpackServerPort": 19006
 }
