@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 const create = require('./createData')
 const parse = require('./parse')
 const read = require('./read')
+const search = require('./searchData')
 const cors = require('cors')
 const app = express()
 const port = 5000
@@ -11,21 +12,22 @@ const port = 5000
 var strsplit = read.getCSV()
 
 app.use(cors())
-app.get('/', (req, res) => {
+app.get('/search', (req, res) => {
     //there are commas in the names of products used so we cannot use split()
     //this regex replaces split() and will extract all the cells that we need into
     //an array of strings
     let lst = parse.parseCSV(strsplit)
     let data = create.createData(lst)
-    if(req.params.key === 'ID'){
-        let ret = []
-        ret.push("hello")
-        console.log(ret)
+    let keys = []
+    let values = []
+    for (const key in req.query){
+        keys.push(key)
+        values.push(req.query[key])
+        //console.log(key, req.query[key])
     }
-    else{
-        res.status(200).json({"item":[{"data": data}]})
-        console.log(data)
-    }
+    let found = search.searchCSV(keys, values, data)
+    //console.log(found)
+    res.status(200).json({"item":[{"data": found}]})
     
 });
 
