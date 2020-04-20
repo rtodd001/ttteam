@@ -18,4 +18,10 @@ app.get('/', (req, res) => {
     console.log(lst)
 });
 
+app.get('/result', (req, res) => {
+
+    res.status(200).json({"item":[{"data": "I got the searchData"}]})
+    console.log('I said to change')
+});
+
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
