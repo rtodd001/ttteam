@@ -36,7 +36,7 @@ const createData = (data) => {
         //newSize += title.get(data[i]).size
     }
     //console.log("New Size:", newSize)
-    console.log("Full Map", title)
+    //console.log("Full Map", title)
     return title
 }
 exports.createData = createData
