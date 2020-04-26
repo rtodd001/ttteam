@@ -30,9 +30,6 @@ const searchCSV = (keys, values, mapTable, rawData) =>{
         if(tempMap.has(values[i])){
             //an array of array gets stored here of all indices
             //console.log("Val:", tempMap.get(values[i]))
-
-            //LEFT OFF HERE NOT GETTING THE RIGHT ARRAY VALUES
-            //GETTING ARRAY IN ARRAY OR NOTHING
             let retrieved = []
             retrieved = Array.from(tempMap.get(values[i]))
             indices = indices.concat(retrieved)
