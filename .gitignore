@@ -2,5 +2,5 @@
 node_modules/
 web-build/
 .vscode/
-package-lock.jsonserver/log-file.txt
 package-lock.json
+server/log-file.txt
