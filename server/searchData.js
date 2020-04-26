@@ -1,8 +1,13 @@
-const searchCSV = (keys, values, data) =>{
-    if(data.length === 0){
+const searchCSV = (keys, values, mapTable, rawData) =>{
+    //edge case for empty data structure
+    if(rawData.length === 0){
         return []
     }
-    let column = []
+    //create our return array
+    let ret = []
+
+    //the number of columns in our data set
+    let columns = 15
     
     //check for empty parameters and throw them away 
     for(let i = 0; i < values.length; i++){
@@ -13,16 +18,65 @@ const searchCSV = (keys, values, data) =>{
             // /i--
         }
     }
+    let num = keys.length
     console.log(keys, values)
+    let indices = []
+
+    //iterate over the columns first
     for(let i = 0; i < keys.length; i++){
-        if(data.has(keys[i])){
-            let tempMap = data.get(keys[i])
-            if(tempMap.has(values[i])){
-                
-            }
+        //get the map assosciated with the key/column
+        let tempMap = mapTable.get(keys[i])
+        //console.log("tempMap:", tempMap)
+        //find the value we are searching for
+        if(tempMap.has(values[i])){
+            //an array of array gets stored here of all indices
+            //console.log("Val:", tempMap.get(values[i]))
+            indices = indices.concat(tempMap.get(values[i]))
+            //indices.push(tempMap.get(values[i]))
         }
     }
+    //sort all the numbers
+    indices.sort(function(a,b){
+        return a - b 
+    });
+    console.log("Index: ", indices)
+    let prev = -1
+    let counter = 0
+    //iterate throught the indices to see all the matching ones
+    for(let i = 0; i < indices.length; i++){
+        if(indices[i] === prev){
+            counter++
+            if(counter === keys.length - 1){
+                console.log("index: ", indices[i])
+                counter = 0
+                let extractedRow = []
+                for(let k = 0; k < columns; k++){
+                    extractedRow.push(rawData[indices[i]* columns + k])
+                }
+                ret.push(extractedRow)
+            }
+        }
+        else{
+            counter = 0
+        }
+        prev = indices[i]
+        
+        //let distance = indices.lastIndexOf(indices[i]) - indices.indexOf(indices[i])
+        //console.log(distance)
+        /* if(distance === keys.length - 1){
+            let extractedRow = []
+            for(let k = 0; k < columns; k++){
+                extractedRow.push(rawData[indices[i]* columns + k])
+            }
+            ret.push(extractedRow)
+            i+=keys.length
+        } */
+    }
+    console.log(ret)
     
+
+
+
    /*  //find what the key is referencing in our dataset
     for(let i = 0; i < keys.length; i++){
         console.log("outer", keys[i])
