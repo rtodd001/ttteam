@@ -1,45 +1,22 @@
 //import axios from 'axios';
 //const create = require('./OLDcreateData')
 const create = require('./createData')
+const fs = require('fs')
 const Promise = require('promise')
 const parse = require('./parse')
 const axios = require('axios')
 
-const getCSV = async () => {
+const getCSV = () => {
     var str = []
-    var url = 'https://raw.githubusercontent.com/rtodd001/ttteam/rtodd/data/ks-projects-201801.csv'
-    console.log("Getting")
+    //var url = 'https://raw.githubusercontent.com/rtodd001/ttteam/rtodd/data/ks-projects-201801.csv'
+    //console.log("Getting")
     return new Promise(function(resolve, reject){
-        axios.get(url).then(res => res)
-        .then(
-            (result)=>{
-                //let str = []
-                //str.push(result.data)
-                let lst = parse.parseCSV([result.data])
-                //console.log("get:",lst)
-                //let ret = create.createData(lst)
-                console.log("Received")
-                resolve(lst)
-            },
-            (error) => {
-                console.log("Error")
-            }
-        )
-        
+        var path = '../data/ks-projects-201801.csv'
+    //var path = './../data/SmallCommaTest.csv'
+        let content = fs.readFileSync(path, 'utf8')
+        let lst = parse.parseCSV(content)
+        resolve(lst)
     })
-
-    /* let res = await axios.get(url).then((res) =>{
-        console.log("Received")
-        str.push(res.data)
-        let lst = parse.parseCSV(str)
-        let data = create.createData(lst)
-        //let data = create.OLDcreateData(lst)
-        //str.push(res.data)
-        //console.log(data)
-        return data;
-    },(error)=>{
-        console.log("Error")
-        return []
-    }); */
+    
 };
 exports.getCSV = getCSV;

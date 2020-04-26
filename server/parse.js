@@ -1,15 +1,8 @@
-const parseCSV = (data) => {
+const parseCSV = (text) => {
     //there are commas in the names of products used so we cannot use split()
     //this regex replaces split() and will extract all the cells that we need into
     //an array of strings
-   /*  let re =/(\"+(?=.*\").*\")|(^\"|\?|\/|\.|\;|\·|\||\*|\!|\-|\&|\:|\w|\ |\'|\(|\)|\™|\¿|[^\x00-\x7F]|\s$)+/g
-   //(\"+(?=.*\").*\")|(^\"|\?|\/|\.|\;|\·|\||\*|\!|\-|\&|\:|\w|\ |\'|\(|\)|\™|\¿|[^\x00-\x7F]|[\x23-\x2B]|[\x2D-\x7F]|\s$)+
-    let temp = "" + data[0]
-    var lst = temp.toString().match(re) */
-    let counter = 0;
-    let columns = 15
     let ret = []
-    let text = data[0]
     //console.log data[0])
     for(let  i = 0; i < text.length; i++){
         let temp = ""
@@ -60,11 +53,6 @@ const parseCSV = (data) => {
             text = text.slice(1)
             //i++
         }
-        /* if(data[0][i] === ÉOF){
-            break
-        } */
-        
-        //console.log("New",temp)
     }
     //console.log(ret)
     return ret

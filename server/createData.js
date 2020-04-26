@@ -6,10 +6,10 @@ const createData = (data) => {
     let newSize = 0
     let totalElem = 0
     let title = new Map()
-    //console.log("Columns:", columns, "| Rows:", Math.floor(data.length/columns), "Size:", data.length)
+    console.log("Columns:", columns, "| Rows:", Math.floor(data.length/columns), "Size:", data.length)
     for(let i = 0; i < columns; i++){
         title.set(data[i], [])
-        //console.log("title:" , data[i])
+        console.log("title:" , data[i])
 
         let values = new Map()
         //console.log("Size:", data.length, "I", i)
@@ -36,7 +36,7 @@ const createData = (data) => {
         //newSize += title.get(data[i]).size
     }
     //console.log("New Size:", newSize)
-    //console.log("Full Map", title)
+    console.log("Full Map", title)
     return title
 }
 exports.createData = createData
