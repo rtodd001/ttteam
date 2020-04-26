@@ -37,7 +37,7 @@ const searchCSV = (keys, values, mapTable, rawData) =>{
     indices.sort(function(a,b){
         return a - b 
     });
-    //console.log("Index: ", indices)
+    console.log("Index: ", indices)
     let prev = -1
     let counter = 0
     //iterate throught the indices to see all the matching ones
@@ -58,6 +58,13 @@ const searchCSV = (keys, values, mapTable, rawData) =>{
             counter = 0
         }
         prev = indices[i]
+    }
+    if(indices.length === 1){
+        let extractedRow = []
+        for(let k = 0; k < columns; k++){
+            extractedRow.push(rawData[indices[0]* columns + k])
+        }
+        ret.push(extractedRow)
     }
     return ret
 }
