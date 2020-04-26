@@ -1,7 +1,7 @@
 //import axios from 'axios';
 //const create = require('./OLDcreateData')
 const create = require('./createData')
-const Promise = require('promise');
+const Promise = require('promise')
 const parse = require('./parse')
 const axios = require('axios')
 
@@ -16,9 +16,9 @@ const getCSV = async () => {
                 //let str = []
                 //str.push(result.data)
                 let lst = parse.parseCSV([result.data])
-                //console.log("get:",result.data)
+                //console.log("get:",lst)
                 //let ret = create.createData(lst)
-
+                console.log("Received")
                 resolve(lst)
             },
             (error) => {
