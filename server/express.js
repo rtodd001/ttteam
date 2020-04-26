@@ -2,6 +2,7 @@ const express = require('express')
 const create = require('./createData')
 const read = require('./read')
 const search = require('./searchData')
+const update = require('./update')
 const cors = require('cors')
 const app = express()
 const port = 5000
@@ -34,5 +35,32 @@ app.get('/search', (req, res) => {
         res.status(404).json({"item":[{"data": "empty"}]})
     });
 });
+
+app.post('/insert', (req, res) => {
+    let keys = []
+    let values = []
+    for (const key in req.query){
+        keys.push(key)
+        values.push(req.query[key])
+    }
+});
+
+app.put('/update', (req, res) => {
+    let keys = []
+    let values = []
+    for (const key in req.query){
+        keys.push(key)
+        values.push(req.query[key])
+    }
+    promise.then(function(result){
+        let newValue = update.updateCSV(keys,values,mappedData,result)
+        res.status(200).json({"item":[{"data": newValue}]})
+    }, function(err){
+        res.status(404).json({"item":[{"data": "empty"}]})
+    });
+
+    //let newValue = update.updateCSV(keys,values,mappedData,data)
+});
+
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
