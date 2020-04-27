@@ -211,21 +211,24 @@ class KickStarter {
         let dataIndex = this.mappedData.get(keys[0]).get(values[0]).values().next().value
         //console.log("Data Index", dataIndex)
         for (let i = 1; i <= keys.length; i++){
-            for(let k = 0; k < this.columns; k++){
-                if(keys[i] === this.tableData[k]){
-                    position.push(k)
-                    //console.log(values[i],k)
-                    //NEED TO ACTUALLY IMPLEMENT THE UPDATE
-                    //console.log("Table:", this.tableData[dataIndex*this.columns + k], "Replaced:", values[i])
-                    this.tableData.splice(dataIndex*this.columns + k,1,values[i])
-                    let old = this.mappedData.get(keys[i]).values().next().value
-                    old.delete(dataIndex)
-                    //console.log("old:",old)
-                    let newer = this.mappedData.get(keys[i]).values().next().value.add(dataIndex)
-                    newer.add(dataIndex)
-                    //console.log("newer:",newer)
-
+            if(values[i] !== ''){
+                for(let k = 0; k < this.columns; k++){
+                    if(keys[i] === this.tableData[k]){
+                        position.push(k)
+                        //console.log(values[i],k)
+                        //NEED TO ACTUALLY IMPLEMENT THE UPDATE
+                        //console.log("Table:", this.tableData[dataIndex*this.columns + k], "Replaced:", values[i])
+                        this.tableData.splice(dataIndex*this.columns + k,1,values[i])
+                        let old = this.mappedData.get(keys[i]).values().next().value
+                        old.delete(dataIndex)
+                        //console.log("old:",old)
+                        let newer = this.mappedData.get(keys[i]).values().next().value.add(dataIndex)
+                        newer.add(dataIndex)
+                        //console.log("newer:",newer)
+    
+                    }
                 }
+
             }
         }
         let updatedResult = this.searchCSV([keys[0]],[values[0]])
