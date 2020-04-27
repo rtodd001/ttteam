@@ -1,0 +1,3 @@
+
+let globalArray = [];
+export {globalArray};
