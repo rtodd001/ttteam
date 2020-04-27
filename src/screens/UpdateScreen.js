@@ -21,7 +21,7 @@ const UpdateScreen = () => {
     const [usdPledgedReal, setUsdPledgedReal] = useState('');
     const [usdGoalReal, setUsdGoalReal] = useState('');
 
-    return <View>
+    return <ScrollView>
         <Text>Enter ID to Modify</Text>
         <SearchBar
             title="UpdateID"
@@ -122,7 +122,7 @@ const UpdateScreen = () => {
             }
         }
         />
-    </View>
+    </ScrollView>
 }
 
 const styles = StyleSheet.create({});

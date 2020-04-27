@@ -4,6 +4,7 @@ import Input from '../components/Input'
 import SearchBar from '../components/SearchBar'
 import { globalArray } from '../components/Global'
 import { searchItem } from '../components/fetch'
+import { ScrollView } from 'react-native-gesture-handler'
 
 const friends1 = [
     {name: 'Category', age: 'Backers'},
@@ -26,18 +27,15 @@ const SearchScreen = () => {
     const [usdPledgedReal, setUsdPledgedReal] = useState('');
     const [usdGoalReal, setUsdGoalReal] = useState('');
     let [click, setClick] = useState(false);
-
+    let arr = [];
     useEffect(() => {
         // Update the document title using the browser API
         searchItem(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal);
-        return () => {
-            setClick(!click);
-        }
-    }, [click]);
+        if (click) setClick(false);
+    });
 
-    // Display items
     return (
-        <View>
+        <ScrollView>
             <Text>Enter Input Fields</Text>
             <SearchBar
                 title="ID"
@@ -135,9 +133,20 @@ const SearchScreen = () => {
                     setClick(true);
                     console.log('Button clicked!');
                 }
-            }/>
-            <Text>{globalArray[0]}</Text>
-        </View>
+            }/>          
+            {/* <Text>{globalArray}</Text> */}
+            
+            <View>
+                {
+                    globalArray.map((item, index) => (
+                        <Text key={index}> {item}</Text>
+                    ))
+                } 
+            </View>
+               
+                
+                    
+        </ScrollView>
     );
 }
 

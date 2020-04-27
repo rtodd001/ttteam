@@ -21,7 +21,7 @@ const InsertScreen = () => {
     const [usdPledgedReal, setUsdPledgedReal] = useState('');
     const [usdGoalReal, setUsdGoalReal] = useState('');
 
-    return <View>
+    return <ScrollView>
         <Text>Enter Input Fields</Text>
         <SearchBar
             title="ID"
@@ -121,7 +121,7 @@ const InsertScreen = () => {
         }
         />
 
-    </View>
+    </ScrollView>
 }
 
 const styles = StyleSheet.create({});
