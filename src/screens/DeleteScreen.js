@@ -1,10 +1,11 @@
 import React, {useState} from 'react'
-import { Text, View, ScrollView, StyleSheet, Button, Animated, TouchableOpacity } from 'react-native'
+import { Text, View, ScrollView, TextInput, StyleSheet, Button, Animated, TouchableOpacity } from 'react-native'
 import SearchBar from '../components/SearchBar'
-import { deleteItem } from '../components/fetch'
+import { deleteItem, importFile, storeFile } from '../components/fetch'
 
 const DeleteScreen = () => {
     const [ID, setID] = useState('');
+    const [text, setText] = useState('');
 
     return <ScrollView>
         <Text>Enter Delete Fields</Text>
@@ -19,7 +20,29 @@ const DeleteScreen = () => {
             onPress={() => {
                 deleteItem(ID);
             }
-        }
+        }/>
+        <TextInput
+            style={{height: 40}}
+            placeholder="File Name"
+            onChangeText={text => setText(text)}
+            defaultValue={text}
+        />
+        <Button
+            color="#1B2669"
+            title="Import"
+            onPress={() => {
+                console.log(text)
+                importFile(text);
+                alert('Imported the File');
+            }}
+        />
+        <Button
+            color="#1B2669"
+            title="Store"
+            onPress={() => {
+                storeFile(text);
+                alert('Stored the File');
+            }}
         />
     </ScrollView>
 }

@@ -1,8 +1,7 @@
 import React, {useState} from 'react'
 import {Text, Alert, View, ScrollView, StyleSheet, Image, TextInput, Button, FlatList} from 'react-native'
-import Input from '../components/Input'
 import SearchBar from '../components/SearchBar'
-import { insertItem } from '../components/fetch'
+import { insertItem, importFile, storeFile } from '../components/fetch'
 
 const InsertScreen = () => {
     const [ID, setID] = useState('');
@@ -21,6 +20,7 @@ const InsertScreen = () => {
     const [usdPledgedReal, setUsdPledgedReal] = useState('');
     const [usdGoalReal, setUsdGoalReal] = useState('');
 
+    const [text, setText] = useState('');
 
     const showAlert = () =>{
         Alert.alert(
@@ -28,7 +28,7 @@ const InsertScreen = () => {
         )
      }
 
-    return <ScrollView>
+    return <ScrollView> 
         <Text>Enter Input Fields</Text>
         <SearchBar
             title="ID"
@@ -126,13 +126,50 @@ const InsertScreen = () => {
                 insertItem(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal);
                 showAlert;
                 alert('INSERT SUMITTED');
-            }
-        }
+            }}
         />
+        <TextInput
+            style={{height: 40}}
+            placeholder="File Name"
+            onChangeText={text => setText(text)}
+            defaultValue={text}
+        />
+        <Button
+            color="#1B2669"
+            title="Import"
+            marginBottom = "20"
+            onPress={() => {
+                console.log(text)
+                importFile(text);
+                alert('Imported the File');
+            }}
+        />
+        <Button
+            title="Store"
+            color="#1B2669"
+            marginBottom = "20"
 
+            onPress={() => {
+                storeFile(text);
+                alert('Stored the File');
+            }}
+        />
     </ScrollView>
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    backgroundStyle: {
+        marginTop: 10,
+        backgroundColor: '#F0EEEE',
+        height: 50,
+        borderRadius: 5,
+        marginHorizontal: 40,
+        flexDirection: 'row',
+        marginBottom: 10
+      },
+    buttonStyle: {
+        color:"red"
+      }
+});
 
 export default InsertScreen;

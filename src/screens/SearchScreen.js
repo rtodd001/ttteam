@@ -135,14 +135,22 @@ const SearchScreen = () => {
             }/>          
             {/* <Text>{globalArray}</Text> */}
             
-            <View>
+            <View >
                 {
                     globalArray.map((item, index) => (
-                        <Text key={index}> {item}</Text>
+                        <Text key={index}>
+                            ID: {item[0]} {"\t"}
+                            NAME: {item[1]} {"\t"}
+                            CATEGORY: {item[2]} {"\t"}
+                            MAIN_CATEGORY: {item[3]} {"\t"}
+                            CURRENCY: {item[4]} {"\t"}
+                            DEADLINE: {item[5]} {"\t"}
+                            GOAL: {item[6]} {"\t"}
+                            LAUNCHED: {item[7]}
+                        </Text>
                     ))
                 } 
             </View>
-               
                 
                     
         </ScrollView>

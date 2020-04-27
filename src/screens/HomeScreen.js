@@ -27,10 +27,11 @@ const HomeScreen = ({navigation}) => {
 
 const styles = StyleSheet.create({
     title: {
+        color : 'grey',
         fontSize: 20,
         textAlign: "center",
         paddingVertical: 15,
-        backgroundColor: 'rgb(153, 102, 255)'
+        backgroundColor: '#141C4E'
     }
 });
 

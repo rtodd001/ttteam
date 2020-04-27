@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {Text, View, StyleSheet, ScrollView, Image, TextInput, Button, FlatList} from 'react-native'
 import Input from '../components/Input'
 import SearchBar from '../components/SearchBar'
-import { updateItem } from '../components/fetch'
+import { updateItem, importFile, storeFile } from '../components/fetch'
 
 const UpdateScreen = () => {
     const [updateID, setUpdateID] = useState('');
@@ -20,6 +20,7 @@ const UpdateScreen = () => {
     const [usdPledged, setUsdPledged] = useState('');
     const [usdPledgedReal, setUsdPledgedReal] = useState('');
     const [usdGoalReal, setUsdGoalReal] = useState('');
+    const [text, setText] = useState('');
 
     return <ScrollView>
         <Text>Enter ID to Modify</Text>
@@ -121,6 +122,29 @@ const UpdateScreen = () => {
                 updateItem(updateID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal);
             }
         }
+        />
+        <TextInput
+            style={{height: 40}}
+            placeholder="File Name"
+            onChangeText={text => setText(text)}
+            defaultValue={text}
+        />
+        <Button
+            color="#1B2669"
+            title="Import"
+            onPress={() => {
+                console.log(text)
+                importFile(text);
+                alert('Imported the File');
+            }}
+        />
+        <Button
+            color="#1B2669"
+            title="Store"
+            onPress={() => {
+                storeFile(text);
+                alert('Stored the File');
+            }}
         />
     </ScrollView>
 }
