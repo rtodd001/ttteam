@@ -8,6 +8,14 @@ console.log("Reading")
 let KS = new KickStarter()
 //console.log("Class", KS.mapData)
 
+const isPreflight = (req) => {
+    return (
+      req.method === 'OPTIONS' &&
+      req.headers['origin'] &&
+      req.headers['access-control-request-method']
+    )
+  }
+
 app.use(cors())
 app.use((req, res, next) => {
     res.set('Access-Control-Allow-Origin', '*')
