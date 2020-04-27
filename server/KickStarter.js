@@ -182,13 +182,6 @@ class KickStarter {
             }
             prev = indices[i]
         }
-        /* if(indices.length === 1){
-            let extractedRow = []
-            for(let k = 0; k < columns; k++){
-                extractedRow.push(this.tableData[indices[0]* columns + k])
-            }
-            ret.push(extractedRow)
-        } */
         return ret
     }
 
