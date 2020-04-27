@@ -7,6 +7,15 @@ const port = 5000
 console.log("Reading")
 let KS = new KickStarter()
 //console.log("Class", KS.mapData)
+app.use(cors({}))
+
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    next();
+  });
+
 
 const isPreflight = (req) => {
     return (
@@ -14,13 +23,13 @@ const isPreflight = (req) => {
       req.headers['origin'] &&
       req.headers['access-control-request-method']
     )
-  }
+}
 
-app.use(cors())
 app.use((req, res, next) => {
     res.set('Access-Control-Allow-Origin', '*')
     next()
   })
+  
 app.get('/search', (req, res) => {
     let keys = []
     let items = []
@@ -56,7 +65,7 @@ app.put('/update', (req, res) => {
     //let newValue = update.updateCSV(keys,values,mappedData,data)
 });
 
-app.put('/delete', (req, res) => {
+app.delete('/delete', (req, res) => {
     let keys = []
     let items = []
     for (const key in req.query){

@@ -1,4 +1,5 @@
 import {globalArray} from './Global'
+
 function searchItem(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal) {
     // var url = new URL('http://192.168.1.8:5000/search')
     var url = new URL('http://localhost:5000/search')
@@ -102,9 +103,12 @@ function updateItem(updateID, name, category, mainCategory, currency, deadline, 
 
 function deleteItem(ID) {
     var url = new URL('http://localhost:5000/delete')
-    url.search = new URLSearchParams(ID).toString();            
+    var params = {
+        'ID' : ID
+    }
+    url.search = new URLSearchParams(params).toString();            
     fetch(url, {
-        method: 'PUT'
+        method: 'DELETE',
     })
     .then(response => response.json())
     .then((result) => {
