@@ -56,7 +56,7 @@ app.put('/update', (req, res) => {
     //let newValue = update.updateCSV(keys,values,mappedData,data)
 });
 
-app.delete('/delete', (req, res) => {
+app.put('/delete', (req, res) => {
     let keys = []
     let items = []
     for (const key in req.query){
