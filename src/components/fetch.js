@@ -26,16 +26,16 @@ function searchItem(ID, name, category, mainCategory, currency, deadline, goal, 
     .then(response => response.json())
     .then((result) => {
  
-        // let array = [];
+        let array = [];
         
-        // array.push(result.item[0].data);
-        // array.forEach(elements => {
-        //     elements.forEach(item => {
-        //         globalArray.push(item);
-        //     })
-        // })
-        // console.log("GlobalArray after pushing")
-        // console.log(globalArray);
+        array.push(result.item[0].data);
+        array.forEach(elements => {
+            elements.forEach(item => {
+                globalArray.push(item);
+            })
+        })
+        console.log("GlobalArray after pushing")
+        console.log(globalArray);
 
         console.log(result);
     })

@@ -27,12 +27,10 @@ const SearchScreen = () => {
     const [usdGoalReal, setUsdGoalReal] = useState('');
     let [click, setClick] = useState(false);
 
-    let arr =[];
     useEffect(() => {
         // Update the document title using the browser API
         searchItem(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal);
         return () => {
-            console.log("clean up");
             setClick(!click);
         }
     }, [click]);
@@ -142,7 +140,6 @@ const SearchScreen = () => {
         </View>
     );
 }
-
 
 const styles = StyleSheet.create({});
 
