@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Text, View, ScrollView, StyleSheet, Image, TextInput, Button, FlatList} from 'react-native'
+import {Text, Alert, View, ScrollView, StyleSheet, Image, TextInput, Button, FlatList} from 'react-native'
 import Input from '../components/Input'
 import SearchBar from '../components/SearchBar'
 import { insertItem } from '../components/fetch'
@@ -20,6 +20,13 @@ const InsertScreen = () => {
     const [usdPledged, setUsdPledged] = useState('');
     const [usdPledgedReal, setUsdPledgedReal] = useState('');
     const [usdGoalReal, setUsdGoalReal] = useState('');
+
+
+    const showAlert = () =>{
+        Alert.alert(
+           'You need to...'
+        )
+     }
 
     return <ScrollView>
         <Text>Enter Input Fields</Text>
@@ -117,6 +124,8 @@ const InsertScreen = () => {
             title="Submit"
             onPress={() => {
                 insertItem(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal);
+                showAlert;
+                alert('INSERT SUMITTED');
             }
         }
         />
