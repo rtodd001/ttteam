@@ -4,7 +4,6 @@ import Input from '../components/Input'
 import SearchBar from '../components/SearchBar'
 import { globalArray } from '../components/Global'
 import { searchItem } from '../components/fetch'
-import { ScrollView } from 'react-native-gesture-handler'
 
 const friends1 = [
     {name: 'Category', age: 'Backers'},
