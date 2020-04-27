@@ -45,9 +45,14 @@ app.put('/update', (req, res) => {
 });
 
 app.delete('/delete', (req, res) => {
-    
-    //let deletedValue = 
-    res.status(200).json({"item":[{"data": []}]})
+    let keys = []
+    let items = []
+    for (const key in req.query){
+        keys.push(key)
+        items.push(req.query[key])
+    }
+    let deletedValue = KS.deleteCSV(keys, items)
+    res.status(200).json({"item":[{"data": deletedValue}]})
 });
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))

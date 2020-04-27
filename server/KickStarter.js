@@ -136,7 +136,7 @@ class KickStarter {
             }
         }
         let num = keys.length
-        //console.log(keys, items)
+        //console.log(keys, items, num)
         let indices = []
     
         //iterate over the columns first
@@ -161,10 +161,10 @@ class KickStarter {
         let counter = 0
         //iterate throught the indices to see all the matching ones
         for(let i = 0; i < indices.length; i++){
-            if(indices[i] === prev){
+            if(indices[i] === prev || keys.length === 1){
                 counter++
-                if(counter === keys.length - 1){
-                    //console.log("index: ", indices[i])
+                if(counter === keys.length - 1|| keys.length === 1){
+                    //console.log("index: ", indices[i], counter)
                     counter = 0
                     let extractedRow = []
                     for(let k = 0; k < columns; k++){
@@ -172,6 +172,9 @@ class KickStarter {
                     }
                     ret.push(extractedRow)
                 }
+                /* if(keys.length === 1){
+                    counter = 0
+                } */
             }
             else{
                 counter = 0
@@ -255,11 +258,36 @@ class KickStarter {
 
     deleteCSV(keys, items){
         //We are now finding the index of the target of deletion
-        let deleteIndex = this.mappedData.get(keys[0]).get(items[0]).values().next().value
-        this.tableData.splice((this.tableData.length/this.columns), this.columns)
-        for(let i = 0; i < this.columns; i++){
-            
+        if(!this.mappedData.get(keys[0]).has(items[0])){
+            return []
         }
+        console.log(keys, items)
+        let deleteIndex = this.mappedData.get(keys[0]).get(items[0]).values().next().value
+        //console.log("DeleteIndex:", deleteIndex)
+        //console.log("Calculated Index:",deleteIndex*this.columns)
+        let toDelete = this.searchCSV(keys, items)
+        console.log(toDelete)
+        //console.log("Table Before:", this.tableData)
+        this.tableData.splice((deleteIndex*this.columns), this.columns)
+        //console.log("Table After:", this.tableData)
+        //console.log("Map Before:", this.mappedData)
+        for(let i = 0; i < keys.length; i++){
+            //let tempMap = this.mappedData.get(keys[i])
+            console.log("Iteration:",i,this.mappedData.get(keys[i]),toDelete[0][i], keys[i])
+            if(this.mappedData.get(keys[i]).has(toDelete[0][i])){
+                let old = this.mappedData.get(keys[i]).values().next().value
+                console.log("old", old)
+                if(old.length === 1){
+                    //this.mappedData.get(keys[i]).delete(deleteIndex[i])
+                }
+                else{
+                    old.delete(deleteIndex)
+                }
+                //tempMap.get(toDelete[0][i]).values().next().value.delete(deleteIndex)
+            }
+        }
+        //console.log("Map After:", this.mappedData)
+        return toDelete[0]
     }
 }
 exports.KickStarter = KickStarter
