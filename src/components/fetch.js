@@ -113,14 +113,14 @@ function deleteItem(ID) {
 }
 
 function importFile(fileName) {
-    var url = new URL('http://localhost:5000/backup')
+    var url = new URL('http://localhost:5000/import')
     url.search = new URLSearchParams(fileName).toString();            
     fetch(url, {
         method: 'GET'
     })
     .then(response => response.json())
     .then((result) => {
-        console.log("import the file");
+        console.log("import the file", result);
     })
 }
 
