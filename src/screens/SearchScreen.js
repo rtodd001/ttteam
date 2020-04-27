@@ -2,9 +2,8 @@ import React, {useState, useEffect} from 'react'
 import {Text, View, StyleSheet, Image, TextInput, Button, FlatList} from 'react-native'
 import Input from '../components/Input'
 import SearchBar from '../components/SearchBar'
-//import {request, globalResult} from '../components/fetch'
 import {globalArray} from '../components/Global'
-import {request} from '../components/fetch'
+import {searchItem} from '../components/fetch'
 
 
 const friends1 = [
@@ -40,7 +39,7 @@ const SearchScreen = () => {
     let arr =[];
     useEffect(() => {
         // Update the document title using the browser API
-        request(category, backers, state);
+        searchItem(category, backers, state);
         return () => {
             console.log("cleam up");
             setClick(!click);
