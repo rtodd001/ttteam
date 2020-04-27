@@ -43,7 +43,7 @@ class KickStarter {
                 //console.log(text[i])
                 if(text[i] === '\r' || text[i] === '\n'){
                     //console.log("\nnewline\n")
-                    text = text.slice(2)
+                    text = text.slice(1)
                     i--
                     break
                 }
@@ -133,7 +133,7 @@ class KickStarter {
             }
         }
         let num = keys.length
-        console.log(keys, items, num)
+        //console.log(keys, items, num)
         let indices = []
     
         //iterate over the columns first
@@ -146,7 +146,7 @@ class KickStarter {
                 let retrieved = []
                 retrieved = Array.from(tempMap.get(items[i]))
                 indices = indices.concat(retrieved)
-                console.log("Set: ",retrieved)
+                //console.log("Set: ",retrieved)
             }
         }
         //sort all the numbers
@@ -194,7 +194,7 @@ class KickStarter {
             return []
         }
         //console.log(items[0], items[0].length)
-        console.log(keys, items)
+        //console.log(keys, items)
         //console.log("Type:",Object.prototype.toString.call(items[0]))
         if(Array.isArray(items[0])){
             //console.log("Trying to fix")
@@ -279,7 +279,7 @@ class KickStarter {
         //return the new item that is retrieved using both the 
         //tableData and mapppedData. This will prove that the 
         //update was succesful 
-        console.log("Full Map: ",this.mappedData)
+        //console.log("Full Map: ",this.mappedData)
         keys.splice(0,1)
         items.splice(0,1)
         let updatedResult = this.searchCSV(keys,items)
@@ -370,11 +370,38 @@ class KickStarter {
         }
 
         //console.log("Before Update:",tempKeys,tempItems)
-        console.log("Full Map: ",this.mappedData)
+        //console.log("Full Map: ",this.mappedData)
         let retUpdate = this.updateCSV(tempKeys,tempItems)
         //console.log("Full Table: ",this.tableData)
-        console.log("Full Map: ",this.mappedData)
+        //console.log("Full Map: ",this.mappedData)
         return retUpdate
+    }
+
+    backupCSV(keys,items){
+        let filename = items[0]
+        let writer = fs.createWriteStream("./../data/backups/" + filename + ".csv", {flags: 'w'})
+        for(let i = 0; i < this.tableData.length; i++){
+            writer.write(this.tableData[i], 'utf8')
+            if(i % this.columns < this.columns - 1){
+                writer.write(",", 'utf8')
+            }
+            else{
+                writer.write("\n", 'utf8')
+            }
+        }
+        writer.on('finish', () => {
+            console.log("Finished Writing!")
+        })
+        writer.end()
+    }
+
+    importCSV(keys, items){
+        let filename = items[0]
+        var path = './../data/backups/' + filename + ".csv"
+        let content = fs.readFileSync(path, 'utf8')
+        this.tableData = this.parseCSV(content)
+        this.mappedData = this.createData()
+        console.log(this.mappedData)
     }
 }
 exports.KickStarter = KickStarter

@@ -55,4 +55,26 @@ app.delete('/delete', (req, res) => {
     res.status(200).json({"item":[{"data": deletedValue}]})
 });
 
+app.put('/backup', (req, res) => {
+    let keys = []
+    let items = []
+    for (const key in req.query){
+        keys.push(key)
+        items.push(req.query[key])
+    }
+    KS.backupCSV(keys,items)
+    res.status(200).json({"item":[{"data": "Backed up"}]})
+});
+
+app.get('/import', (req,res) => {
+    let keys = []
+    let items = []
+    for (const key in req.query){
+        keys.push(key)
+        items.push(req.query[key])
+    }
+    KS.importCSV(keys, items)
+    res.status(200).json({"item":[{"data": "Imported"}]})
+});
+
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
