@@ -11,38 +11,43 @@ let KS = new KickStarter()
 app.use(cors())
 app.get('/search', (req, res) => {
     let keys = []
-    let values = []
+    let items = []
     for (const key in req.query){
         keys.push(key)
-        values.push(req.query[key])
+        items.push(req.query[key])
     }
 
-    let found = KS.searchCSV(keys, values)
+    let found = KS.searchCSV(keys, items)
     res.status(200).json({"item":[{"data": found}]})
 });
 
 app.post('/insert', (req, res) => {
     let keys = []
-    let values = []
+    let items = []
     for (const key in req.query){
         keys.push(key)
-        values.push(req.query[key])
+        items.push(req.query[key])
     }
+    let inserted = KS.insertCSV(keys, items)
+    res.status(200).json({"item":[{"data": inserted}]})
 });
 
 app.put('/update', (req, res) => {
     let keys = []
-    let values = []
+    let items = []
     for (const key in req.query){
         keys.push(key)
-        values.push(req.query[key])
+        items.push(req.query[key])
     }
-    let newValue = KS.updateCSV(keys,values)
+    let newValue = KS.updateCSV(keys,items)
     res.status(200).json({"item":[{"data": newValue}]})
-
-
     //let newValue = update.updateCSV(keys,values,mappedData,data)
 });
 
+app.delete('/delete', (req, res) => {
+    
+    //let deletedValue = 
+    res.status(200).json({"item":[{"data": []}]})
+});
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))

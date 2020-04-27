@@ -88,7 +88,7 @@ class KickStarter {
     
             let item = new Map()
             //console.log("Size:", this.tableData.length, "I", i)
-            for(let k = Math.floor(i+ this.columns); k < Math.floor(this.tableData.length); k+=this.columns){
+            for(let k = Math.floor(i + this.columns); k < Math.floor(this.tableData.length); k+=this.columns){
                 //console.log("Loop index", k,"| Title:",this.tableData[i])
                 let row = Math.floor(k / this.columns)
                 let name = this.tableData[k]
@@ -115,7 +115,7 @@ class KickStarter {
         return title
     }
 
-    searchCSV (keys, values){
+    searchCSV (keys, items){
         //edge case for empty data structure
         if(this.tableData.length === 0){
             return []
@@ -127,16 +127,16 @@ class KickStarter {
         let columns = 15
         
         //check for empty parameters and throw them away 
-        for(let i = 0; i < values.length; i++){
-            if( '' + values[i] === ''){
+        for(let i = 0; i < items.length; i++){
+            if( '' + items[i] === ''){
                 //remove both the key and value
-                values.splice(i,1)
+                items.splice(i,1)
                 keys.splice(i,1)
                 // /i--
             }
         }
         let num = keys.length
-        console.log(keys, values)
+        //console.log(keys, items)
         let indices = []
     
         //iterate over the columns first
@@ -144,11 +144,10 @@ class KickStarter {
             //get the map assosciated with the key/column
             let tempMap = this.mappedData.get(keys[i])
             //find the value we are searching for
-            if(tempMap.has(values[i])){
+            if(tempMap.has(items[i])){
                 //an array of array gets stored here of all indices
-                //console.log("Val:", tempMap.get(values[i]))
                 let retrieved = []
-                retrieved = Array.from(tempMap.get(values[i]))
+                retrieved = Array.from(tempMap.get(items[i]))
                 indices = indices.concat(retrieved)
                 //console.log("Set: ",retrieved)
             }
@@ -189,52 +188,78 @@ class KickStarter {
         return ret
     }
 
-    updateCSV (keys, values) {
-        //if there is not enough information give, return nothing
+    updateCSV (keys, items) {
+        //if there is not enough information given, return nothing
         if(keys.length < 2){
             return []
         }
-    
-        //find the unique ID to update
-        let id = []
-        id.push(keys[0])
-        //console.log([keys[0]])
-        //console.log("this.tableData", this.tableData)
-        let original = []
-        original = this.searchCSV([keys[0]],[values[0]])
-        //console.log(keys, values)
-        //console.log("Original", original)
-        //find out what needs to be changed
-        let position = []
-        //let it = this.mappedData.get(keys[0]).get(values[0]).values()
-        //this long statement gets the row that the ID is in the tableData
-        let dataIndex = this.mappedData.get(keys[0]).get(values[0]).values().next().value
-        //console.log("Data Index", dataIndex)
+        //We are now finding the index of the original in the tableData
+        let dataIndex = this.mappedData.get(keys[0]).get(items[0]).values().next().value
+        //iterate through all the things we must update
         for (let i = 1; i <= keys.length; i++){
-            if(values[i] !== ''){
+            //ommit the empty parameters
+            if(items[i] !== ''){
+                //find the position of the item that we are updating
                 for(let k = 0; k < this.columns; k++){
+                    //if the key matches the column, we do the update
                     if(keys[i] === this.tableData[k]){
-                        position.push(k)
-                        //console.log(values[i],k)
-                        //NEED TO ACTUALLY IMPLEMENT THE UPDATE
-                        //console.log("Table:", this.tableData[dataIndex*this.columns + k], "Replaced:", values[i])
-                        this.tableData.splice(dataIndex*this.columns + k,1,values[i])
+                        //update the tableData first
+                        this.tableData.splice(dataIndex*this.columns + k,1,items[i])
+                        //we are now getting the index reference of the original
+                        //and removing it so in the mappedData
                         let old = this.mappedData.get(keys[i]).values().next().value
                         old.delete(dataIndex)
-                        //console.log("old:",old)
+                        //we are now adding the index into the new updated value
+                        //in the mappedData
                         let newer = this.mappedData.get(keys[i]).values().next().value.add(dataIndex)
                         newer.add(dataIndex)
-                        //console.log("newer:",newer)
     
                     }
                 }
 
             }
         }
-        let updatedResult = this.searchCSV([keys[0]],[values[0]])
-        //console.log("After", updatedResult)
-        //console.log("position to update", position)
+        //return the new item that is retrieved using both the 
+        //tableData and mapppedData. This will prove that the 
+        //update was succesful 
+        let updatedResult = this.searchCSV([keys[0]],[items[0]])
         return updatedResult
+    }
+
+    insertCSV(keys, items){
+        //force that every element has to be present so we do not have empty data points
+        if(keys.length !== this.columns && items.length !== this.columns){
+            return []
+        }
+        for(let i = 0; i < items.length; i++){
+            this.tableData.push(items[i])
+            let tempMap = this.mappedData.get(keys[i])//.get(items[i]).values().next().value
+            //console.log("Temp:", i, tempMap)
+            if(tempMap.has(items[i])){
+                let tempSet = tempMap.get(items[i])
+                tempSet.add(Math.floor(this.tableData.length/this.columns))
+                this.mappedData.get(keys[i]).set(items[i], tempSet)
+            }
+            else{
+                let tempRow = new Set()
+                console.log(Math.floor((this.tableData.length - 1)/this.columns))
+                tempRow.add(Math.floor((this.tableData.length - 1)/this.columns))
+                this.mappedData.get(keys[i]).set(items[i],tempRow)
+                //console.log("Inserted New: ", this.mappedData.get(keys[i]).set(items[i],tempRow))
+            }
+        }
+        let ret = this.searchCSV(keys, items)
+        console.log("Inserted",ret)
+        return ret
+    }
+
+    deleteCSV(keys, items){
+        //We are now finding the index of the target of deletion
+        let deleteIndex = this.mappedData.get(keys[0]).get(items[0]).values().next().value
+        this.tableData.splice((this.tableData.length/this.columns), this.columns)
+        for(let i = 0; i < this.columns; i++){
+            
+        }
     }
 }
 exports.KickStarter = KickStarter
