@@ -125,29 +125,30 @@ class KickStarter {
     
         //the number of columns in our data set
         let columns = 15
-        
+        let tempKeys = keys
+        let tempItems = items
         //check for empty parameters and throw them away 
-        for(let i = 0; i < items.length; i++){
-            if( '' + items[i] === ''){
+        for(let i = 0; i < tempItems.length; i++){
+            if( '' + tempItems[i] === ''){
                 //remove both the key and value
-                items.splice(i,1)
-                keys.splice(i,1)
+                tempItems.splice(i,1)
+                tempKeys.splice(i,1)
                 // /i--
             }
         }
-        let num = keys.length
-        //console.log(keys, items, num)
+        let num = tempKeys.length
+        //console.log(tempKeys, tempItems, num)
         let indices = []
     
         //iterate over the columns first
-        for(let i = 0; i < keys.length; i++){
+        for(let i = 0; i < tempKeys.length; i++){
             //get the map assosciated with the key/column
-            let tempMap = this.mappedData.get(keys[i])
+            let tempMap = this.mappedData.get(tempKeys[i])
             //find the value we are searching for
-            if(tempMap.has(items[i])){
+            if(tempMap.has(tempItems[i])){
                 //an array of array gets stored here of all indices
                 let retrieved = []
-                retrieved = Array.from(tempMap.get(items[i]))
+                retrieved = Array.from(tempMap.get(tempItems[i]))
                 indices = indices.concat(retrieved)
                 //console.log("Set: ",retrieved)
             }
@@ -161,9 +162,9 @@ class KickStarter {
         let counter = 0
         //iterate throught the indices to see all the matching ones
         for(let i = 0; i < indices.length; i++){
-            if(indices[i] === prev || keys.length === 1){
+            if(indices[i] === prev || tempKeys.length === 1){
                 counter++
-                if(counter === keys.length - 1|| keys.length === 1){
+                if(counter === tempKeys.length - 1|| tempKeys.length === 1){
                     //console.log("index: ", indices[i], counter)
                     counter = 0
                     let extractedRow = []
@@ -172,7 +173,7 @@ class KickStarter {
                     }
                     ret.push(extractedRow)
                 }
-                /* if(keys.length === 1){
+                /* if(tempKeys.length === 1){
                     counter = 0
                 } */
             }
@@ -181,13 +182,13 @@ class KickStarter {
             }
             prev = indices[i]
         }
-        if(indices.length === 1){
+        /* if(indices.length === 1){
             let extractedRow = []
             for(let k = 0; k < columns; k++){
                 extractedRow.push(this.tableData[indices[0]* columns + k])
             }
             ret.push(extractedRow)
-        }
+        } */
         return ret
     }
 
@@ -261,27 +262,35 @@ class KickStarter {
         if(!this.mappedData.get(keys[0]).has(items[0])){
             return []
         }
-        console.log(keys, items)
+        //console.log(keys, items)
+        
         let deleteIndex = this.mappedData.get(keys[0]).get(items[0]).values().next().value
+        
         //console.log("DeleteIndex:", deleteIndex)
         //console.log("Calculated Index:",deleteIndex*this.columns)
+        
+        //make shallow copies because Search mutates the parameters
+        let tempKeys = keys.slice()
+        let tempItems = items.slice()
         let toDelete = this.searchCSV(keys, items)
-        console.log(toDelete)
-        //console.log("Table Before:", this.tableData)
+        //console.log(toDelete)
         this.tableData.splice((deleteIndex*this.columns), this.columns)
-        //console.log("Table After:", this.tableData)
         //console.log("Map Before:", this.mappedData)
-        for(let i = 0; i < keys.length; i++){
-            //let tempMap = this.mappedData.get(keys[i])
-            console.log("Iteration:",i,this.mappedData.get(keys[i]),toDelete[0][i], keys[i])
-            if(this.mappedData.get(keys[i]).has(toDelete[0][i])){
-                let old = this.mappedData.get(keys[i]).values().next().value
-                console.log("old", old)
-                if(old.length === 1){
-                    //this.mappedData.get(keys[i]).delete(deleteIndex[i])
+        for(let i = 0; i < tempKeys.length; i++){
+            //let tempMap = this.mappedData.get(tempKeys[i])
+            //console.log(this.mappedData.get(tempKeys[i]),"To Delete: ",toDelete[0][i], "Key: ",tempKeys[i], '\n')
+            if(this.mappedData.get(tempKeys[i]).has(toDelete[0][i])){
+                let old = this.mappedData.get(tempKeys[i]).values().next().value
+                //console.log("old", old)
+                if(old.size === 1){
+                    let oldKey = this.mappedData.get(tempKeys[i])
+                    oldKey.delete(toDelete[0][i])
+                    //console.log("oldkey",oldKey)
+                    //this.mappedData.get(tempKeys[i]).delete(deleteIndex)
+                    //console.log("Size 1: ", this.mappedData.get(tempKeys[i]), deleteIndex)
                 }
                 else{
-                    old.delete(deleteIndex)
+                    old.delete("old",deleteIndex)
                 }
                 //tempMap.get(toDelete[0][i]).values().next().value.delete(deleteIndex)
             }
