@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Text, View, StyleSheet, Image, TextInput, Button, FlatList} from 'react-native'
+import {Text, View, StyleSheet, ScrollView, Image, TextInput, Button, FlatList} from 'react-native'
 import Input from '../components/Input'
 import SearchBar from '../components/SearchBar'
 import { updateItem } from '../components/fetch'

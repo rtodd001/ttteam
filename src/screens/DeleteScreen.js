@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { Text, View, StyleSheet, Button, Animated, TouchableOpacity } from 'react-native'
+import { Text, View, ScrollView, StyleSheet, Button, Animated, TouchableOpacity } from 'react-native'
 import SearchBar from '../components/SearchBar'
 import { deleteItem } from '../components/fetch'
 import { ScrollView } from 'react-native-gesture-handler'
