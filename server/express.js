@@ -1,34 +1,53 @@
 const express = require('express')
-const bodyParser = require('body-parser')
-const create = require('./createData')
-const parse = require('./parse')
-const read = require('./read')
-const search = require('./searchData')
+const KickStarter = require('./KickStarter').KickStarter
 const cors = require('cors')
 const app = express()
 const port = 5000
 
-//app.get('/', (req, res) => res.send('Hello World!'))
-var strsplit = read.getCSV()
+console.log("Reading")
+let KS = new KickStarter()
+//console.log("Class", KS.mapData)
 
 app.use(cors())
 app.get('/search', (req, res) => {
-    //there are commas in the names of products used so we cannot use split()
-    //this regex replaces split() and will extract all the cells that we need into
-    //an array of strings
-    let lst = parse.parseCSV(strsplit)
-    let data = create.createData(lst)
     let keys = []
-    let values = []
+    let items = []
     for (const key in req.query){
         keys.push(key)
-        values.push(req.query[key])
-        //console.log(key, req.query[key])
+        items.push(req.query[key])
     }
-    let found = search.searchCSV(keys, values, data)
-    console.log(found)
+
+    let found = KS.searchCSV(keys, items)
     res.status(200).json({"item":[{"data": found}]})
+});
+
+app.post('/insert', (req, res) => {
+    let keys = []
+    let items = []
+    for (const key in req.query){
+        keys.push(key)
+        items.push(req.query[key])
+    }
+    let inserted = KS.insertCSV(keys, items)
+    res.status(200).json({"item":[{"data": inserted}]})
+});
+
+app.put('/update', (req, res) => {
+    let keys = []
+    let items = []
+    for (const key in req.query){
+        keys.push(key)
+        items.push(req.query[key])
+    }
+    let newValue = KS.updateCSV(keys,items)
+    res.status(200).json({"item":[{"data": newValue}]})
+    //let newValue = update.updateCSV(keys,values,mappedData,data)
+});
+
+app.delete('/delete', (req, res) => {
     
+    //let deletedValue = 
+    res.status(200).json({"item":[{"data": []}]})
 });
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
