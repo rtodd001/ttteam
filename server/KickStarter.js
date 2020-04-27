@@ -43,7 +43,7 @@ class KickStarter {
                 //console.log(text[i])
                 if(text[i] === '\r' || text[i] === '\n'){
                     //console.log("\nnewline\n")
-                    text = text.slice(2)
+                    text = text.slice(1)
                     i--
                     break
                 }
