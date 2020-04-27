@@ -8,7 +8,11 @@ console.log("Reading")
 let KS = new KickStarter()
 //console.log("Class", KS.mapData)
 
-app.use(cors())
+//app.use(cors())
+app.use((req, res, next) => {
+    res.set('Access-Control-Allow-Origin', '*')
+    next()
+  })
 app.get('/search', (req, res) => {
     let keys = []
     let items = []
