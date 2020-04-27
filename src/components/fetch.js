@@ -104,7 +104,7 @@ function deleteItem(ID) {
     var url = new URL('http://localhost:5000/delete')
     url.search = new URLSearchParams(ID).toString();            
     fetch(url, {
-        method: 'DEL'
+        method: 'PUT'
     })
     .then(response => response.json())
     .then((result) => {
