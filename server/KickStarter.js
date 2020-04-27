@@ -150,14 +150,14 @@ class KickStarter {
                 let retrieved = []
                 retrieved = Array.from(tempMap.get(values[i]))
                 indices = indices.concat(retrieved)
-                console.log("Set: ",retrieved)
+                //console.log("Set: ",retrieved)
             }
         }
         //sort all the numbers
         indices.sort(function(a,b){
             return a - b 
         });
-        console.log("Index: ", indices)
+        //console.log("Index: ", indices)
         let prev = -1
         let counter = 0
         //iterate throught the indices to see all the matching ones
@@ -202,23 +202,36 @@ class KickStarter {
         //console.log("this.tableData", this.tableData)
         let original = []
         original = this.searchCSV([keys[0]],[values[0]])
-        console.log(keys, values)
-        console.log("Original", original)
+        //console.log(keys, values)
+        //console.log("Original", original)
         //find out what needs to be changed
-        let index = []
+        let position = []
+        //let it = this.mappedData.get(keys[0]).get(values[0]).values()
+        //this long statement gets the row that the ID is in the tableData
+        let dataIndex = this.mappedData.get(keys[0]).get(values[0]).values().next().value
+        //console.log("Data Index", dataIndex)
         for (let i = 1; i <= keys.length; i++){
             for(let k = 0; k < this.columns; k++){
                 if(keys[i] === this.tableData[k]){
-                    index.push(k)
-                    console.log(values[i],k)
+                    position.push(k)
+                    //console.log(values[i],k)
                     //NEED TO ACTUALLY IMPLEMENT THE UPDATE
-                    original[0].splice(k,1,values[i])
+                    //console.log("Table:", this.tableData[dataIndex*this.columns + k], "Replaced:", values[i])
+                    this.tableData.splice(dataIndex*this.columns + k,1,values[i])
+                    let old = this.mappedData.get(keys[i]).values().next().value
+                    old.delete(dataIndex)
+                    //console.log("old:",old)
+                    let newer = this.mappedData.get(keys[i]).values().next().value.add(dataIndex)
+                    newer.add(dataIndex)
+                    //console.log("newer:",newer)
+
                 }
             }
         }
-        console.log("After", original)
-        //console.log("Index to update", index)
-        return original
+        let updatedResult = this.searchCSV([keys[0]],[values[0]])
+        //console.log("After", updatedResult)
+        //console.log("position to update", position)
+        return updatedResult
     }
 }
 exports.KickStarter = KickStarter
