@@ -15,7 +15,7 @@ const friends1 = [
     {name: 'Music', age: '22'}
 ];
 
-const SearchScreen = () => {
+const InsertScreen = () => {
 
 const [state, setState] = useState('');
 const [category, setCategory] = useState('');
@@ -92,4 +92,4 @@ const [backers, setBackers] = useState('');
 
 const styles = StyleSheet.create({});
 
-export default SearchScreen;
+export default InsertScreen;
