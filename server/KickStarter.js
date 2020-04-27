@@ -193,7 +193,37 @@ class KickStarter {
         if(keys.length < 2){
             return []
         }
+        //console.log(items[0], items[0].length)
+        console.log(keys, items)
+        //console.log("Type:",Object.prototype.toString.call(items[0]))
+        if(Array.isArray(items[0])){
+            //console.log("Trying to fix")
+            let temp = items[0].slice()
+            items.splice(0,1)
+            let tempKeys = keys.slice()
+            keys.splice(0,1)
+            //console.log(keys, items)
+            for(let i = temp.length; i > 0; i--){
+                keys.splice(0,0,tempKeys[0])
+                items.splice(0,0, temp[i-1])
+            }
+        }
+        if(!this.mappedData.get(keys[0]).has(items[0])){
+            return []
+        }
+        //console.log(keys, items)
+        //check for empty parameters and throw them away 
+        for(let i = 0; i < items.length; i++){
+            if(items[i] === ''){
+                //remove both the key and value
+                items.splice(i,1)
+                keys.splice(i,1)
+                i--
+            }
+        }
+        //console.log(keys, items)
         //We are now finding the index of the original in the tableData
+        //console.log(this.mappedData.get(keys[0]))
         let dataIndex = this.mappedData.get(keys[0]).get(items[0]).values().next().value
         //iterate through all the things we must update
         for (let i = 1; i <= keys.length; i++){
@@ -204,15 +234,42 @@ class KickStarter {
                     //if the key matches the column, we do the update
                     if(keys[i] === this.tableData[k]){
                         //update the tableData first
+                        let originalItem = this.tableData[dataIndex*this.columns + k]
+                        //console.log("Original", originalItem)
                         this.tableData.splice(dataIndex*this.columns + k,1,items[i])
+                        
                         //we are now getting the index reference of the original
                         //and removing it so in the mappedData
-                        let old = this.mappedData.get(keys[i]).values().next().value
+                        //console.log("Item value:", items[i])
+                        //console.log("Item:", this.mappedData.get(keys[i]).get(originalItem))
+                        if(this.mappedData.get(keys[i]).get(originalItem).size === 1){
+                            this.mappedData.get(keys[i]).delete(originalItem)
+                            let tmp = new Set()
+                            tmp.add(dataIndex)
+                            this.mappedData.get(keys[i]).set(items[i],tmp)
+                        }
+                        else{
+                            //remove index and add it to the new spot
+                            let tempSet = this.mappedData.get(keys[i]).get(originalItem)
+                            tempSet.delete(dataIndex)
+                            if(this.mappedData.get(keys[i]).has(items[i])){
+                                let updateSet = new Set()
+                                updateSet = this.mappedData.get(keys[i]).get(items[i])
+                                updateSet.add(dataIndex)
+                            }
+                            else{
+                                let tmp1 = new Set()
+                                tmp1.add(dataIndex)
+                                this.mappedData.get(keys[i]).set(items[i], tmp1)
+                            }
+
+                        }
+                        /* let old = this.mappedData.get(keys[i]).values().next().value
                         old.delete(dataIndex)
                         //we are now adding the index into the new updated value
                         //in the mappedData
                         let newer = this.mappedData.get(keys[i]).values().next().value.add(dataIndex)
-                        newer.add(dataIndex)
+                        newer.add(dataIndex) */
     
                     }
                 }
@@ -222,7 +279,10 @@ class KickStarter {
         //return the new item that is retrieved using both the 
         //tableData and mapppedData. This will prove that the 
         //update was succesful 
-        let updatedResult = this.searchCSV([keys[0]],[items[0]])
+        console.log("Full Map: ",this.mappedData)
+        keys.splice(0,1)
+        items.splice(0,1)
+        let updatedResult = this.searchCSV(keys,items)
         return updatedResult
     }
 
@@ -250,6 +310,7 @@ class KickStarter {
         }
         let ret = this.searchCSV(keys, items)
         console.log("Inserted",ret)
+        
         return ret
     }
 
@@ -259,40 +320,61 @@ class KickStarter {
             return []
         }
         //console.log(keys, items)
-        
-        let deleteIndex = this.mappedData.get(keys[0]).get(items[0]).values().next().value
-        
-        //console.log("DeleteIndex:", deleteIndex)
-        //console.log("Calculated Index:",deleteIndex*this.columns)
-        
-        //make shallow copies because Search mutates the parameters
-        let tempKeys = keys.slice()
-        let tempItems = items.slice()
-        let toDelete = this.searchCSV(tempKeys, tempItems)
-        console.log(toDelete)
-        this.tableData.splice((deleteIndex*this.columns), this.columns)
+
+        //get the last data item in the tableData
+        //we will be using this to replace the target of deletion
+        //not doing so will offset all indices stored in the mappedData
+        //not replacing will require an entire rebuild
+        let bottomRow = []
+        //for(let i = Math.floor(this.tableData.length/this.columns); i < this.tableData.length; i++){
+        for(let i = 0; i < this.columns;i++){
+            bottomRow.push(this.tableData[this.tableData.length- this.columns + i])
+        }
+        //console.log("Bottom Row:", bottomRow)
+
+        //now we must delete this bottom row before replacing it to avoid having
+        //duplicate IDs. We must preserve uniqueness for ID
+        this.tableData.splice(this.tableData.length- this.columns, this.columns)
+        //for(let k = 0; k < bottomRow.length; k++){}
+        //this.tableData.splice((deleteIndex*this.columns), this.columns,bottomRow[k])
         //console.log("Map Before:", this.mappedData)
-        for(let i = 0; i < tempKeys.length; i++){
-            //let tempMap = this.mappedData.get(tempKeys[i])
-            //console.log(this.mappedData.get(tempKeys[i]),"To Delete: ",toDelete[0][i], "Key: ",tempKeys[i], '\n')
-            if(this.mappedData.get(tempKeys[i]).has(toDelete[0][i])){
-                let old = this.mappedData.get(tempKeys[i]).values().next().value
+        for(let i = 0; i < keys.length; i++){
+            let tempMap = this.mappedData.get(keys[i])
+            //console.log(this.mappedData.get(keys[i]),"To Delete: ",bottomRow[0][i], "Key: ",keys[i], '\n')
+            if(this.mappedData.get(keys[i]).has(bottomRow[i])){
+                let old = this.mappedData.get(keys[i]).get(bottomRow[i])
                 //console.log("old", old)
                 if(old.size === 1){
-                    let oldKey = this.mappedData.get(tempKeys[i])
-                    oldKey.delete(toDelete[0][i])
+                    let oldKey = this.mappedData.get(keys[i])
+                    oldKey.delete(bottomRow[i])
                     //console.log("oldkey",oldKey)
-                    //this.mappedData.get(tempKeys[i]).delete(deleteIndex)
-                    //console.log("Size 1: ", this.mappedData.get(tempKeys[i]), deleteIndex)
+                    //this.mappedData.get(keys[i]).delete(deleteIndex)
+                    //console.log("Size 1: ", this.mappedData.get(keys[i]), deleteIndex)
                 }
                 else{
-                    old.delete("old",deleteIndex)
+                    old.delete("old",this.mappedData.get(keys[i]).get(bottomRow[i]).values().next().value)
                 }
-                //tempMap.get(toDelete[0][i]).values().next().value.delete(deleteIndex)
+                //tempMap.get(bottomRow[0][i]).values().next().value.delete(deleteIndex)
             }
         }
-        //console.log("Map After:", this.mappedData)
-        return toDelete[0]
+
+        //now must use the deleted bottom row to replace/update the original target for deletion
+        //create shallow copies of parameters in case they get modified
+        let tempKeys = keys.slice()
+        let tempItems = []
+        tempKeys.splice(0,0,keys[0])
+        tempItems.push(items[0])
+        //add the ID of the bottom row to use as a key
+        for(let i = 0; i < bottomRow.length; i++){
+            tempItems.push(bottomRow[i])
+        }
+
+        //console.log("Before Update:",tempKeys,tempItems)
+        console.log("Full Map: ",this.mappedData)
+        let retUpdate = this.updateCSV(tempKeys,tempItems)
+        //console.log("Full Table: ",this.tableData)
+        console.log("Full Map: ",this.mappedData)
+        return retUpdate
     }
 }
 exports.KickStarter = KickStarter
