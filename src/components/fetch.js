@@ -1,5 +1,6 @@
 import {globalArray} from './Global'
-function searchItem(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal) {
+
+async function searchItem(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal) {
     // var url = new URL('http://192.168.1.8:5000/search')
         var url = new URL('http://localhost:5000/search')
         var params = {
@@ -21,26 +22,21 @@ function searchItem(ID, name, category, mainCategory, currency, deadline, goal, 
         }
     
         url.search = new URLSearchParams(params).toString();            
-        fetch(url)
-        .then(response => response.json())
-        .then((result) => {
-            globalArray.splice(0,globalArray.length)
-
-            let array = [];
-            
-            array.push(result.item[0].data);
-            array.forEach(elements => {
-                elements.forEach(item => {
-                    globalArray.push(item);
-                })
+        let response = await fetch(url);
+        let result = await response.json();
+        console.log('26', result);
+        let array = [];
+        
+        array.push(result.item[0].data);
+        array.forEach(elements => {
+            elements.forEach(item => {
+                globalArray.push(item);
             })
-            console.log("GlobalArray after pushing")
-            console.log(globalArray);
-            console.log(result);
         })
-    
-    
-    
+        console.log("GlobalArray after pushing")
+        console.log(globalArray);
+        console.log('40', array);
+        return array[0]; 
 
 }
 

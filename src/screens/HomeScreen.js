@@ -1,9 +1,11 @@
 import React from 'react';
-import {Button, Text, View, StyleSheet} from 'react-native';
+import {Button, Text, View, StyleSheet, Image} from 'react-native';
 
 const HomeScreen = ({navigation}) => {
     return <View>
-        <Text style={styles.title}>KickStarter Projects Analytics</Text>
+        <Image style={{resizeMode: 'center', widht:50, height:250}}source={require('../../assets/ttteamLogo.jpg')}/>
+
+        {/* <Text style={styles.title}>TTTEAM KickStarter Projects Analytics</Text> */}
 
         <Button
             title="Search"
