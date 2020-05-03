@@ -20,7 +20,9 @@ class KickStarter {
     }
 
     getCSV() {
-        var path = './../data/CommaTest.csv'
+        //var path = './../data/ks-projects-201801.csv'
+        //var path = './../data/CommaTest.csv'
+        var path = './../data/SmallCommaTest.csv'
         let content = fs.readFileSync(path, 'utf8')
         let lst = this.parseCSV(content)
         //console.log(lst)
@@ -111,7 +113,7 @@ class KickStarter {
             //newSize += title.get(this.tableData[i]).size
         }
         //console.log("New Size:", newSize)
-        //console.log("Full Map", title)
+        console.log("Full Map", title)
         return title
     }
 

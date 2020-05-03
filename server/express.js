@@ -56,7 +56,7 @@ app.put('/update', (req, res) => {
     //let newValue = update.updateCSV(keys,values,mappedData,data)
 });
 
-app.put('/delete', (req, res) => {
+app.delete('/delete', (req, res) => {
     let keys = []
     let items = []
     for (const key in req.query){
@@ -64,7 +64,7 @@ app.put('/delete', (req, res) => {
         items.push(req.query[key])
     }
     let deletedValue = KS.deleteCSV(keys, items)
-    res.status(200).json({"item":[{"data": deletedValue}]})
+    res.status(200).json({"item":[{"data": "Deleted!"}]})
 });
 
 app.put('/backup', (req, res) => {
