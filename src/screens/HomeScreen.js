@@ -1,13 +1,27 @@
 import React from 'react';
-import {Button, Text, View, StyleSheet} from 'react-native';
+import {Button, Text, View, StyleSheet, Image} from 'react-native';
 
 const HomeScreen = ({navigation}) => {
     return <View>
-        <Text style={styles.title}>Welcome!</Text>
+        <Image style={{resizeMode: 'center', widht:50, height:250}}source={require('../../assets/ttteamLogo.jpg')}/>
+
+        {/* <Text style={styles.title}>TTTEAM KickStarter Projects Analytics</Text> */}
 
         <Button
             title="Search"
-            onPress={() => navigation.navigate('Results')}
+            onPress={() => navigation.navigate('Search')}
+        />
+        <Button
+            title="Update"
+            onPress={() => navigation.navigate('Update')}
+        />
+        <Button
+            title="Insert"
+            onPress={() => navigation.navigate('Insert')}
+        />
+        <Button
+            title="Delete"
+            onPress={() => navigation.navigate('Delete')}
         />
 
     </View>
