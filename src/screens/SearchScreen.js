@@ -5,7 +5,7 @@ import { Feather } from '@expo/vector-icons';
 import Input from '../components/Input'
 import SearchBar from '../components/SearchBar'
 import { globalArray } from '../components/Global'
-import { searchItem } from '../components/fetch'
+import { searchItem, deleteItem, importFile, storeFile } from '../components/fetch'
 
 
 const SearchScreen = () => {
@@ -26,6 +26,8 @@ const SearchScreen = () => {
     const [usdPledgedReal, setUsdPledgedReal] = useState('');
     const [usdGoalReal, setUsdGoalReal] = useState('');
     const [results, setResults] = useState([]);
+    const [text, setText] = useState('');
+
 
     async function search() {
         const fetchResults = await searchItem(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
@@ -159,13 +161,66 @@ const SearchScreen = () => {
             </View>
 
             <Button
-                title="Submit"
+                title="Search"
                 onPress={() => {
                     search()
                     console.log('Button clicked!');
                 }
             } />
-            
+            <Button
+                title="Insert"
+                onPress={() => {
+                    insertItem(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal);
+                    showAlert;
+                    alert('INSERT SUMITTED');
+                }
+            }
+            />
+            <Button
+                title="Update"
+                onPress={() => {
+                    updateItem(updateID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal);
+                }
+            }
+            />
+            <Text>Enter Delete Fields</Text>
+            <SearchBar
+                title="ID"
+                ID={ID}
+                onTermChange={setID}
+                // onTermSubmit={console.log("submit term")}
+            />
+            <Button
+                title="Delete"
+                onPress={() => {
+                    deleteItem(ID);
+                }
+            }
+        />
+            <TextInput
+                style={{height: 40}}
+                placeholder="File Name"
+                onChangeText={text => setText(text)}
+                defaultValue={text}
+            />
+            <Button
+                color="#1B2669"
+                title="Import"
+                onPress={() => {
+                    console.log(text)
+                    importFile(text);
+                    alert('Imported the File');
+                }}
+            />
+            <Button
+                color="#1B2669"
+                title="Store"
+                onPress={() => {
+                    storeFile(text);
+                    alert('Stored the File');
+                }}
+            />
+
             <View>
                 <ScrollView horizontal={true} scrollEnabled={true}>
                 {results.length > 0 && <table>
