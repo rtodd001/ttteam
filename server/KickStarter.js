@@ -20,9 +20,9 @@ class KickStarter {
     }
 
     getCSV() {
-        //var path = './../data/ks-projects-201801.csv'
+        var path = './../data/ks-projects-201801.csv'
         //var path = './../data/CommaTest.csv'
-        var path = './../data/SmallCommaTest.csv'
+        //var path = './../data/SmallCommaTest.csv'
         let content = fs.readFileSync(path, 'utf8')
         let lst = this.parseCSV(content)
         //console.log(lst)
@@ -242,8 +242,8 @@ class KickStarter {
                         
                         //we are now getting the index reference of the original
                         //and removing it so in the mappedData
-                        console.log("Item value:", items[i])
-                        console.log("Item:", this.mappedData.get(keys[i]).get(originalItem))
+                        //console.log("Item value:", items[i])
+                        //console.log("Item:", this.mappedData.get(keys[i]).get(originalItem))
                         if(this.mappedData.get(keys[i]).get(originalItem).size === 1){
                             this.mappedData.get(keys[i]).delete(originalItem)
                             if(this.mappedData.get(keys[i]).has(items[i])){
@@ -325,7 +325,7 @@ class KickStarter {
             }
         }
         let ret = this.searchCSV(keys, items)
-        console.log("Inserted",ret)
+        //console.log("Inserted",ret)
         
         return ret
     }
@@ -335,7 +335,7 @@ class KickStarter {
         if(!this.mappedData.get(keys[0]).has(items[0])){
             return []
         }
-        console.log(keys, items)
+        //console.log(keys, items)
 
         //get the last data item in the tableData
         //we will be using this to replace the target of deletion
@@ -348,7 +348,7 @@ class KickStarter {
         }
 
         let delIndex = this.mappedData.get(keys[0]).get(bottomRow[0]).values().next().value
-        console.log("Bottom Index:", delIndex)
+        //console.log("Bottom Index:", delIndex)
 
         //now we must delete this bottom row before replacing it to avoid having
         //duplicate IDs. We must preserve uniqueness for ID
@@ -391,11 +391,11 @@ class KickStarter {
             tempItems.push(bottomRow[i])
         }
 
-        console.log("Before Update:",tempKeys,tempItems)
-        console.log("Before Update: ",this.mappedData)
+        //console.log("Before Update:",tempKeys,tempItems)
+        //console.log("Before Update: ",this.mappedData)
         let retUpdate = this.updateCSV(tempKeys,tempItems)
         //console.log("Full Table: ",this.tableData)
-        console.log("Full Map: ",this.mappedData)
+        //console.log("Full Map: ",this.mappedData)
         return retUpdate
     }
 
@@ -423,7 +423,30 @@ class KickStarter {
         let content = fs.readFileSync(path, 'utf8')
         this.tableData = this.parseCSV(content)
         this.mappedData = this.createData()
-        console.log(this.mappedData)
+        //console.log(this.mappedData)
     }
+
+    analysisCSV(keys,items){
+        let tempKeys = keys.slice()
+        let tempItems = items.slice()
+        //console.log(tempKeys, tempItems)
+        let allRows = this.searchCSV(tempKeys, tempItems)
+        //console.log("Unsorted", allRows)
+        //the usd_pledge_real is on column 13
+
+        allRows.sort(function(a,b){
+            return b[13] - a[13]
+            /* if (a[13] === b[13]) {
+                return 0;
+            }
+            else {
+                return (a[13] < b[13]) ? -1 : 1;
+            } */
+        })
+        //console.log("Sorted", allRows)
+        return allRows.slice(0,10)
+    }
+
+
 }
 exports.KickStarter = KickStarter

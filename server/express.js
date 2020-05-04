@@ -6,6 +6,7 @@ const port = 5000
 
 console.log("Reading")
 let KS = new KickStarter()
+console.log("Loaded")
 //console.log("Class", KS.mapData)
 
 const isPreflight = (req) => {
@@ -96,6 +97,19 @@ app.get('/import', (req,res) => {
     }
     KS.importCSV(keys, items)
     res.status(200).json({"item":[{"data": "Imported"}]})
+});
+
+app.get('/analysis/top10', (req, res) => {
+    let keys = []
+    let items = []
+    for (const key in req.query){
+        keys.push(key)
+        items.push(req.query[key])
+    }
+    //console.log(req.query)
+    //console.log(keys, items)
+    let top = KS.analysisCSV(keys,items)
+    res.status(200).json({"item":[{"data": top}]})
 });
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
