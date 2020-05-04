@@ -448,6 +448,28 @@ class KickStarter {
         return allRows.slice(0,10)
     }
 
+    stateCountCSV(keys, items){
+        let tempKeys = keys.slice()
+        let tempItems = items.slice()
+        let allRows = this.searchCSV(tempKeys, tempItems)
+        let success = 0
+        let fail = 0
+        //console.log(allRows[0])
+        for (let i = 0; i < allRows.length; i++){
+            if (allRows[i][9] === 'successful'){
+                success += 1
+            }
+            else if (allRows[i][9] === 'failed'){
+                fail += 1
+            }
+        }
+        let ret = []
+        console.log("success", success)
+        ret.push(success)
+        console.log("fail", fail)
+        ret.push(fail)
+        return ret
+    }
 
 }
 exports.KickStarter = KickStarter
