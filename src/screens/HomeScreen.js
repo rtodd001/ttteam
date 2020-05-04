@@ -3,7 +3,7 @@ import {Button, Text, View, StyleSheet, Image} from 'react-native';
 
 const HomeScreen = ({navigation}) => {
     return <View>
-        <Image style={{resizeMode: 'center', widht:50, height:250}}source={require('../../assets/ttteamLogo.jpg')}/>
+        <Image style={{resizeMode: 'center', height:250}}source={require('../../assets/ttteamLogo.jpg')}/>
 
         {/* <Text style={styles.title}>TTTEAM KickStarter Projects Analytics</Text> */}
 
