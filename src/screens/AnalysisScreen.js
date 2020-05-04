@@ -1,19 +1,10 @@
 import React, { useState, Fragment  } from 'react'
 import { Dimensions, Text, Alert, View, ScrollView, StyleSheet, Button, TextInput, Picker } from 'react-native'
-import { Table, TableWrapper, Row } from 'react-native-table-component';
 import { Feather } from '@expo/vector-icons';
-import Input from '../components/Input'
 import SearchBar from '../components/SearchBar'
-import { globalArray } from '../components/Global'
-import { searchItem, a_top10, a_state_cnt } from '../components/fetch'
+import { a_top10, a_state_cnt } from '../components/fetch'
 import { PieChart, FullOption } from 'react-minimal-pie-chart'
-import {
-    LineChart,
-    BarChart,
-    ProgressChart,
-    ContributionGraph,
-    StackedBarChart
-  } from 'react-native-chart-kit'
+import { BarChart } from 'react-native-chart-kit'
 
 const AnalysisScreen = ({navigation}) => {
 
@@ -36,16 +27,6 @@ const AnalysisScreen = ({navigation}) => {
     const [success, setSuccess] = useState('');
     const [fail, setFail] = useState('');
     const [array, setArray] = useState('');
-
-
-    async function search() {
-        const fetchResults = await searchItem(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
-        console.log(fetchResults);
-        let array = fetchResults;
-        console.log("im here in analysis")
-        console.log(array)
-        setResults(fetchResults);
-    }
 
     async function top10() {
         const fetchResults = await a_top10(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
@@ -130,26 +111,15 @@ const AnalysisScreen = ({navigation}) => {
                 />              
                 }    
             </View>
-            <View>
-                {
-                    results.length>0 &&  <Text style={{color:'#5680BF',  textAlign: 'center'}}>SUCCESS %</Text>           
-
-                }
-            </View>
-            <View>
-                {
-                    results.length>0 &&  <Text style={{color:'#eff3ff',  textAlign: 'center'}}>FAIL %</Text>           
-
-                }
-            </View>
-
+            <View>{results.length>0 &&  <Text style={{color:'#5680BF',  textAlign: 'center'}}>SUCCESS %</Text>}</View>
+            <View>{results.length>0 &&  <Text style={{color:'#eff3ff',  textAlign: 'center'}}>FAIL %</Text>}</View>
             {<View>
                {array.length > 0 && <BarChart
                     // style={graphStyle}
                     data={{
                         labels: array.map(col => col[0]),
                         datasets: [{
-                            data: array.map(col => col[13])
+                            data: array.map(col => (col[13]/1000))
                         }]
                     }}
                     width={Dimensions.get('window').width} // from react-native
@@ -157,16 +127,15 @@ const AnalysisScreen = ({navigation}) => {
                     style={{ paddingLeft: 20, backgroundColor:'#eff3ff' }}
 
                     yAxisLabel={'$'}
+                    yAxisSuffix={'k'}
                     chartConfig={{
                         backgroundColor: '#1cc910',
                         backgroundGradientFrom: '#eff3ff',
                         backgroundGradientTo: '#efefef',
-                        decimalPlaces: 0,
                         color: (opacity = 2) => `rgba(0, 0, 0, ${opacity})`,
                       }}
                 />}
             </View>}
-
         </ScrollView>
     );
 }
