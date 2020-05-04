@@ -5,7 +5,7 @@ import { Feather } from '@expo/vector-icons';
 import Input from '../components/Input'
 import SearchBar from '../components/SearchBar'
 import { globalArray } from '../components/Global'
-import { searchItem, deleteItem, importFile, storeFile } from '../components/fetch'
+import { searchItem, insertItem, deleteItem, updateItem, importFile, storeFile } from '../components/fetch'
 
 
 const SearchScreen = () => {
