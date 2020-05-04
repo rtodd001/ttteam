@@ -122,7 +122,7 @@ async function storeFile(fileName) {
 }
 
 
-async function anaylysis(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal) {
+async function anaylysis(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal, request) {
     // var url = new URL('http://192.168.1.8:5000/search')
         var url = new URL('http://localhost:5000/analysis')
         var params = {
@@ -140,7 +140,8 @@ async function anaylysis(ID, name, category, mainCategory, currency, deadline, g
             'country' : country,
             'usd pledged' : usdPledged,
             'usd_pledged_real' : usdPledgedReal,
-            'usd_goal_real' : usdGoalReal
+            'usd_goal_real' : usdGoalReal,
+            'request' : request
         } 
         url.search = new URLSearchParams(params).toString();            
         let response = await fetch(url);

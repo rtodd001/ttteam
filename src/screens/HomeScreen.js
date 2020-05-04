@@ -12,18 +12,9 @@ const HomeScreen = ({navigation}) => {
             onPress={() => navigation.navigate('Search')}
         />
         <Button
-            title="Update"
-            onPress={() => navigation.navigate('Update')}
+            title="Analysis"
+            onPress={() => navigation.navigate('Analysis')}
         />
-        <Button
-            title="Insert"
-            onPress={() => navigation.navigate('Insert')}
-        />
-        <Button
-            title="Delete"
-            onPress={() => navigation.navigate('Delete')}
-        />
-
     </View>
 };
 

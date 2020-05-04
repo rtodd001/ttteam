@@ -5,7 +5,7 @@ import { Feather } from '@expo/vector-icons';
 import Input from '../components/Input'
 import SearchBar from '../components/SearchBar'
 import { globalArray } from '../components/Global'
-import { searchItem, insertItem, deleteItem, updateItem, importFile, storeFile } from '../components/fetch'
+import { searchItem, insertItem, deleteItem, updateItem, importFile, storeFile, analysis } from '../components/fetch'
 
 
 const SearchScreen = () => {
@@ -55,6 +55,11 @@ const SearchScreen = () => {
         const fetchResults = await storeFile(text)
     }
 
+    async function analysis_() {
+        const fetchResults = await analysis(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
+        console.log(fetchResults);
+        setResults(fetchResults);
+    }
 
     return (
         <ScrollView>
@@ -202,6 +207,12 @@ const SearchScreen = () => {
                 }
             }
             />
+           <Button
+                title="Analysis"
+                onPress={() => {
+                    analysis_()
+                }
+            }/>
             <Text>Enter Delete Fields</Text>
             <SearchBar
                 title="ID"
