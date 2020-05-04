@@ -106,13 +106,13 @@ const AnalysisScreen = ({navigation}) => {
                     ]}
                     data={[
                         { title: 'success', value: success, color: '#5680BF' },
-                        { title: 'fail', value: fail, color: '#eff3ff' },
+                        { title: 'fail', value: fail, color: '#B8C0C9' },
                     ]}
                 />              
                 }    
             </View>
             <View>{results.length>0 &&  <Text style={{color:'#5680BF',  textAlign: 'center'}}>SUCCESS %</Text>}</View>
-            <View>{results.length>0 &&  <Text style={{color:'#eff3ff',  textAlign: 'center'}}>FAIL %</Text>}</View>
+            <View>{results.length>0 &&  <Text style={{color:'#B8C0C9',  textAlign: 'center'}}>FAIL %</Text>}</View>
             {<View>
                {array.length > 0 && <BarChart
                     // style={graphStyle}
