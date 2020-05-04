@@ -56,7 +56,6 @@ const SearchScreen = () => {
         const fetchResults = await storeFile(text)
     }
 
-<<<<<<< HEAD
     async function analysis_() {
         const fetchResults = await analysis(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
         console.log(fetchResults);
@@ -107,9 +106,6 @@ const SearchScreen = () => {
         }
     }
     // console.log('67', results);
-=======
-   
->>>>>>> siena_spr4
 
     return (
         <ScrollView>
@@ -244,19 +240,8 @@ const SearchScreen = () => {
                     }
                 />
             </View>
-
-<<<<<<< HEAD
-            {/* <Button
-=======
+            
             <Button
-                title="Search"
-                onPress={() => {
-                    search()
-                    console.log('Button clicked!');
-                }
-            } />
-            <Button
->>>>>>> siena_spr4
                 title="Insert"
                 onPress={() => {
                     insert()
@@ -326,7 +311,6 @@ const SearchScreen = () => {
                     ]}
                 />}
                 <ScrollView horizontal={true} scrollEnabled={true}>
-<<<<<<< HEAD
 
                     {results.length > 0 && <table>
                         <tbody>
@@ -482,49 +466,9 @@ const SearchScreen = () => {
                                         }
                                     />
                                 </th>
-=======
-                {results.length > 0 && <table>
-                    <tr>
-                        <th>ID:</th>
-                        <th>NAME:</th>
-                        <th>CATEGORY:</th>
-                        <th>MAIN_CATEGORY:</th>
-                        <th>CURRENCY:</th>
-                        <th>DEADLINE:</th>
-                        <th>GOAL:</th>
-                        <th>LAUNCHED:</th>
-                        <th>PLEDGED:</th>
-                        <th>STATE:</th>
-                        <th>BACKERS:</th>
-                        <th>COUNTRY:</th>
-                        <th>USD PLEDGE:</th>
-                        <th>USD PLEDGE REAL:</th>
-                        <th>USD GOAL REAL:</th>
-                    </tr>
-                    {
-                        results.map((item, index) => (
-                            <tr key={index} >
-                                <td>
-                                    <TextInput value={item[0]} /*onChange={}*//>
-                                </td>
-                                <td>{item[1]}</td>
-                                <td>{item[2]}</td>
-                                <td>{item[3]}</td>
-                                <td>{item[4]}</td>
-                                <td>{item[5]}</td>
-                                <td>{item[6]}</td>
-                                <td>{item[7]}</td>
-                                <td>{item[8]}</td>
-                                <td>{item[9]}</td>
-                                <td>{item[10]}</td>
-                                <td>{item[11]}</td>
-                                <td>{item[12]}</td>
-                                <td>{item[13]}</td>
-                                <td>{item[14]}</td>
->>>>>>> siena_spr4
                             </tr>
-                        ))
-                    }
+                        }
+                    </tbody>
                 </table>}
 
                 </ScrollView>
@@ -548,13 +492,11 @@ const styles = StyleSheet.create({
     tableRow: {
         fontSize: 11
     },
-
-
     container2: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
-  header: { height: 50, backgroundColor: '#537791' },
-  text: { textAlign: 'center', fontWeight: '100' },
-  dataWrapper: { marginTop: -1 },
-  row: { height: 40, backgroundColor: '#E7E6E1' }
+    header: { height: 50, backgroundColor: '#537791' },
+    text: { textAlign: 'center', fontWeight: '100' },
+    dataWrapper: { marginTop: -1 },
+    row: { height: 40, backgroundColor: '#E7E6E1' }
 });
 
 export default SearchScreen;
