@@ -6,7 +6,7 @@ const ResultScreen = ({navigation}) => {
     console.log("reuslt")
     console.log(globalArray);
     return <View>
-        <Text>{globalArray[0]}d</Text>
+        <Text>{item[0]}</Text>
     </View>
 };
 

@@ -7,7 +7,7 @@ import SearchBar from '../components/SearchBar'
 import { globalArray } from '../components/Global'
 import { searchItem, analysis } from '../components/fetch'
 
-const AnalysisScreen = () => {
+const AnalysisScreen = ({navigation}) => {
 
     const [ID, setID] = useState('');
     const [name, setName] = useState('');
@@ -27,10 +27,14 @@ const AnalysisScreen = () => {
     const [results, setResults] = useState([]);
     const [text, setText] = useState('');
 
+    let array = [];
 
     async function search() {
         const fetchResults = await searchItem(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
         console.log(fetchResults);
+        let array = fetchResults;
+        console.log("im here in analysis")
+        console.log(array)
         setResults(fetchResults);
     }
 
@@ -173,7 +177,8 @@ const AnalysisScreen = () => {
            <Button
                 title="Analysis"
                 onPress={() => {
-                    analysis_()
+                    // analysis_()
+                    search()
                 }
             }/>
   
