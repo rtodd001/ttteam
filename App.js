@@ -12,6 +12,7 @@ const navigator = createStackNavigator(
   //this gives the stack navigator the possible list of screen to show to the user 'name': 'name of file'
   {
     Home: HomeScreen,
+    Search: SearchScreen,
     Analysis: AnalysisScreen
   },
   

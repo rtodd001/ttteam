@@ -5,7 +5,7 @@ import { Feather } from '@expo/vector-icons';
 import Input from '../components/Input'
 import SearchBar from '../components/SearchBar'
 import { globalArray } from '../components/Global'
-import { searchItem, insertItem, deleteItem, updateItem, importFile, storeFile, analysis } from '../components/fetch'
+import { searchItem, analysis } from '../components/fetch'
 
 const AnalysisScreen = () => {
 
@@ -44,10 +44,10 @@ const AnalysisScreen = () => {
         <ScrollView>
             <View style={styles.container}>
                 <Feather name="search" style={styles.title} />
-                <Text style={styles.title}>Search Fields</Text>
+                <Text style={styles.title}>Analysis</Text>
             </View>
             <View class='search-bar-container'>
-                <View style={styles.container}>
+                {/* <View style={styles.container}>
                     <SearchBar
                         title="ID"
                         ID={ID}
@@ -60,7 +60,7 @@ const AnalysisScreen = () => {
                         onTermChange={setName}
                     // onTermSubmit={console.log("submit term")}
                     />
-                </View>
+                </View> */}
                 <View style={styles.container}>
                     <SearchBar
                         title="Category"
@@ -75,7 +75,7 @@ const AnalysisScreen = () => {
                     // onTermSubmit={console.log("submit term")}
                     />
                 </View>
-
+{/* 
                 <View style={styles.container}>
                     <SearchBar
                         title="Currency"
@@ -89,8 +89,8 @@ const AnalysisScreen = () => {
                         onTermChange={setDeadline}
                     // onTermSubmit={console.log("submit term")}
                     />
-                </View>
-
+                </View> */}
+{/* 
                 <View style={styles.container}>
                     <SearchBar
                         title="Goal"
@@ -104,7 +104,7 @@ const AnalysisScreen = () => {
                         onTermChange={setLaunched}
                     // onTermSubmit={console.log("submit term")}
                     />
-                </View>
+                </View> */}
 
                 <View style={styles.container}>
                     <SearchBar
@@ -129,14 +129,20 @@ const AnalysisScreen = () => {
                     // onTermSubmit={console.log("submit term")}
                     />
                     <SearchBar
+                        title="UsdPledgedReal"
+                        usdPledgedReal={usdPledgedReal}
+                        onTermChange={setUsdPledgedReal}
+                    // onTermSubmit={console.log("submit term")}
+                    />
+                    {/* <SearchBar
                         title="Backers"
                         backers={backers}
                         onTermChange={setBackers}
                     // onTermSubmit={console.log("submit term")}
-                    />
+                    /> */}
                 </View>
 
-                <View style={styles.container}>
+                {/* <View style={styles.container}>
                     <SearchBar
                         title="UsdPledged"
                         usdPledged={usdPledged}
@@ -149,7 +155,7 @@ const AnalysisScreen = () => {
                         onTermChange={setUsdPledgedReal}
                     // onTermSubmit={console.log("submit term")}
                     />
-                </View>
+                </View> */}
                 {/*
                 <View style={styles.container}>
                     <Picker
