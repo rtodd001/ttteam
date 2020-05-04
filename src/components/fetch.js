@@ -203,9 +203,7 @@ async function a_state_cnt(ID, name, category, mainCategory, currency, deadline,
             globalArray.push(item);
         })
     })
-    console.log("GlobalArray after pushing")
-    console.log(globalArray);
-    console.log('40', array);
+
     return array[0]; 
 }
 
