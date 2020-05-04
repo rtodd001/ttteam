@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, Fragment  } from 'react'
 import { Text, Alert, View, ScrollView, StyleSheet, Button, TextInput, Picker } from 'react-native'
 import { Table, TableWrapper, Row } from 'react-native-table-component';
 import { Feather } from '@expo/vector-icons';
 import Input from '../components/Input'
 import SearchBar from '../components/SearchBar'
 import { globalArray } from '../components/Global'
-import { searchItem, analysis } from '../components/fetch'
+import { searchItem, a_top10, a_state_cnt } from '../components/fetch'
+import { PieChart, FullOption } from 'react-minimal-pie-chart'
 
 const AnalysisScreen = ({navigation}) => {
 
@@ -25,8 +26,8 @@ const AnalysisScreen = ({navigation}) => {
     const [usdPledgedReal, setUsdPledgedReal] = useState('');
     const [usdGoalReal, setUsdGoalReal] = useState('');
     const [results, setResults] = useState([]);
-    const [text, setText] = useState('');
-
+    const [success, setSuccess] = useState('');
+    const [fail, setFail] = useState('');
     let array = [];
 
     async function search() {
@@ -38,10 +39,21 @@ const AnalysisScreen = ({navigation}) => {
         setResults(fetchResults);
     }
 
-    async function analysis_() {
-        const fetchResults = await analysis(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
+    async function top10() {
+        const fetchResults = await a_top10(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
         console.log(fetchResults);
         setResults(fetchResults);
+    }
+
+    async function stateCount() {
+        const fetchResults = await a_state_cnt(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
+        console.log(fetchResults);
+        setSuccess(fetchResults[0])
+        setFail(fetchResults[1])
+        array = fetchResults
+        setResults(fetchResults);
+        console.log("inside stateCount : ", success);
+
     }
 
     return (
@@ -146,6 +158,8 @@ const AnalysisScreen = ({navigation}) => {
                     /> */}
                 </View>
 
+
+
                 {/* <View style={styles.container}>
                     <SearchBar
                         title="UsdPledged"
@@ -177,58 +191,42 @@ const AnalysisScreen = ({navigation}) => {
            <Button
                 title="Analysis"
                 onPress={() => {
-                    // analysis_()
-                    search()
+                    console.log('typeof analysis', typeof(analysis_));
+                  //  top10()
+                    stateCount()
+                    //search()
                 }
             }/>
-  
+
             <View>
-                <ScrollView horizontal={true} scrollEnabled={true}>
-                {results.length > 0 && <table>
-                    <tr>
-                        <th>ID:</th>
-                        <th>NAME:</th>
-                        <th>CATEGORY:</th>
-                        <th>MAIN_CATEGORY:</th>
-                        <th>CURRENCY:</th>
-                        <th>DEADLINE:</th>
-                        <th>GOAL:</th>
-                        <th>LAUNCHED:</th>
-                        <th>PLEDGED:</th>
-                        <th>STATE:</th>
-                        <th>BACKERS:</th>
-                        <th>COUNTRY:</th>
-                        <th>USD PLEDGE:</th>
-                        <th>USD PLEDGE REAL:</th>
-                        <th>USD GOAL REAL:</th>
-                    </tr>
-                    {
-                        results.map((item, index) => (
-                            <tr key={index} >
-                                <td>
-                                    <TextInput value={item[0]} /*onChange={}*//>
-                                </td>
-                                <td>{item[1]}</td>
-                                <td>{item[2]}</td>
-                                <td>{item[3]}</td>
-                                <td>{item[4]}</td>
-                                <td>{item[5]}</td>
-                                <td>{item[6]}</td>
-                                <td>{item[7]}</td>
-                                <td>{item[8]}</td>
-                                <td>{item[9]}</td>
-                                <td>{item[10]}</td>
-                                <td>{item[11]}</td>
-                                <td>{item[12]}</td>
-                                <td>{item[13]}</td>
-                                <td>{item[14]}</td>
-                            </tr>
-                        ))
-                    }
-                </table>}
+                <br />
+                {(results.length > 0) && <PieChart
+                    animate
+                    animationDuration={1000}
+                    animationEasing="ease-out"
+                    label={({ dataEntry }) => `${Math.round(dataEntry.percentage)} %`}
+                    center={[
+                    50,
+                    50
+                    ]}
+                    data={[
+                        { title: 'success', value: success, color: '#C13C37' },
+                        { title: 'fail', value: fail, color: '#E38627' },
+                    ]}
+                />              
+                }    
+            </View>
+            <View>
+                {
+                    results.length>0 &&  <Text style={{color:'#C13C37',  textAlign: 'center'}}>SUCCESS %</Text>           
 
-                </ScrollView>
+                }
+            </View>
+            <View>
+                {
+                    results.length>0 &&  <Text style={{color:'#E38627',  textAlign: 'center'}}>FaIL %</Text>           
 
+                }
             </View>
         </ScrollView>
     );
