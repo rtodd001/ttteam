@@ -225,14 +225,17 @@ const SearchScreen = () => {
                 </View>
                 */}
             </View>
+            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                <Button
+                    title="Search"
+                    onPress={() => {
+                        search()
+                        console.log('Button clicked!');
+                    }
+                    }
+                />
+            </View>
 
-            <Button
-                title="Search"
-                onPress={() => {
-                    search()
-                    console.log('Button clicked!');
-                }
-                } />
             {/* <Button
                 title="Insert"
                 onPress={() => {
@@ -287,12 +290,27 @@ const SearchScreen = () => {
             /> */}
 
             <View>
+                {results.length > 0 && <PieChart
+                    animate
+                    animationDuration={1000}
+                    animationEasing="ease-out"
+                    center={[
+                        50,
+                        50
+                    ]}
+                    data={[
+                        { title: 'One', value: 10, color: '#E38627' },
+                        { title: 'Two', value: 15, color: '#C13C37' },
+                        { title: 'Three', value: 20, color: '#6A2135' },
+                    ]}
+                />}
                 <ScrollView horizontal={true} scrollEnabled={true}>
+
                     {results.length > 0 && <table>
                         <tbody>
                             <tr>
                                 <th>
-                                <Button
+                                    <Button
                                         title='ID:'
                                         onPress={() => {
                                             console.log("pushed!")
@@ -476,20 +494,6 @@ const SearchScreen = () => {
                 </ScrollView>
 
             </View>
-            {results.length > 0 && <PieChart
-                animate
-                animationDuration={1000}
-                animationEasing="ease-out"
-                center={[
-                50,
-                50
-                ]}
-                data={[
-                    { title: 'One', value: 10, color: '#E38627' },
-                    { title: 'Two', value: 15, color: '#C13C37' },
-                    { title: 'Three', value: 20, color: '#6A2135' },
-                ]}
-            />}
         </ScrollView>
 
     );
