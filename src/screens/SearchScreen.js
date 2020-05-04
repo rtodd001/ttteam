@@ -6,10 +6,9 @@ import { Feather } from '@expo/vector-icons';
 import Input from '../components/Input'
 import SearchBar from '../components/SearchBar'
 import { globalArray } from '../components/Global'
-import { searchItem, insertItem, deleteItem, updateItem, importFile, storeFile, analysis } from '../components/fetch'
+import { searchItem, insertItem, deleteItem, updateItem, importFile, storeFile, a_top10 } from '../components/fetch'
 
 const SearchScreen = () => {
-    const [sortOrder, setSortOrder] = useState('');
 
     const [ID, setID] = useState('');
     const [name, setName] = useState('');
@@ -28,6 +27,7 @@ const SearchScreen = () => {
     const [usdGoalReal, setUsdGoalReal] = useState('');
     const [results, setResults] = useState([]);
     const [text, setText] = useState('');
+
 
 
     async function search() {
@@ -56,6 +56,7 @@ const SearchScreen = () => {
         const fetchResults = await storeFile(text)
     }
 
+<<<<<<< HEAD
     async function analysis_() {
         const fetchResults = await analysis(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
         console.log(fetchResults);
@@ -106,6 +107,9 @@ const SearchScreen = () => {
         }
     }
     // console.log('67', results);
+=======
+   
+>>>>>>> siena_spr4
 
     return (
         <ScrollView>
@@ -241,7 +245,18 @@ const SearchScreen = () => {
                 />
             </View>
 
+<<<<<<< HEAD
             {/* <Button
+=======
+            <Button
+                title="Search"
+                onPress={() => {
+                    search()
+                    console.log('Button clicked!');
+                }
+            } />
+            <Button
+>>>>>>> siena_spr4
                 title="Insert"
                 onPress={() => {
                     insert()
@@ -256,12 +271,7 @@ const SearchScreen = () => {
                 }
             }
             />
-           <Button
-                title="Analysis"
-                onPress={() => {
-                    analysis_()
-                }
-            }/>
+    
             <Text>Enter Delete Fields</Text>
             <SearchBar
                 title="ID"
@@ -275,8 +285,8 @@ const SearchScreen = () => {
                     delete_()
                 }
             }
-        /> */}
-            {/* <TextInput
+        />
+            <TextInput
                 style={{height: 40}}
                 placeholder="File Name"
                 onChangeText={text => setText(text)}
@@ -298,7 +308,7 @@ const SearchScreen = () => {
                     store_()
                     alert('Stored the File');
                 }}
-            /> */}
+            />
 
             <View>
                 {results.length > 0 && <PieChart
@@ -316,6 +326,7 @@ const SearchScreen = () => {
                     ]}
                 />}
                 <ScrollView horizontal={true} scrollEnabled={true}>
+<<<<<<< HEAD
 
                     {results.length > 0 && <table>
                         <tbody>
@@ -471,36 +482,50 @@ const SearchScreen = () => {
                                         }
                                     />
                                 </th>
+=======
+                {results.length > 0 && <table>
+                    <tr>
+                        <th>ID:</th>
+                        <th>NAME:</th>
+                        <th>CATEGORY:</th>
+                        <th>MAIN_CATEGORY:</th>
+                        <th>CURRENCY:</th>
+                        <th>DEADLINE:</th>
+                        <th>GOAL:</th>
+                        <th>LAUNCHED:</th>
+                        <th>PLEDGED:</th>
+                        <th>STATE:</th>
+                        <th>BACKERS:</th>
+                        <th>COUNTRY:</th>
+                        <th>USD PLEDGE:</th>
+                        <th>USD PLEDGE REAL:</th>
+                        <th>USD GOAL REAL:</th>
+                    </tr>
+                    {
+                        results.map((item, index) => (
+                            <tr key={index} >
+                                <td>
+                                    <TextInput value={item[0]} /*onChange={}*//>
+                                </td>
+                                <td>{item[1]}</td>
+                                <td>{item[2]}</td>
+                                <td>{item[3]}</td>
+                                <td>{item[4]}</td>
+                                <td>{item[5]}</td>
+                                <td>{item[6]}</td>
+                                <td>{item[7]}</td>
+                                <td>{item[8]}</td>
+                                <td>{item[9]}</td>
+                                <td>{item[10]}</td>
+                                <td>{item[11]}</td>
+                                <td>{item[12]}</td>
+                                <td>{item[13]}</td>
+                                <td>{item[14]}</td>
+>>>>>>> siena_spr4
                             </tr>
-                            {console.log('283', results)}
-                            {
-                                results.map((item, index) => {
-                                    console.log(item[3]);
-                                    return (
-                                        <tr key={index} >
-                                            <td>
-                                                <TextInput value={item[0]} /*onChange={}*/ />
-                                            </td>
-                                            <td><TextInput value={item[1]} /*onChange={}*/ /></td>
-                                            <td><TextInput value={item[2]} /*onChange={}*/ /></td>
-                                            <td><TextInput value={item[3]} /*onChange={}*/ /></td>
-                                            <td><TextInput value={item[4]} /*onChange={}*/ /></td>
-                                            <td><TextInput value={item[5]} /*onChange={}*/ /></td>
-                                            <td><TextInput value={item[6]} /*onChange={}*/ /></td>
-                                            <td><TextInput value={item[7]} /*onChange={}*/ /></td>
-                                            <td><TextInput value={item[8]} /*onChange={}*/ /></td>
-                                            <td><TextInput value={item[9]} /*onChange={}*/ /></td>
-                                            <td><TextInput value={item[10]} /*onChange={}*/ /></td>
-                                            <td><TextInput value={item[11]} /*onChange={}*/ /></td>
-                                            <td><TextInput value={item[12]} /*onChange={}*/ /></td>
-                                            <td><TextInput value={item[13]} /*onChange={}*/ /></td>
-                                            <td><TextInput value={item[14]} /*onChange={}*/ /></td>
-                                        </tr>
-                                    )
-                                })
-                            }
-                        </tbody>
-                    </table>}
+                        ))
+                    }
+                </table>}
 
                 </ScrollView>
 
@@ -523,29 +548,13 @@ const styles = StyleSheet.create({
     tableRow: {
         fontSize: 11
     },
-    container2: {
-        flex: 1,
-        padding: 16,
-        paddingTop: 30,
-        backgroundColor: '#fff'
-    },
-    header: {
-        height: 50,
-        backgroundColor: '#537791'
-    },
-    text: {
-        textAlign: 'center',
-        fontWeight: '100'
-    },
 
-    dataWrapper: {
-        marginTop: -1
-    },
 
-    row: {
-        height: 40,
-        backgroundColor: '#E7E6E1'
-    }
+    container2: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
+  header: { height: 50, backgroundColor: '#537791' },
+  text: { textAlign: 'center', fontWeight: '100' },
+  dataWrapper: { marginTop: -1 },
+  row: { height: 40, backgroundColor: '#E7E6E1' }
 });
 
 export default SearchScreen;

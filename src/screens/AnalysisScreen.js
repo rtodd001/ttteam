@@ -1,11 +1,19 @@
-import React, { useState, useEffect } from 'react'
-import { Text, Alert, View, ScrollView, StyleSheet, Button, TextInput, Picker } from 'react-native'
+import React, { useState, Fragment  } from 'react'
+import { Dimensions, Text, Alert, View, ScrollView, StyleSheet, Button, TextInput, Picker } from 'react-native'
 import { Table, TableWrapper, Row } from 'react-native-table-component';
 import { Feather } from '@expo/vector-icons';
 import Input from '../components/Input'
 import SearchBar from '../components/SearchBar'
 import { globalArray } from '../components/Global'
-import { searchItem, analysis } from '../components/fetch'
+import { searchItem, a_top10, a_state_cnt } from '../components/fetch'
+import { PieChart, FullOption } from 'react-minimal-pie-chart'
+import {
+    LineChart,
+    BarChart,
+    ProgressChart,
+    ContributionGraph,
+    StackedBarChart
+  } from 'react-native-chart-kit'
 
 const AnalysisScreen = ({navigation}) => {
 
@@ -25,9 +33,10 @@ const AnalysisScreen = ({navigation}) => {
     const [usdPledgedReal, setUsdPledgedReal] = useState('');
     const [usdGoalReal, setUsdGoalReal] = useState('');
     const [results, setResults] = useState([]);
-    const [text, setText] = useState('');
+    const [success, setSuccess] = useState('');
+    const [fail, setFail] = useState('');
+    const [array, setArray] = useState('');
 
-    let array = [];
 
     async function search() {
         const fetchResults = await searchItem(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
@@ -38,10 +47,20 @@ const AnalysisScreen = ({navigation}) => {
         setResults(fetchResults);
     }
 
-    async function analysis_() {
-        const fetchResults = await analysis(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
+    async function top10() {
+        const fetchResults = await a_top10(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
+        setArray(fetchResults)
         console.log(fetchResults);
+    }
+
+    async function stateCount() {
+        const fetchResults = await a_state_cnt(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
+        console.log(fetchResults);
+        setSuccess(fetchResults[0])
+        setFail(fetchResults[1])
         setResults(fetchResults);
+        console.log("inside stateCount : ", success);
+
     }
 
     return (
@@ -51,20 +70,6 @@ const AnalysisScreen = ({navigation}) => {
                 <Text style={styles.title}>Analysis</Text>
             </View>
             <View class='search-bar-container'>
-                {/* <View style={styles.container}>
-                    <SearchBar
-                        title="ID"
-                        ID={ID}
-                        onTermChange={setID}
-                    // onTermSubmit={console.log("submit term")}
-                    />
-                    <SearchBar
-                        title="Name"
-                        name={name}
-                        onTermChange={setName}
-                    // onTermSubmit={console.log("submit term")}
-                    />
-                </View> */}
                 <View style={styles.container}>
                     <SearchBar
                         title="Category"
@@ -79,51 +84,6 @@ const AnalysisScreen = ({navigation}) => {
                     // onTermSubmit={console.log("submit term")}
                     />
                 </View>
-{/* 
-                <View style={styles.container}>
-                    <SearchBar
-                        title="Currency"
-                        currency={currency}
-                        onTermChange={setCurrency}
-                    // onTermSubmit={console.log("submit term")}
-                    />
-                    <SearchBar
-                        title="Deadline"
-                        deadline={deadline}
-                        onTermChange={setDeadline}
-                    // onTermSubmit={console.log("submit term")}
-                    />
-                </View> */}
-{/* 
-                <View style={styles.container}>
-                    <SearchBar
-                        title="Goal"
-                        goal={goal}
-                        onTermChange={setGoal}
-                    // onTermSubmit={console.log("submit term")}
-                    />
-                    <SearchBar
-                        title="Launched"
-                        launched={launched}
-                        onTermChange={setLaunched}
-                    // onTermSubmit={console.log("submit term")}
-                    />
-                </View> */}
-
-                <View style={styles.container}>
-                    <SearchBar
-                        title="Pledged"
-                        pledged={pledged}
-                        onTermChange={setPledged}
-                    // onTermSubmit={console.log("submit term")}
-                    />
-                    <SearchBar
-                        title="State"
-                        state={state}
-                        onTermChange={setState}
-                    // onTermSubmit={console.log("submit term")}
-                    />
-                </View>
 
                 <View style={styles.container}>
                     <SearchBar
@@ -133,103 +93,80 @@ const AnalysisScreen = ({navigation}) => {
                     // onTermSubmit={console.log("submit term")}
                     />
                     <SearchBar
-                        title="UsdPledgedReal"
-                        usdPledgedReal={usdPledgedReal}
-                        onTermChange={setUsdPledgedReal}
+                        title="Currency"
+                        cyrrency={currency}
+                        onTermChange={setCurrency}
                     // onTermSubmit={console.log("submit term")}
                     />
-                    {/* <SearchBar
-                        title="Backers"
-                        backers={backers}
-                        onTermChange={setBackers}
-                    // onTermSubmit={console.log("submit term")}
-                    /> */}
                 </View>
-
-                {/* <View style={styles.container}>
-                    <SearchBar
-                        title="UsdPledged"
-                        usdPledged={usdPledged}
-                        onTermChange={setUsdPledged}
-                    // onTermSubmit={console.log("submit term")}
-                    />
-                    <SearchBar
-                        title="UsdPledgedReal"
-                        usdPledgedReal={usdPledgedReal}
-                        onTermChange={setUsdPledgedReal}
-                    // onTermSubmit={console.log("submit term")}
-                    />
-                </View> */}
-                {/*
-                <View style={styles.container}>
-                    <Picker
-                        title="UsdGoalReal"
-                        selectedValue={usdGoalReal}
-                        onValueChange={setUsdGoalReal}
-                    >
-                    <Picker.Item label="test1" value='test1'/>
-                    <Picker.Item label='test2' value='test2'/>
-                    </Picker>
-                </View>
-                */}
             </View>
 
            <Button
                 title="Analysis"
                 onPress={() => {
-                    // analysis_()
-                    search()
+                    console.log('typeof analysis', typeof(analysis_));
+                    top10()
+                    stateCount()
+                    //search()
                 }
             }/>
-  
+
             <View>
-                <ScrollView horizontal={true} scrollEnabled={true}>
-                {results.length > 0 && <table>
-                    <tr>
-                        <th>ID:</th>
-                        <th>NAME:</th>
-                        <th>CATEGORY:</th>
-                        <th>MAIN_CATEGORY:</th>
-                        <th>CURRENCY:</th>
-                        <th>DEADLINE:</th>
-                        <th>GOAL:</th>
-                        <th>LAUNCHED:</th>
-                        <th>PLEDGED:</th>
-                        <th>STATE:</th>
-                        <th>BACKERS:</th>
-                        <th>COUNTRY:</th>
-                        <th>USD PLEDGE:</th>
-                        <th>USD PLEDGE REAL:</th>
-                        <th>USD GOAL REAL:</th>
-                    </tr>
-                    {
-                        results.map((item, index) => (
-                            <tr key={index} >
-                                <td>
-                                    <TextInput value={item[0]} /*onChange={}*//>
-                                </td>
-                                <td>{item[1]}</td>
-                                <td>{item[2]}</td>
-                                <td>{item[3]}</td>
-                                <td>{item[4]}</td>
-                                <td>{item[5]}</td>
-                                <td>{item[6]}</td>
-                                <td>{item[7]}</td>
-                                <td>{item[8]}</td>
-                                <td>{item[9]}</td>
-                                <td>{item[10]}</td>
-                                <td>{item[11]}</td>
-                                <td>{item[12]}</td>
-                                <td>{item[13]}</td>
-                                <td>{item[14]}</td>
-                            </tr>
-                        ))
-                    }
-                </table>}
-
-                </ScrollView>
-
+                <br />
+                {(results.length > 0) && <PieChart
+                    animate 
+                    animationDuration={1000}
+                    animationEasing="ease-out"
+                    barRadius={200}
+                    label={({ dataEntry }) => `${Math.round(dataEntry.percentage)} %`}
+                    center={[
+                    50,
+                    50
+                    ]}
+                    data={[
+                        { title: 'success', value: success, color: '#5680BF' },
+                        { title: 'fail', value: fail, color: '#eff3ff' },
+                    ]}
+                />              
+                }    
             </View>
+            <View>
+                {
+                    results.length>0 &&  <Text style={{color:'#5680BF',  textAlign: 'center'}}>SUCCESS %</Text>           
+
+                }
+            </View>
+            <View>
+                {
+                    results.length>0 &&  <Text style={{color:'#eff3ff',  textAlign: 'center'}}>FAIL %</Text>           
+
+                }
+            </View>
+
+            {<View>
+               {array.length > 0 && <BarChart
+                    // style={graphStyle}
+                    data={{
+                        labels: array.map(col => col[0]),
+                        datasets: [{
+                            data: array.map(col => col[13])
+                        }]
+                    }}
+                    width={Dimensions.get('window').width} // from react-native
+                    height={600}
+                    style={{ paddingLeft: 20, backgroundColor:'#eff3ff' }}
+
+                    yAxisLabel={'$'}
+                    chartConfig={{
+                        backgroundColor: '#1cc910',
+                        backgroundGradientFrom: '#eff3ff',
+                        backgroundGradientTo: '#efefef',
+                        decimalPlaces: 0,
+                        color: (opacity = 2) => `rgba(0, 0, 0, ${opacity})`,
+                      }}
+                />}
+            </View>}
+
         </ScrollView>
     );
 }
