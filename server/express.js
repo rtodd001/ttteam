@@ -103,4 +103,15 @@ app.get('/analysis/top10', (req, res) => {
     res.status(200).json({"item":[{"data": top}]})
 });
 
+app.get('/analysis/stateCount', (req, res) => {
+    let keys = []
+    let items = []
+    for (const key in req.query){
+        keys.push(key)
+        items.push(req.query[key])
+    }
+    let count = KS.stateCountCSV(keys,items)
+    res.status(200).json({"item":[{"data": count}]})
+});
+
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
