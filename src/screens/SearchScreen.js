@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, ScrollView, StyleSheet, Button, TextInput, Picker } from 'react-native'
+import { Text, Alert, View, ScrollView, StyleSheet, Button, TextInput, Picker } from 'react-native'
 import { Table, TableWrapper, Row } from 'react-native-table-component';
 import { Feather } from '@expo/vector-icons';
 import Input from '../components/Input'
@@ -35,8 +35,28 @@ const SearchScreen = () => {
         setResults(fetchResults);
     }
 
-    return (
+    async function insert() {
+        const fetchResults = await insertItem(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
+    }
 
+    async function update() {
+        const fetchResults = await updateItem(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
+    }
+
+    async function delete_() {
+        const fetchResults = await deleteItem(ID)
+    }
+
+    async function import_() {
+        const fetchResults = await importFile(text)
+    }
+
+    async function store_() {
+        const fetchResults = await storeFile(text)
+    }
+
+
+    return (
         <ScrollView>
             <View style={styles.container}>
                 <Feather name="search" style={styles.title} />
@@ -170,8 +190,7 @@ const SearchScreen = () => {
             <Button
                 title="Insert"
                 onPress={() => {
-                    insertItem(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal);
-                    showAlert;
+                    insert()
                     alert('INSERT SUMITTED');
                 }
             }
@@ -179,7 +198,7 @@ const SearchScreen = () => {
             <Button
                 title="Update"
                 onPress={() => {
-                    updateItem(updateID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal);
+                    update()
                 }
             }
             />
@@ -193,7 +212,7 @@ const SearchScreen = () => {
             <Button
                 title="Delete"
                 onPress={() => {
-                    deleteItem(ID);
+                    delete_()
                 }
             }
         />
@@ -208,7 +227,7 @@ const SearchScreen = () => {
                 title="Import"
                 onPress={() => {
                     console.log(text)
-                    importFile(text);
+                    import_()
                     alert('Imported the File');
                 }}
             />
@@ -216,7 +235,7 @@ const SearchScreen = () => {
                 color="#1B2669"
                 title="Store"
                 onPress={() => {
-                    storeFile(text);
+                    store_()
                     alert('Stored the File');
                 }}
             />
