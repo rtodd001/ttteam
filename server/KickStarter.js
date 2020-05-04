@@ -20,9 +20,10 @@ class KickStarter {
     }
 
     getCSV() {
-        var path = './../data/ks-projects-201801.csv'
+        //var path = './../data/ks-projects-201801.csv'
         //var path = './../data/CommaTest.csv'
         //var path = './../data/SmallCommaTest.csv'
+        var path = './../data/500.csv'
         let content = fs.readFileSync(path, 'utf8')
         let lst = this.parseCSV(content)
         //console.log(lst)
