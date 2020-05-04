@@ -6,6 +6,7 @@ import { a_top10, a_state_cnt } from '../components/fetch'
 import { PieChart, FullOption } from 'react-minimal-pie-chart'
 import { BarChart } from 'react-native-chart-kit'
 
+
 const AnalysisScreen = ({navigation}) => {
 
     const [ID, setID] = useState('');
