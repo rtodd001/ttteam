@@ -240,7 +240,8 @@ const SearchScreen = () => {
                     }
                 />
             </View>
-            
+            {/* Commenting out all other buttons */}
+            {/*
             <Button
                 title="Insert"
                 onPress={() => {
@@ -294,6 +295,7 @@ const SearchScreen = () => {
                     alert('Stored the File');
                 }}
             />
+            */}
 
             <View>
                 {results.length > 0 && <PieChart
@@ -467,8 +469,9 @@ const SearchScreen = () => {
                                     />
                                 </th>
                             </tr>
+                        </tbody>
                         }
-                    </tbody>
+                    
                 </table>}
 
                 </ScrollView>

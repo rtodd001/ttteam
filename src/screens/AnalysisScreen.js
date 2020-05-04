@@ -7,13 +7,7 @@ import SearchBar from '../components/SearchBar'
 import { globalArray } from '../components/Global'
 import { searchItem, a_top10, a_state_cnt } from '../components/fetch'
 import { PieChart, FullOption } from 'react-minimal-pie-chart'
-import {
-    LineChart,
-    BarChart,
-    ProgressChart,
-    ContributionGraph,
-    StackedBarChart
-  } from 'react-native-chart-kit'
+import { LineChart, BarChart, ProgressChart, ContributionGraph, StackedBarChart} from 'react-native-chart-kit'
 
 const AnalysisScreen = ({navigation}) => {
 
@@ -166,7 +160,6 @@ const AnalysisScreen = ({navigation}) => {
                       }}
                 />}
             </View>}
-
         </ScrollView>
     );
 }
