@@ -113,7 +113,7 @@ class KickStarter {
             //newSize += title.get(this.tableData[i]).size
         }
         //console.log("New Size:", newSize)
-        console.log("Full Map", title)
+        //console.log("Full Map", title)
         return title
     }
 
@@ -242,13 +242,25 @@ class KickStarter {
                         
                         //we are now getting the index reference of the original
                         //and removing it so in the mappedData
-                        //console.log("Item value:", items[i])
-                        //console.log("Item:", this.mappedData.get(keys[i]).get(originalItem))
+                        console.log("Item value:", items[i])
+                        console.log("Item:", this.mappedData.get(keys[i]).get(originalItem))
                         if(this.mappedData.get(keys[i]).get(originalItem).size === 1){
                             this.mappedData.get(keys[i]).delete(originalItem)
-                            let tmp = new Set()
+                            if(this.mappedData.get(keys[i]).has(items[i])){
+                                let updateSet = new Set()
+                                updateSet = this.mappedData.get(keys[i]).get(items[i])
+                                updateSet.add(dataIndex)
+                                this.mappedData.get(keys[i]).set(items[i],updateSet)
+                            }
+                            else{
+                                let tmp1 = new Set()
+                                tmp1.add(dataIndex)
+                                this.mappedData.get(keys[i]).set(items[i], tmp1)
+                                
+                            }
+                            /*let tmp = new Set()
                             tmp.add(dataIndex)
-                            this.mappedData.get(keys[i]).set(items[i],tmp)
+                            this.mappedData.get(keys[i]).set(items[i],tmp) */
                         }
                         else{
                             //remove index and add it to the new spot
@@ -258,11 +270,13 @@ class KickStarter {
                                 let updateSet = new Set()
                                 updateSet = this.mappedData.get(keys[i]).get(items[i])
                                 updateSet.add(dataIndex)
+                                this.mappedData.get(keys[i]).set(items[i],updateSet)
                             }
                             else{
                                 let tmp1 = new Set()
                                 tmp1.add(dataIndex)
                                 this.mappedData.get(keys[i]).set(items[i], tmp1)
+
                             }
 
                         }
@@ -321,7 +335,7 @@ class KickStarter {
         if(!this.mappedData.get(keys[0]).has(items[0])){
             return []
         }
-        //console.log(keys, items)
+        console.log(keys, items)
 
         //get the last data item in the tableData
         //we will be using this to replace the target of deletion
@@ -332,7 +346,9 @@ class KickStarter {
         for(let i = 0; i < this.columns;i++){
             bottomRow.push(this.tableData[this.tableData.length- this.columns + i])
         }
-        //console.log("Bottom Row:", bottomRow)
+
+        let delIndex = this.mappedData.get(keys[0]).get(bottomRow[0]).values().next().value
+        console.log("Bottom Index:", delIndex)
 
         //now we must delete this bottom row before replacing it to avoid having
         //duplicate IDs. We must preserve uniqueness for ID
@@ -354,7 +370,11 @@ class KickStarter {
                     //console.log("Size 1: ", this.mappedData.get(keys[i]), deleteIndex)
                 }
                 else{
-                    old.delete("old",this.mappedData.get(keys[i]).get(bottomRow[i]).values().next().value)
+                    //console.log("old", old)
+                    //old.delete(items[i])
+                    
+                    this.mappedData.get(keys[i]).get(bottomRow[i]).delete(delIndex)
+                    //console.log("old after", old)
                 }
                 //tempMap.get(bottomRow[0][i]).values().next().value.delete(deleteIndex)
             }
@@ -371,11 +391,11 @@ class KickStarter {
             tempItems.push(bottomRow[i])
         }
 
-        //console.log("Before Update:",tempKeys,tempItems)
-        //console.log("Full Map: ",this.mappedData)
+        console.log("Before Update:",tempKeys,tempItems)
+        console.log("Before Update: ",this.mappedData)
         let retUpdate = this.updateCSV(tempKeys,tempItems)
         //console.log("Full Table: ",this.tableData)
-        //console.log("Full Map: ",this.mappedData)
+        console.log("Full Map: ",this.mappedData)
         return retUpdate
     }
 
