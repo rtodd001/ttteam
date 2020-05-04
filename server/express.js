@@ -97,7 +97,8 @@ app.get('/analysis/top10', (req, res) => {
         keys.push(key)
         items.push(req.query[key])
     }
-    console.log(keys, items)
+    //console.log(req.query)
+    //console.log(keys, items)
     let top = KS.analysisCSV(keys,items)
     res.status(200).json({"item":[{"data": top}]})
 });
