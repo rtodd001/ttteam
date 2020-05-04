@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import { Text, Alert, View, ScrollView, StyleSheet, Button, TextInput, Picker } from 'react-native'
 import { Table, TableWrapper, Row } from 'react-native-table-component';
+import { PieChart, FullOption } from 'react-minimal-pie-chart'
 import { Feather } from '@expo/vector-icons';
 import Input from '../components/Input'
 import SearchBar from '../components/SearchBar'
@@ -475,7 +476,22 @@ const SearchScreen = () => {
                 </ScrollView>
 
             </View>
+            {results.length > 0 && <PieChart
+                animate
+                animationDuration={1000}
+                animationEasing="ease-out"
+                center={[
+                50,
+                50
+                ]}
+                data={[
+                    { title: 'One', value: 10, color: '#E38627' },
+                    { title: 'Two', value: 15, color: '#C13C37' },
+                    { title: 'Three', value: 20, color: '#6A2135' },
+                ]}
+            />}
         </ScrollView>
+
     );
 }
 
