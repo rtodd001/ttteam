@@ -5,6 +5,8 @@ import SearchScreen from './src/screens/SearchScreen';
 import UpdateScreen from './src/screens/UpdateScreen';
 import InsertScreen from './src/screens/InsertScreen';
 import DeleteScreen from './src/screens/DeleteScreen';
+import AnalysisScreen from './src/screens/AnalysisScreen';
+import ResultScreen from './src/screens/ResultScreen';
 
 //this is a stack navigator to show on the screen
 const navigator = createStackNavigator(
@@ -12,9 +14,8 @@ const navigator = createStackNavigator(
   {
     Home: HomeScreen,
     Search: SearchScreen,
-    Update: UpdateScreen,
-    Insert: InsertScreen,
-    Delete: DeleteScreen
+    Analysis: AnalysisScreen,
+    Result: ResultScreen
   },
   
   //initialRouteName = is the 1st component to show on the screen

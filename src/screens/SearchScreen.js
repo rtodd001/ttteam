@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, ScrollView, StyleSheet, Button, TextInput, Picker } from 'react-native'
+import { Text, Alert, View, ScrollView, StyleSheet, Button, TextInput, Picker } from 'react-native'
 import { Table, TableWrapper, Row } from 'react-native-table-component';
 import { Feather } from '@expo/vector-icons';
 import Input from '../components/Input'
 import SearchBar from '../components/SearchBar'
 import { globalArray } from '../components/Global'
-import { searchItem } from '../components/fetch'
-
+import { searchItem, insertItem, deleteItem, updateItem, importFile, storeFile, a_top10 } from '../components/fetch'
 
 const SearchScreen = () => {
 
@@ -26,6 +25,9 @@ const SearchScreen = () => {
     const [usdPledgedReal, setUsdPledgedReal] = useState('');
     const [usdGoalReal, setUsdGoalReal] = useState('');
     const [results, setResults] = useState([]);
+    const [text, setText] = useState('');
+
+
 
     async function search() {
         const fetchResults = await searchItem(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
@@ -33,8 +35,29 @@ const SearchScreen = () => {
         setResults(fetchResults);
     }
 
-    return (
+    async function insert() {
+        const fetchResults = await insertItem(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
+    }
 
+    async function update() {
+        const fetchResults = await updateItem(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
+    }
+
+    async function delete_() {
+        const fetchResults = await deleteItem(ID)
+    }
+
+    async function import_() {
+        const fetchResults = await importFile(text)
+    }
+
+    async function store_() {
+        const fetchResults = await storeFile(text)
+    }
+
+   
+
+    return (
         <ScrollView>
             <View style={styles.container}>
                 <Feather name="search" style={styles.title} />
@@ -159,13 +182,66 @@ const SearchScreen = () => {
             </View>
 
             <Button
-                title="Submit"
+                title="Search"
                 onPress={() => {
                     search()
                     console.log('Button clicked!');
                 }
             } />
-            
+            <Button
+                title="Insert"
+                onPress={() => {
+                    insert()
+                    alert('INSERT SUMITTED');
+                }
+            }
+            />
+            <Button
+                title="Update"
+                onPress={() => {
+                    update()
+                }
+            }
+            />
+    
+            <Text>Enter Delete Fields</Text>
+            <SearchBar
+                title="ID"
+                ID={ID}
+                onTermChange={setID}
+                // onTermSubmit={console.log("submit term")}
+            />
+            <Button
+                title="Delete"
+                onPress={() => {
+                    delete_()
+                }
+            }
+        />
+            <TextInput
+                style={{height: 40}}
+                placeholder="File Name"
+                onChangeText={text => setText(text)}
+                defaultValue={text}
+            />
+            <Button
+                color="#1B2669"
+                title="Import"
+                onPress={() => {
+                    console.log(text)
+                    import_()
+                    alert('Imported the File');
+                }}
+            />
+            <Button
+                color="#1B2669"
+                title="Store"
+                onPress={() => {
+                    store_()
+                    alert('Stored the File');
+                }}
+            />
+
             <View>
                 <ScrollView horizontal={true} scrollEnabled={true}>
                 {results.length > 0 && <table>

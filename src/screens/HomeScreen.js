@@ -1,9 +1,9 @@
 import React from 'react';
-import {Button, Text, View, StyleSheet, Image} from 'react-native';
+import {Button, Text, View, StyleSheet, Image, Dimensions} from 'react-native';
 
 const HomeScreen = ({navigation}) => {
     return <View>
-        <Image style={{resizeMode: 'center', widht:50, height:250}}source={require('../../assets/ttteamLogo.jpg')}/>
+        <Image style={{resizeMode: 'center', width:Dimensions.get('window').width, height:200}}source={require('../../assets/ttteamLogo.jpg')}/>
 
         {/* <Text style={styles.title}>TTTEAM KickStarter Projects Analytics</Text> */}
 
@@ -12,18 +12,9 @@ const HomeScreen = ({navigation}) => {
             onPress={() => navigation.navigate('Search')}
         />
         <Button
-            title="Update"
-            onPress={() => navigation.navigate('Update')}
+            title="Analysis"
+            onPress={() => navigation.navigate('Analysis')}
         />
-        <Button
-            title="Insert"
-            onPress={() => navigation.navigate('Insert')}
-        />
-        <Button
-            title="Delete"
-            onPress={() => navigation.navigate('Delete')}
-        />
-
     </View>
 };
 
