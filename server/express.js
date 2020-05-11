@@ -99,7 +99,7 @@ app.get('/import', (req,res) => {
     res.status(200).json({"item":[{"data": "Imported"}]})
 });
 
-app.get('/analysis/top10', (req, res) => {
+app.get('/analysis/top5', (req, res) => {
     let keys = []
     let items = []
     for (const key in req.query){
@@ -121,6 +121,17 @@ app.get('/analysis/stateCount', (req, res) => {
     }
     let count = KS.stateCountCSV(keys,items)
     res.status(200).json({"item":[{"data": count}]})
+});
+
+app.get('/analysis/pledgeBack', (req, res) => {
+    let keys = []
+    let items = []
+    for (const key in req.query){
+        keys.push(key)
+        items.push(req.query[key])
+    }
+    let PB = KS.pledgeBackerCSV(keys,items)
+    res.status(200).json({"item":[{"data": PB}]})
 });
 
 app.get('/result', (req, res) => {

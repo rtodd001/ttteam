@@ -437,15 +437,9 @@ class KickStarter {
 
         allRows.sort(function(a,b){
             return b[13] - a[13]
-            /* if (a[13] === b[13]) {
-                return 0;
-            }
-            else {
-                return (a[13] < b[13]) ? -1 : 1;
-            } */
         })
         //console.log("Sorted", allRows)
-        return allRows.slice(0,10)
+        return allRows.slice(0,5)
     }
 
     stateCountCSV(keys, items){
@@ -468,6 +462,23 @@ class KickStarter {
         ret.push(success)
         console.log("fail", fail)
         ret.push(fail)
+        return ret
+    }
+
+    pledgeBackerCSV(keys, items){
+        let tempKeys = keys.slice()
+        let tempItems = items.slice()
+        let topRows = this.analysisCSV(tempKeys, tempItems)
+        let ret = []
+        let backCol = 10
+        let pledgeCol = 8
+        for(let i = 0; i < topRows.length; i++){
+            let temp = []
+            temp.push(topRows[i][pledgeCol])
+            temp.push(topRows[i][backCol])
+            ret.push(temp)
+        }
+        console.log(ret)
         return ret
     }
 
