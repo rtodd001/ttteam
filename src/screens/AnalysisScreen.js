@@ -3,7 +3,7 @@ import { Dimensions, Text, Alert, View, ScrollView, StyleSheet, Button, TextInpu
 import { Feather } from '@expo/vector-icons';
 import SearchBar from '../components/SearchBar'
 import AwesomeButton from 'react-native-really-awesome-button';
-import { a_top10, a_state_cnt } from '../components/fetch'
+import { a_top10, a_state_cnt, pledgeBacker } from '../components/fetch'
 import { PieChart, FullOption } from 'react-minimal-pie-chart'
 import { BarChart } from 'react-native-chart-kit'
 
@@ -45,6 +45,12 @@ const AnalysisScreen = ({navigation}) => {
 
     }
 
+    async function pledgeBackers() {
+        const fetchResults = await pledgeBacker(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
+        console.log(fetchResults);
+        console.log("inside plegeBackers ");
+
+    }
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -100,9 +106,10 @@ const AnalysisScreen = ({navigation}) => {
                 onPress={(next) => {
                     /** Do Something **/
                     next();
+                    pledgeBackers()
                 }}
             >
-                Top 5 Pledged Real
+                BAckers
             </AwesomeButton>
 
             <View>

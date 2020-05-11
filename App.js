@@ -24,7 +24,14 @@ const navigator = createStackNavigator(
     defaultNavigationOptions: {
       title: "TTTEAM"
     }
+  },
+  {
+    navigationOptions: "Results",
+    defaultNavigationOptions: {
+      title: "Result"
+    }
   }
 );
+
 
 export default createAppContainer(navigator);

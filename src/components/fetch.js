@@ -198,9 +198,7 @@ async function a_state_cnt(ID, name, category, mainCategory, currency, deadline,
 
 async function pledgeBacker(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal) {
     // var url = new URL('http://192.168.1.8:5000/search')
-    console.log("fetch 127")
     var url = new URL('http://localhost:5000/analysis/pledgeBack')
-    console.log("fetch 129")
     var params = {
         'ID' : ID,
         'name' : name,
@@ -218,16 +216,11 @@ async function pledgeBacker(ID, name, category, mainCategory, currency, deadline
         'usd_pledged_real' : usdPledgedReal,
         'usd_goal_real' : usdGoalReal
     } 
-    console.log("fetch 147")
     url.search = new URLSearchParams(params).toString();    
-    console.log("fetch 149")
     let response = await fetch(url);
-    console.log("fetch 151")
     let result = await response.json();
-    console.log("fetch 153")
-    console.log('26', result);
     let array = [];
-    
+    console.log(response);
     array.push(result.item[0].data);
     array.forEach(elements => {
         elements.forEach(item => {
@@ -239,4 +232,4 @@ async function pledgeBacker(ID, name, category, mainCategory, currency, deadline
 }
 
 
-export { searchItem, insertItem, deleteItem, updateItem, importFile, storeFile, a_top10, a_state_cnt };
+export { searchItem, insertItem, deleteItem, updateItem, importFile, storeFile, a_top10, a_state_cnt, pledgeBacker };
