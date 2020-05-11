@@ -156,6 +156,17 @@ app.get('/analysis/topCountries', (req, res) => {
     res.status(200).json({"item":[{"data": countries}]})
 });
 
+app.get('/analysis/topMainCategory', (req, res) => {
+    let keys = []
+    let items = []
+    for (const key in req.query){
+        keys.push(key)
+        items.push(req.query[key])
+    }
+    let mainCat = KS.topMainCatergoryCSV(keys,items)
+    res.status(200).json({"item":[{"data": mainCat}]})
+});
+
 app.get('/result', (req, res) => {
 
     res.status(200).json({"item":[{"data": "I got the searchData"}]})
