@@ -1,7 +1,8 @@
 import React, { useState, Fragment  } from 'react'
-import { Dimensions, Text, Alert, View, ScrollView, StyleSheet, Button, TextInput, Picker } from 'react-native'
+import { Dimensions, Text, Alert, View, ScrollView, StyleSheet, Button, TextInput, Picker, TouchableWithoutFeedback, Animated} from 'react-native'
 import { Feather } from '@expo/vector-icons';
 import SearchBar from '../components/SearchBar'
+import AwesomeButton from 'react-native-really-awesome-button';
 import { a_top10, a_state_cnt } from '../components/fetch'
 import { PieChart, FullOption } from 'react-minimal-pie-chart'
 import { BarChart } from 'react-native-chart-kit'
@@ -85,12 +86,24 @@ const AnalysisScreen = ({navigation}) => {
            <Button
                 title="Analysis"
                 onPress={() => {
-                    console.log('typeof analysis', typeof(analysis_));
                     top10()
                     stateCount()
                     //search()
                 }
             }/>
+
+            <AwesomeButton
+                progress
+                backgroundColor = '#1F618D'
+                backgroundProgress = '#154360'
+                width = {300}
+                onPress={(next) => {
+                    /** Do Something **/
+                    next();
+                }}
+            >
+                Top 5 Pledged Real
+            </AwesomeButton>
 
             <View>
                 <br />
@@ -141,23 +154,41 @@ const AnalysisScreen = ({navigation}) => {
 }
 
 const styles = StyleSheet.create({
-    title: {
-        justifyContent: 'center',
-        fontSize: 40
-    },
     container: {
-        flex: 2,
-        flexDirection: 'row',
-        justifyContent: 'center'
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
-    tableRow: {
-        fontSize: 11
+    button: {
+      backgroundColor: "#333",
+      width: 100,
+      height: 50,
+      alignItems: "center",
+      justifyContent: "center",
     },
-    container2: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
-        header: { height: 50, backgroundColor: '#537791' },
-        text: { textAlign: 'center', fontWeight: '100' },
-        dataWrapper: { marginTop: -1 },
-        row: { height: 40, backgroundColor: '#E7E6E1' }
-});
+    text: {
+      color: "#FFF"
+    }
+  });
+  
+// const styles = StyleSheet.create({
+//     title: {
+//         justifyContent: 'center',
+//         fontSize: 40
+//     },
+//     container: {
+//         flex: 2,
+//         flexDirection: 'row',
+//         justifyContent: 'center'
+//     },
+//     tableRow: {
+//         fontSize: 11
+//     },
+//     container2: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
+//         header: { height: 50, backgroundColor: '#537791' },
+//         text: { textAlign: 'center', fontWeight: '100' },
+//         dataWrapper: { marginTop: -1 },
+//         row: { height: 40, backgroundColor: '#E7E6E1' }
+// });
 
 export default AnalysisScreen;
