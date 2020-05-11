@@ -3,9 +3,9 @@ import { Dimensions, Text, Alert, View, ScrollView, StyleSheet, Button, TextInpu
 import { Feather } from '@expo/vector-icons';
 import SearchBar from '../components/SearchBar'
 import AwesomeButton from 'react-native-really-awesome-button';
-import { a_top10, a_state_cnt, pledgeBacker } from '../components/fetch'
+import { a_top10, a_state_cnt, pledgeBacker, popCat } from '../components/fetch'
 import { PieChart, FullOption } from 'react-minimal-pie-chart'
-import { BarChart, LineChart } from 'react-native-chart-kit'
+import { BarChart, LineChart, bezier } from 'react-native-chart-kit'
 
 const AnalysisScreen = ({navigation}) => {
 
@@ -29,7 +29,7 @@ const AnalysisScreen = ({navigation}) => {
     const [fail, setFail] = useState('');
     const [array, setArray] = useState('');
     const [resPledge, setResPledge] = useState('');
-    const [resBackers, setResBackers] = useState('');
+    const [popCategory, setPopCategory] = useState('');
 
     async function top10() {
         const topResults = await a_top10(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
@@ -50,11 +50,15 @@ const AnalysisScreen = ({navigation}) => {
         const fetchResults = await pledgeBacker(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
         console.log(fetchResults);
         setResPledge(fetchResults);
-        setResBackers(fetchResults[1]);
-        console.log(resPledge);
-        console.log(resBackers);
-
     }
+
+    async function popularCat() {
+        const fetchResults = await popCat(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
+        console.log(fetchResults.map(col => col[0]));
+        setPopCategory(fetchResults);
+    }
+
+
     return (
         <ScrollView
             alignItems = 'center'
@@ -95,16 +99,40 @@ const AnalysisScreen = ({navigation}) => {
                 </View>
             </View>
 
-           <Button
-                title="Analysis"
+            <AwesomeButton
+                progress
                 backgroundColor = '#1F618D'
                 backgroundProgress = '#154360'
-                onPress={() => {
-                    top10()
-                    stateCount()
-                    //search()
-                }
-            }/>
+                width = {300}
+                onPress={(next) => {
+                    /** Do Something **/
+                    next();
+                    setResults('');
+                    setArray('');
+                    setPledged('');
+                    popularCat();
+                }}
+            >
+                Top 5 Successful Categories
+            </AwesomeButton>
+            <br />
+            <AwesomeButton
+                progress
+                backgroundColor = '#1F618D'
+                backgroundProgress = '#154360'
+                width = {300}
+                onPress={(next) => {
+                    /** Do Something **/
+                    next();
+                    setResults('');
+                    setResPledge('');
+                    setPopCategory('');
+                    top10();
+                }}
+            >
+                Top 5 Pledged USD
+            </AwesomeButton>
+            <br />
             <AwesomeButton
                 progress
                 backgroundColor = '#1F618D'
@@ -114,6 +142,7 @@ const AnalysisScreen = ({navigation}) => {
                     next();
                     setArray('');
                     setResPledge('');
+                    setPopCategory('');
                     stateCount();
                 }}
             >
@@ -129,25 +158,11 @@ const AnalysisScreen = ({navigation}) => {
                     /** Do Something **/
                     next();
                     setResults('');
-                    setResPledge('');
-                    top10();
-                }}
-            >
-                Top 5 Pledged USD
-            </AwesomeButton>
-            <br />
-            <AwesomeButton
-                progress
-                backgroundColor = '#1F618D'
-                backgroundProgress = '#154360'
-                width = {300}
-                onPress={(next) => {
-                    /** Do Something **/
-                    next();
-                    setResults('');
                     setArray('');
+                    setPopCategory('');
                     pledgeBackers()
                 }}
+                PaddingBottom = {15}
             >
                 Backers VS Pledged 
             </AwesomeButton>
@@ -158,12 +173,11 @@ const AnalysisScreen = ({navigation}) => {
                     animate 
                     animationDuration={1000}
                     animationEasing="ease-out"
-                    barRadius={200}
                     label={({ dataEntry }) => `${Math.round(dataEntry.percentage)} %`}
                     center={[50,50]}
                     data={[
-                        { title: 'success', value: success, color: '#5680BF' },
-                        { title: 'fail', value: fail, color: '#B8C0C9' },
+                        { name: 'success', value: success, color: '#5680BF' },
+                        { name: 'fail', value: fail, color: '#B8C0C9' },
                     ]}
                 />              
                 }    
@@ -180,7 +194,7 @@ const AnalysisScreen = ({navigation}) => {
                         }]
                     }}
                     width={Dimensions.get('window').width} // from react-native
-                    height={600}
+                    height={300}
                     style={{ paddingLeft: 20, backgroundColor:'#eff3ff' }}
 
                     yAxisLabel={'$'}
@@ -213,6 +227,27 @@ const AnalysisScreen = ({navigation}) => {
                         backgroundGradientTo: '#efefef',
                         color: (opacity = 2) => `rgba(0, 0, 0, ${opacity})`,
                       }}
+                />}
+            </View>
+
+            <View>
+                {popCategory.length>0 && <LineChart
+                    data={{
+                        labels: popCategory.map(col => col[0]),
+                        datasets: [{
+                            data: popCategory.map(col => col[1])
+                        }]
+                    }}
+                    width={Dimensions.get('window').width}
+                    height={500}
+                    yAxisLabel={'#'}
+                    chartConfig={{
+                        backgroundColor: '#1cc910',
+                        backgroundGradientFrom: '#eff3ff',
+                        backgroundGradientTo: '#efefef',
+                        color: (opacity = 2) => `rgba(0, 0, 0, ${opacity})`,
+                      }}     
+                    bezier
                 />}
             </View>
         </ScrollView>
