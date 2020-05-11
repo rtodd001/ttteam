@@ -327,7 +327,6 @@ const AnalysisScreen = ({navigation}) => {
                     bezier
                 />}
             </View>
-
         </ScrollView>
     );
 }

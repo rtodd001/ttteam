@@ -154,7 +154,6 @@ async function a_top10(ID, name, category, mainCategory, currency, deadline, goa
             globalArray.push(item);
         })
     })
-    
     return array[0]; 
 }
 
@@ -191,7 +190,6 @@ async function a_state_cnt(ID, name, category, mainCategory, currency, deadline,
             globalArray.push(item);
         })
     })
-
     return array[0]; 
 }
 
@@ -227,7 +225,6 @@ async function pledgeBacker(ID, name, category, mainCategory, currency, deadline
             globalArray.push(item);
         })
     })
-
     return array[0]; 
 }
 
@@ -262,7 +259,6 @@ async function popCat(ID, name, category, mainCategory, currency, deadline, goal
             globalArray.push(item);
         })
     })
-
     return array[0]; 
 }
 
