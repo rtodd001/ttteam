@@ -519,7 +519,7 @@ class KickStarter {
             if(countries.has(allRows[i][contRow])){
                 countries.set(allRows[i][contRow], parseFloat(countries.get(allRows[i][contRow])) + parseFloat(allRows[i][pledgeRealRow]))
             }
-            //else initialize with 1
+            //else initialize with first number
             else{
                 countries.set(allRows[i][contRow], parseFloat(allRows[i][pledgeRealRow]))
             }
@@ -531,6 +531,32 @@ class KickStarter {
         })
         //console.log(arrayCountries)
         return arrayCountries.slice(0,5)
+    }
+
+    topMainCatergoryCSV(keys, items){
+        let tempKeys = keys.slice()
+        let tempItems = items.slice()
+        let allRows = this.searchCSV(tempKeys, tempItems)
+        let MainCat = new Map()
+        let contRow = 3
+        let pledgeRealRow = 13
+        for(let i = 0; i < allRows.length; i++){
+            //if the category exists, increment
+            if(MainCat.has(allRows[i][contRow])){
+                MainCat.set(allRows[i][contRow], MainCat.get(allRows[i][contRow]) + parseFloat(allRows[i][pledgeRealRow]))
+            }
+            //else initialize with first number
+            else{
+                MainCat.set(allRows[i][contRow], parseFloat(allRows[i][pledgeRealRow]))
+            }
+        }
+        //convert to an array of pairs
+        let arrayMainCat = [...MainCat]
+        arrayMainCat.sort(function(a,b){
+            return b[1] - a[1]
+        })
+        console.log(arrayMainCat)
+        return arrayMainCat.slice(0,5)
     }
 
 }
