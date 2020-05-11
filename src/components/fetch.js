@@ -33,8 +33,8 @@ async function searchItem(ID, name, category, mainCategory, currency, deadline, 
         })
     })
     console.log("GlobalArray after pushing")
-    console.log(globalArray);
-    console.log('40', array);
+    // console.log(globalArray);
+    console.log('37', array);
     return array[0]; 
 }
 

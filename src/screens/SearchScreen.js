@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import { Text, Alert, View, ScrollView, StyleSheet, Button, TextInput, Picker } from 'react-native'
 import { Table, TableWrapper, Row } from 'react-native-table-component';
+import { PieChart, FullOption } from 'react-minimal-pie-chart'
 import { Feather } from '@expo/vector-icons';
 import Input from '../components/Input'
 import SearchBar from '../components/SearchBar'
@@ -31,7 +32,7 @@ const SearchScreen = () => {
 
     async function search() {
         const fetchResults = await searchItem(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
-        console.log(fetchResults);
+        // console.log(fetchResults);
         setResults(fetchResults);
     }
 
@@ -55,7 +56,56 @@ const SearchScreen = () => {
         const fetchResults = await storeFile(text)
     }
 
-   
+    async function analysis_() {
+        const fetchResults = await analysis(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
+        console.log(fetchResults);
+        setResults(fetchResults);
+    }
+    function sortBy(key) {
+        const sortEnum = {
+            ID: 0, //this is a number must consider type
+            NAME: 1,
+            CATEGORY: 2,
+            MAIN_CATEGORY: 3,
+            CURRENCY: 4,
+            DEADLINE: 5,
+            GOAL: 6,
+            LAUNCHED: 7,
+            PLEDGED: 8,
+            STATE: 9,
+            BACKERS: 10,
+            COUNTRY: 11,
+            USD_PLEDGE: 12,
+            USD_PLEDGE_REAL: 13,
+            USD_GOAL_REAL: 14
+        }
+        if (sortOrder === '' || sortOrder === 'desc') {
+            setSortOrder('asc');
+            setResults([...results.sort((a, b) => {
+                if (a[sortEnum[key]] > b[sortEnum[key]]) {
+                    return 1;
+                } else if (a[sortEnum[key]] < b[sortEnum[key]]) {
+                    return -1
+                }
+                else {
+                    return 0
+                }
+            })])
+        } else {
+            setSortOrder('desc');
+            setResults([...results.sort((a, b) => {
+                if (a[sortEnum[key]] < b[sortEnum[key]]) {
+                    return 1;
+                } else if (a[sortEnum[key]] > b[sortEnum[key]]) {
+                    return -1
+                }
+                else {
+                    return 0
+                }
+            })])
+        }
+    }
+    // console.log('67', results);
 
     return (
         <ScrollView>
@@ -180,14 +230,18 @@ const SearchScreen = () => {
                 </View>
                 */}
             </View>
-
-            <Button
-                title="Search"
-                onPress={() => {
-                    search()
-                    console.log('Button clicked!');
-                }
-            } />
+            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                <Button
+                    title="Search"
+                    onPress={() => {
+                        search()
+                        console.log('Button clicked!');
+                    }
+                    }
+                />
+            </View>
+            {/* Commenting out all other buttons */}
+            {/*
             <Button
                 title="Insert"
                 onPress={() => {
@@ -241,56 +295,189 @@ const SearchScreen = () => {
                     alert('Stored the File');
                 }}
             />
+            */}
 
             <View>
+                {/* {results.length > 0 && <PieChart
+                    animate
+                    animationDuration={1000}
+                    animationEasing="ease-out"
+                    center={[
+                        50,
+                        50
+                    ]}
+                    data={[
+                        { title: 'One', value: 10, color: '#E38627' },
+                        { title: 'Two', value: 15, color: '#C13C37' },
+                        { title: 'Three', value: 20, color: '#6A2135' },
+                    ]}
+                />} */}
                 <ScrollView horizontal={true} scrollEnabled={true}>
-                {results.length > 0 && <table>
-                    <tr>
-                        <th>ID:</th>
-                        <th>NAME:</th>
-                        <th>CATEGORY:</th>
-                        <th>MAIN_CATEGORY:</th>
-                        <th>CURRENCY:</th>
-                        <th>DEADLINE:</th>
-                        <th>GOAL:</th>
-                        <th>LAUNCHED:</th>
-                        <th>PLEDGED:</th>
-                        <th>STATE:</th>
-                        <th>BACKERS:</th>
-                        <th>COUNTRY:</th>
-                        <th>USD PLEDGE:</th>
-                        <th>USD PLEDGE REAL:</th>
-                        <th>USD GOAL REAL:</th>
-                    </tr>
-                    {
-                        results.map((item, index) => (
-                            <tr key={index} >
-                                <td>
-                                    <TextInput value={item[0]} /*onChange={}*//>
-                                </td>
-                                <td>{item[1]}</td>
-                                <td>{item[2]}</td>
-                                <td>{item[3]}</td>
-                                <td>{item[4]}</td>
-                                <td>{item[5]}</td>
-                                <td>{item[6]}</td>
-                                <td>{item[7]}</td>
-                                <td>{item[8]}</td>
-                                <td>{item[9]}</td>
-                                <td>{item[10]}</td>
-                                <td>{item[11]}</td>
-                                <td>{item[12]}</td>
-                                <td>{item[13]}</td>
-                                <td>{item[14]}</td>
+
+                    {results.length > 0 && <table>
+                        <tbody>
+                            <tr>
+                                <th>
+                                    <Button
+                                        title='ID:'
+                                        onPress={() => {
+                                            console.log("pushed!")
+                                            sortBy('ID')
+                                        }
+                                        }
+                                    />
+                                </th>
+
+                                <th>
+                                    <Button
+                                        title='NAME:'
+                                        onPress={() => {
+                                            console.log("pushed!")
+                                            sortBy('NAME')
+                                        }
+                                        }
+                                    />
+                                </th>
+                                <th>
+                                    <Button
+                                        title='CATEGORY:'
+                                        onPress={() => {
+                                            console.log("pushed!")
+                                            sortBy('CATEGORY')
+                                        }
+                                        }
+                                    />
+                                </th>
+                                <th>
+                                    <Button
+                                        title='MAIN_CATEGORY:'
+                                        onPress={() => {
+                                            console.log("pushed!")
+                                            sortBy('MAIN_CATEGORY')
+                                        }
+                                        }
+                                    />
+                                </th>
+                                <th>
+                                    <Button
+                                        title='CURRENCY:'
+                                        onPress={() => {
+                                            console.log("pushed!")
+                                            sortBy('CURRENCY')
+                                        }
+                                        }
+                                    />
+                                </th>
+                                <th>
+                                    <Button
+                                        title='DEADLINE:'
+                                        onPress={() => {
+                                            console.log("pushed!")
+                                            sortBy('DEADLINE')
+                                        }
+                                        }
+                                    />
+                                </th>
+                                <th>
+                                    <Button
+                                        title='GOAL:'
+                                        onPress={() => {
+                                            console.log("pushed!")
+                                            sortBy('GOAL')
+                                        }
+                                        }
+                                    />
+                                </th>
+                                <th>
+                                    <Button
+                                        title='LAUNCHED:'
+                                        onPress={() => {
+                                            console.log("pushed!")
+                                            sortBy('LAUNCHED')
+                                        }
+                                        }
+                                    />
+                                </th>
+                                <th>
+                                    <Button
+                                        title='PLEDGED:'
+                                        onPress={() => {
+                                            console.log("pushed!")
+                                            sortBy('PLEDGED')
+                                        }
+                                        }
+                                    />
+                                </th>
+                                <th>
+                                    <Button
+                                        title='STATE:'
+                                        onPress={() => {
+                                            console.log("pushed!")
+                                            sortBy('STATE')
+                                        }
+                                        }
+                                    />
+                                </th>
+                                <th>
+                                    <Button
+                                        title='BACKERS:'
+                                        onPress={() => {
+                                            console.log("pushed!")
+                                            sortBy('BACKERS')
+                                        }
+                                        }
+                                    />
+                                </th>
+                                <th>
+                                    <Button
+                                        title='COUNTRY:'
+                                        onPress={() => {
+                                            console.log("pushed!")
+                                            sortBy('COUNTRY')
+                                        }
+                                        }
+                                    />
+                                </th>
+                                <th>
+                                    <Button
+                                        title='USD PLEDGE:'
+                                        onPress={() => {
+                                            console.log("pushed!")
+                                            sortBy('USD_PLEDGE')
+                                        }
+                                        }
+                                    />
+                                </th>
+                                <th>
+                                    <Button
+                                        title='USD PLEDGE REAL:'
+                                        onPress={() => {
+                                            console.log("pushed!")
+                                            sortBy('USD_PLEDGE_REAL')
+                                        }
+                                        }
+                                    />
+                                </th>
+                                <th>
+                                    <Button
+                                        title='USD GOAL REAL:'
+                                        onPress={() => {
+                                            console.log("pushed!")
+                                            sortBy('USD_GOAL_REAL')
+                                        }
+                                        }
+                                    />
+                                </th>
                             </tr>
-                        ))
-                    }
-                </table>}
+                        </tbody>
+                    
+                    </table>}
 
                 </ScrollView>
 
             </View>
         </ScrollView>
+
     );
 }
 
@@ -307,13 +494,11 @@ const styles = StyleSheet.create({
     tableRow: {
         fontSize: 11
     },
-
-
     container2: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
-  header: { height: 50, backgroundColor: '#537791' },
-  text: { textAlign: 'center', fontWeight: '100' },
-  dataWrapper: { marginTop: -1 },
-  row: { height: 40, backgroundColor: '#E7E6E1' }
+    header: { height: 50, backgroundColor: '#537791' },
+    text: { textAlign: 'center', fontWeight: '100' },
+    dataWrapper: { marginTop: -1 },
+    row: { height: 40, backgroundColor: '#E7E6E1' }
 });
 
 export default SearchScreen;
