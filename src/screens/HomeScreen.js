@@ -2,6 +2,8 @@ import React from 'react';
 import {Button, Text, View, StyleSheet, Image, Dimensions} from 'react-native';
 
 const HomeScreen = ({navigation}) => {
+    const [term, setTerm] = useState('');
+
     return <View>
         <Image style={{resizeMode: 'center', width:Dimensions.get('window').width, height:200}}source={require('../../assets/ttteamLogo.jpg')}/>
 
@@ -26,5 +28,5 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgb(153, 102, 255)'
     }
 });
-
+export {searchW as searchWord}  ;
 export default HomeScreen;
