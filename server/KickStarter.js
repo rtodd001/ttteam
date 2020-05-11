@@ -471,7 +471,7 @@ class KickStarter {
         let topRows = this.analysisCSV(tempKeys, tempItems)
         let ret = []
         let backCol = 10
-        let pledgeCol = 8
+        let pledgeCol = 13
         for(let i = 0; i < topRows.length; i++){
             let temp = []
             temp.push(topRows[i][pledgeCol])
