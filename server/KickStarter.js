@@ -499,7 +499,12 @@ class KickStarter {
             }
         }
         //console.log(...catCount)
-        return [...catCount]
+        let arrayCat = [...catCount]
+        arrayCat.sort(function(a,b){
+            return b[1] - a[1]
+        })
+        console.log(arrayCat)
+        return arrayCat.slice(0,5)
     }
 
 }
