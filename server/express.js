@@ -145,6 +145,17 @@ app.get('/analysis/popCat', (req, res) => {
     res.status(200).json({"item":[{"data": catCount}]})
 });
 
+app.get('/analysis/topCountries', (req, res) => {
+    let keys = []
+    let items = []
+    for (const key in req.query){
+        keys.push(key)
+        items.push(req.query[key])
+    }
+    let countries = KS.richCountriesCSV(keys,items)
+    res.status(200).json({"item":[{"data": countries}]})
+});
+
 app.get('/result', (req, res) => {
 
     res.status(200).json({"item":[{"data": "I got the searchData"}]})
