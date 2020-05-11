@@ -30,9 +30,9 @@ const AnalysisScreen = ({navigation}) => {
     const [array, setArray] = useState('');
 
     async function top10() {
-        const fetchResults = await a_top10(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
-        setArray(fetchResults)
-        console.log(fetchResults);
+        const topResults = await a_top10(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
+        setArray(topResults)
+        console.log(topResults);
     }
 
     async function stateCount() {
