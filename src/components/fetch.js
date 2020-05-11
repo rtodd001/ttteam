@@ -124,7 +124,7 @@ async function storeFile(fileName) {
 async function a_top10(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal) {
     // var url = new URL('http://192.168.1.8:5000/search')
     console.log("fetch 127")
-    var url = new URL('http://localhost:5000/analysis/top10')
+    var url = new URL('http://localhost:5000/analysis/top5')
     console.log("fetch 129")
     var params = {
         'ID' : ID,

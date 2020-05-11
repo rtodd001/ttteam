@@ -42,14 +42,12 @@ const AnalysisScreen = ({navigation}) => {
         setFail(fetchResults[1])
         setResults(fetchResults);
         console.log("inside stateCount : ", success);
-
     }
 
     async function pledgeBackers() {
         const fetchResults = await pledgeBacker(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
         console.log(fetchResults);
         console.log("inside plegeBackers ");
-
     }
     return (
         <ScrollView>
@@ -97,6 +95,32 @@ const AnalysisScreen = ({navigation}) => {
                     //search()
                 }
             }/>
+            <AwesomeButton
+                progress
+                backgroundColor = '#1F618D'
+                backgroundProgress = '#154360'
+                width = {300}
+                onPress={(next) => {
+                    next();
+                    stateCount()
+                }}
+            >
+                Success VS Fail
+            </AwesomeButton>
+
+            <AwesomeButton
+                progress
+                backgroundColor = '#1F618D'
+                backgroundProgress = '#154360'
+                width = {300}
+                onPress={(next) => {
+                    /** Do Something **/
+                    next();
+                    top10()
+                }}
+            >
+                Top 5 Pledged USD
+            </AwesomeButton>
 
             <AwesomeButton
                 progress
@@ -109,7 +133,7 @@ const AnalysisScreen = ({navigation}) => {
                     pledgeBackers()
                 }}
             >
-                BAckers
+                Backers VS Pledged 
             </AwesomeButton>
 
             <View>
