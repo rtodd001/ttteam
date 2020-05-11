@@ -27,6 +27,7 @@ const SearchScreen = () => {
     const [usdGoalReal, setUsdGoalReal] = useState('');
     const [results, setResults] = useState([]);
     const [text, setText] = useState('');
+    const [sortOrder, setSortOrder] = useState('');
 
 
 
@@ -230,7 +231,7 @@ const SearchScreen = () => {
                 </View>
                 */}
             </View>
-            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                 <Button
                     title="Search"
                     onPress={() => {
@@ -469,8 +470,31 @@ const SearchScreen = () => {
                                     />
                                 </th>
                             </tr>
+                            {
+                                results.map((item, index) => (
+                                    <tr key={index} >
+                                        <td>
+                                            <TextInput value={item[0]} /*onChange={}*/ />
+                                        </td>
+                                        <td>{item[1]}</td>
+                                        <td>{item[2]}</td>
+                                        <td>{item[3]}</td>
+                                        <td>{item[4]}</td>
+                                        <td>{item[5]}</td>
+                                        <td>{item[6]}</td>
+                                        <td>{item[7]}</td>
+                                        <td>{item[8]}</td>
+                                        <td>{item[9]}</td>
+                                        <td>{item[10]}</td>
+                                        <td>{item[11]}</td>
+                                        <td>{item[12]}</td>
+                                        <td>{item[13]}</td>
+                                        <td>{item[14]}</td>
+                                    </tr>
+                                ))
+                            }
                         </tbody>
-                    
+
                     </table>}
 
                 </ScrollView>
