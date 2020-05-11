@@ -3,7 +3,7 @@ import { Dimensions, Text, Alert, View, ScrollView, StyleSheet, Button, TextInpu
 import { Feather } from '@expo/vector-icons';
 import SearchBar from '../components/SearchBar'
 import AwesomeButton from 'react-native-really-awesome-button';
-import { a_top10, a_state_cnt, pledgeBacker, popCat, topCountries } from '../components/fetch'
+import { a_top10, a_state_cnt, pledgeBacker, popCat, topCountries, topMainCategory } from '../components/fetch'
 import { PieChart, FullOption } from 'react-minimal-pie-chart'
 import { BarChart, LineChart, bezier } from 'react-native-chart-kit'
 
@@ -31,6 +31,7 @@ const AnalysisScreen = ({navigation}) => {
     const [resPledge, setResPledge] = useState('');
     const [popCategory, setPopCategory] = useState('');
     const [topCo, setTopCo] = useState('');
+    const [topMainCa, setTopMainCa] = useState('');
 
     async function top10() {
         const topResults = await a_top10(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
@@ -55,7 +56,7 @@ const AnalysisScreen = ({navigation}) => {
 
     async function popularCat() {
         const fetchResults = await popCat(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
-        console.log(fetchResults.map(col => col[0]));
+        console.log(fetchResults);
         setPopCategory(fetchResults);
     }
 
@@ -63,6 +64,12 @@ const AnalysisScreen = ({navigation}) => {
         const fetchResults = await topCountries(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
         console.log(fetchResults);
         setTopCo(fetchResults);
+    }
+
+    async function topMainCat() {
+        const fetchResults = await topMainCategory(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
+        console.log(fetchResults);
+        setTopMainCa(fetchResults);
     }
 
     return (
@@ -115,7 +122,9 @@ const AnalysisScreen = ({navigation}) => {
                 onPress={() => {
                     setResults('');
                     setArray('');
-                    setPledged('');
+                    setResPledge('');
+                    setTopCo('');
+                    setTopMainCa('');
                     popularCat();
                 }
             }/>
@@ -128,6 +137,8 @@ const AnalysisScreen = ({navigation}) => {
                     setResults('');
                     setResPledge('');
                     setPopCategory('');
+                    setTopCo('');
+                    setTopMainCa('');
                     top10();
                 }
             }/>
@@ -140,6 +151,8 @@ const AnalysisScreen = ({navigation}) => {
                     setArray('');
                     setResPledge('');
                     setPopCategory('');
+                    setTopCo('');
+                    setTopMainCa('');
                     stateCount();
                 }
             }/>
@@ -147,14 +160,16 @@ const AnalysisScreen = ({navigation}) => {
             <View style={{flex: 1, width: 100, margin: 10, flexGrow: 1,}}>
             <View style={{flex: 1,height: 100,maxHeight: 100,margin: 10,}} />
             <Button
-                title="Backers VS Pledged"
+                title="Top 5 MainCategory"
                 backgroundColor = '#1F618D'
                 backgroundProgress = '#154360'
                 onPress={() => {
                     setResults('');
                     setArray('');
                     setPopCategory('');
-                    pledgeBackers()
+                    setResPledge('');
+                    setTopCo('');
+                    topMainCat()
                 }
             }/>
             <View style={{flex: 1,height: 100,maxHeight: 100,margin: 10,}} />
@@ -166,19 +181,23 @@ const AnalysisScreen = ({navigation}) => {
                     setResults('');
                     setArray('');
                     setPopCategory('');
-                    setPledged('');
+                    setResPledge('');
+                    setTopMainCa('');
                     topCountry();
                 }
             }/>
             <View style={{flex: 1,height: 100,maxHeight: 100,margin: 10,}} />
             <Button
-                title="Analysis"
+                title="Backers VS Pledged"s
                 backgroundColor = '#1F618D'
                 backgroundProgress = '#154360'
                 onPress={() => {
-                    top10()
-                    stateCount()
-                    //search()
+                    setResults('');
+                    setArray('');
+                    setPopCategory('');
+                    setTopCo('');
+                    setTopMainCa('');
+                    pledgeBackers()
                 }
             }/>
             </View>
@@ -212,7 +231,6 @@ const AnalysisScreen = ({navigation}) => {
                     width={Dimensions.get('window').width} // from react-native
                     height={300}
                     style={{ paddingLeft: 20, backgroundColor:'#eff3ff' }}
-
                     yAxisLabel={'$'}
                     yAxisSuffix={'k'}
                     chartConfig={{
@@ -276,7 +294,7 @@ const AnalysisScreen = ({navigation}) => {
                         }]
                     }}
                     width={Dimensions.get('window').width}
-                    height={500}
+                    height={400}
                     yAxisSuffix={'k'}
                     yAxisLabel={'$'}
                     chartConfig={{
@@ -285,6 +303,28 @@ const AnalysisScreen = ({navigation}) => {
                         backgroundGradientTo: '#efefef',
                         color: (opacity = 2) => `rgba(0, 0, 0, ${opacity})`,
                       }}
+                />}
+            </View>
+
+            <View>
+                {topMainCa.length>0 && <LineChart
+                    data={{
+                        labels: topMainCa.map(col => col[0]),
+                        datasets: [{
+                            data: topMainCa.map(col => col[1]/1000)
+                        }]
+                    }}
+                    width={Dimensions.get('window').width}
+                    height={300}
+                    yAxisSuffix={'k'}
+                    yAxisLabel={'$'}                    
+                    chartConfig={{
+                        backgroundColor: '#1cc910',
+                        backgroundGradientFrom: '#eff3ff',
+                        backgroundGradientTo: '#efefef',
+                        color: (opacity = 2) => `rgba(0, 0, 0, ${opacity})`,
+                      }}     
+                    bezier
                 />}
             </View>
 

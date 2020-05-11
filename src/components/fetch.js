@@ -301,7 +301,7 @@ async function topCountries(ID, name, category, mainCategory, currency, deadline
     return array[0]; 
 }
 
-async function topMainCat(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal) {
+async function topMainCategory(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal) {
     // var url = new URL('http://192.168.1.8:5000/search')
     var url = new URL('http://localhost:5000/analysis/topMainCategory')
     var params = {
@@ -336,4 +336,4 @@ async function topMainCat(ID, name, category, mainCategory, currency, deadline, 
     return array[0]; 
 }
 
-export { searchItem, insertItem, deleteItem, updateItem, importFile, storeFile, a_top10, a_state_cnt, pledgeBacker, popCat, topCountries, topMainCat };
+export { searchItem, insertItem, deleteItem, updateItem, importFile, storeFile, a_top10, a_state_cnt, pledgeBacker, popCat, topCountries, topMainCategory };
