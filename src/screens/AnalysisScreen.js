@@ -3,7 +3,7 @@ import { Dimensions, Text, Alert, View, ScrollView, StyleSheet, Button, TextInpu
 import { Feather } from '@expo/vector-icons';
 import SearchBar from '../components/SearchBar'
 import AwesomeButton from 'react-native-really-awesome-button';
-import { a_top10, a_state_cnt, pledgeBacker, popCat } from '../components/fetch'
+import { a_top10, a_state_cnt, pledgeBacker, popCat, topCountries } from '../components/fetch'
 import { PieChart, FullOption } from 'react-minimal-pie-chart'
 import { BarChart, LineChart, bezier } from 'react-native-chart-kit'
 
@@ -30,6 +30,7 @@ const AnalysisScreen = ({navigation}) => {
     const [array, setArray] = useState('');
     const [resPledge, setResPledge] = useState('');
     const [popCategory, setPopCategory] = useState('');
+    const [topCo, setTopCo] = useState('');
 
     async function top10() {
         const topResults = await a_top10(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
@@ -58,6 +59,11 @@ const AnalysisScreen = ({navigation}) => {
         setPopCategory(fetchResults);
     }
 
+    async function topCountry() {
+        const fetchResults = await topCountries(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
+        console.log(fetchResults);
+        setTopCo(fetchResults);
+    }
 
     return (
         <ScrollView
@@ -91,82 +97,92 @@ const AnalysisScreen = ({navigation}) => {
                     // onTermSubmit={console.log("submit term")}
                     />
                     <SearchBar
-                        title="Currency"
-                        cyrrency={currency}
-                        onTermChange={setCurrency}
+                        title="State"
+                        cyrrency={state}
+                        onTermChange={setState}
                     // onTermSubmit={console.log("submit term")}
                     />
                 </View>
             </View>
 
-            <AwesomeButton
-                progress
+            <View style={{flex: 1, width: 500, height: 500, alignSelf: 'center', flexDirection: 'row', alignItems: 'flex-start'}}>
+            <View style={{ flex: 1, width: 100, margin: 10, flexGrow: 1, }}>
+            <View style={{flex: 1,height: 100,maxHeight: 100,margin: 10,flexGrow: 1,}} />
+            <Button
+                title="Top 5 Successful Categories"
                 backgroundColor = '#1F618D'
                 backgroundProgress = '#154360'
-                width = {300}
-                onPress={(next) => {
-                    /** Do Something **/
-                    next();
+                onPress={() => {
                     setResults('');
                     setArray('');
                     setPledged('');
                     popularCat();
-                }}
-            >
-                Top 5 Successful Categories
-            </AwesomeButton>
-            <br />
-            <AwesomeButton
-                progress
+                }
+            }/>
+            <View style={{flex: 1, height: 100, maxHeight: 100,margin: 10, }} />
+            <Button
+                title="Top 5 Pledged USD"
                 backgroundColor = '#1F618D'
                 backgroundProgress = '#154360'
-                width = {300}
-                onPress={(next) => {
-                    /** Do Something **/
-                    next();
+                onPress={() => {
                     setResults('');
                     setResPledge('');
                     setPopCategory('');
                     top10();
-                }}
-            >
-                Top 5 Pledged USD
-            </AwesomeButton>
-            <br />
-            <AwesomeButton
-                progress
+                }
+            }/>
+            <View style={{flex: 1, height: 100,margin: 10,}} />
+            <Button
+                title="Success VS Fail"
                 backgroundColor = '#1F618D'
                 backgroundProgress = '#154360'
-                width = {300}
-                onPress={(next) => {
-                    next();
+                onPress={() => {
                     setArray('');
                     setResPledge('');
                     setPopCategory('');
                     stateCount();
-                }}
-            >
-                Success VS Fail
-            </AwesomeButton>
-            <br />
-            <AwesomeButton
-                progress
+                }
+            }/>
+            </View>
+            <View style={{flex: 1, width: 100, margin: 10, flexGrow: 1,}}>
+            <View style={{flex: 1,height: 100,maxHeight: 100,margin: 10,}} />
+            <Button
+                title="Backers VS Pledged"
                 backgroundColor = '#1F618D'
                 backgroundProgress = '#154360'
-                width = {300}
-                onPress={(next) => {
-                    /** Do Something **/
-                    next();
+                onPress={() => {
                     setResults('');
                     setArray('');
                     setPopCategory('');
                     pledgeBackers()
-                }}
-                PaddingBottom = {15}
-            >
-                Backers VS Pledged 
-            </AwesomeButton>
-
+                }
+            }/>
+            <View style={{flex: 1,height: 100,maxHeight: 100,margin: 10,}} />
+            <Button
+                title="Top 5 Coutries"
+                backgroundColor = '#1F618D'
+                backgroundProgress = '#154360'
+                onPress={() => {
+                    setResults('');
+                    setArray('');
+                    setPopCategory('');
+                    setPledged('');
+                    topCountry();
+                }
+            }/>
+            <View style={{flex: 1,height: 100,maxHeight: 100,margin: 10,}} />
+            <Button
+                title="Analysis"
+                backgroundColor = '#1F618D'
+                backgroundProgress = '#154360'
+                onPress={() => {
+                    top10()
+                    stateCount()
+                    //search()
+                }
+            }/>
+            </View>
+            </View>
             <View>
                 <br />
                 {(results.length > 0) && <PieChart
@@ -239,7 +255,7 @@ const AnalysisScreen = ({navigation}) => {
                         }]
                     }}
                     width={Dimensions.get('window').width}
-                    height={500}
+                    height={300}
                     yAxisLabel={'#'}
                     chartConfig={{
                         backgroundColor: '#1cc910',
@@ -250,6 +266,28 @@ const AnalysisScreen = ({navigation}) => {
                     bezier
                 />}
             </View>
+
+            <View>
+                {topCo.length>0 && <LineChart
+                    data={{
+                        labels: topCo.map(item => item[0]),
+                        datasets: [{
+                            data: topCo.map(item => item[1]/1000)
+                        }]
+                    }}
+                    width={Dimensions.get('window').width}
+                    height={500}
+                    yAxisSuffix={'k'}
+                    yAxisLabel={'$'}
+                    chartConfig={{
+                        backgroundColor: '#1cc910',
+                        backgroundGradientFrom: '#eff3ff',
+                        backgroundGradientTo: '#efefef',
+                        color: (opacity = 2) => `rgba(0, 0, 0, ${opacity})`,
+                      }}
+                />}
+            </View>
+
         </ScrollView>
     );
 }
