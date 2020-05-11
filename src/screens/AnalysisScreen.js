@@ -5,7 +5,7 @@ import SearchBar from '../components/SearchBar'
 import AwesomeButton from 'react-native-really-awesome-button';
 import { a_top10, a_state_cnt, pledgeBacker } from '../components/fetch'
 import { PieChart, FullOption } from 'react-minimal-pie-chart'
-import { BarChart } from 'react-native-chart-kit'
+import { BarChart, LineChart } from 'react-native-chart-kit'
 
 const AnalysisScreen = ({navigation}) => {
 
@@ -28,6 +28,8 @@ const AnalysisScreen = ({navigation}) => {
     const [success, setSuccess] = useState('');
     const [fail, setFail] = useState('');
     const [array, setArray] = useState('');
+    const [resPledge, setResPledge] = useState('');
+    const [resBackers, setResBackers] = useState('');
 
     async function top10() {
         const topResults = await a_top10(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
@@ -47,10 +49,16 @@ const AnalysisScreen = ({navigation}) => {
     async function pledgeBackers() {
         const fetchResults = await pledgeBacker(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
         console.log(fetchResults);
-        console.log("inside plegeBackers ");
+        setResPledge(fetchResults);
+        setResBackers(fetchResults[1]);
+        console.log(resPledge);
+        console.log(resBackers);
+
     }
     return (
-        <ScrollView>
+        <ScrollView
+            alignItems = 'center'
+        >
             <View style={styles.container}>
                 <Feather name="search" style={styles.title} />
                 <Text style={styles.title}>Analysis</Text>
@@ -89,6 +97,8 @@ const AnalysisScreen = ({navigation}) => {
 
            <Button
                 title="Analysis"
+                backgroundColor = '#1F618D'
+                backgroundProgress = '#154360'
                 onPress={() => {
                     top10()
                     stateCount()
@@ -102,12 +112,14 @@ const AnalysisScreen = ({navigation}) => {
                 width = {300}
                 onPress={(next) => {
                     next();
-                    stateCount()
+                    setArray('');
+                    setResPledge('');
+                    stateCount();
                 }}
             >
                 Success VS Fail
             </AwesomeButton>
-
+            <br />
             <AwesomeButton
                 progress
                 backgroundColor = '#1F618D'
@@ -116,12 +128,14 @@ const AnalysisScreen = ({navigation}) => {
                 onPress={(next) => {
                     /** Do Something **/
                     next();
-                    top10()
+                    setResults('');
+                    setResPledge('');
+                    top10();
                 }}
             >
                 Top 5 Pledged USD
             </AwesomeButton>
-
+            <br />
             <AwesomeButton
                 progress
                 backgroundColor = '#1F618D'
@@ -130,6 +144,8 @@ const AnalysisScreen = ({navigation}) => {
                 onPress={(next) => {
                     /** Do Something **/
                     next();
+                    setResults('');
+                    setArray('');
                     pledgeBackers()
                 }}
             >
@@ -144,10 +160,7 @@ const AnalysisScreen = ({navigation}) => {
                     animationEasing="ease-out"
                     barRadius={200}
                     label={({ dataEntry }) => `${Math.round(dataEntry.percentage)} %`}
-                    center={[
-                    50,
-                    50
-                    ]}
+                    center={[50,50]}
                     data={[
                         { title: 'success', value: success, color: '#5680BF' },
                         { title: 'fail', value: fail, color: '#B8C0C9' },
@@ -161,7 +174,7 @@ const AnalysisScreen = ({navigation}) => {
                {array.length > 0 && <BarChart
                     // style={graphStyle}
                     data={{
-                        labels: array.map(col => col[0]),
+                        labels: array.map(col => col[2]),
                         datasets: [{
                             data: array.map(col => (col[13]/1000))
                         }]
@@ -180,6 +193,28 @@ const AnalysisScreen = ({navigation}) => {
                       }}
                 />}
             </View>}
+
+            <View>
+                {resPledge.length>0 && <LineChart
+                    data={{
+                        labels: resPledge.map(item => item[1]),
+                        datasets: [{
+                            data: resPledge.map(item => item[0]/1000)
+                        }]
+                    }}
+                    width={Dimensions.get('window').width}
+                    height={500}
+                    yAxisSuffix={'k'}
+                    yAxisLabel={'$'}
+                    xAxisLabel={' backers'}
+                    chartConfig={{
+                        backgroundColor: '#1cc910',
+                        backgroundGradientFrom: '#eff3ff',
+                        backgroundGradientTo: '#efefef',
+                        color: (opacity = 2) => `rgba(0, 0, 0, ${opacity})`,
+                      }}
+                />}
+            </View>
         </ScrollView>
     );
 }
