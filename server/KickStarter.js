@@ -482,5 +482,30 @@ class KickStarter {
         return ret
     }
 
+    popCatCSV(keys,items){
+        let tempKeys = keys.slice()
+        let tempItems = items.slice()
+        let allRows = this.searchCSV(tempKeys, tempItems)
+        let catCount = new Map()
+        let catRow = 2
+        for(let i = 0; i < allRows.length; i++){
+            //if the category exists, increment
+            if(catCount.has(allRows[i][catRow])){
+                catCount.set(allRows[i][catRow], catCount.get(allRows[i][catRow]) + 1)
+            }
+            //else initialize with 1
+            else{
+                catCount.set(allRows[i][catRow], 1)
+            }
+        }
+        //console.log(...catCount)
+        let arrayCat = [...catCount]
+        arrayCat.sort(function(a,b){
+            return b[1] - a[1]
+        })
+        console.log(arrayCat)
+        return arrayCat.slice(0,5)
+    }
+
 }
 exports.KickStarter = KickStarter
