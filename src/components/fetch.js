@@ -231,5 +231,40 @@ async function pledgeBacker(ID, name, category, mainCategory, currency, deadline
     return array[0]; 
 }
 
+async function popCat(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal) {
+    // var url = new URL('http://192.168.1.8:5000/search')
+    var url = new URL('http://localhost:5000/analysis/popCat')
+    var params = {
+        'ID' : ID,
+        'name' : name,
+        'category' : category,
+        'main_category': mainCategory,
+        'currency' : currency,
+        'deadline' : deadline,
+        'goal' : goal,
+        'launched' : launched,
+        'pledged' : pledged,
+        'state' : state,
+        'backers' : backers,
+        'country' : country,
+        'usd pledged' : usdPledged,
+        'usd_pledged_real' : usdPledgedReal,
+        'usd_goal_real' : usdGoalReal
+    } 
+    url.search = new URLSearchParams(params).toString();    
+    let response = await fetch(url);
+    let result = await response.json();
+    let array = [];
+    console.log(response);
+    array.push(result.item[0].data);
+    array.forEach(elements => {
+        elements.forEach(item => {
+            globalArray.push(item);
+        })
+    })
 
-export { searchItem, insertItem, deleteItem, updateItem, importFile, storeFile, a_top10, a_state_cnt, pledgeBacker };
+    return array[0]; 
+}
+
+
+export { searchItem, insertItem, deleteItem, updateItem, importFile, storeFile, a_top10, a_state_cnt, pledgeBacker, popCat };
