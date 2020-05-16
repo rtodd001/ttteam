@@ -482,5 +482,82 @@ class KickStarter {
         return ret
     }
 
+    popCatCSV(keys,items){
+        let tempKeys = keys.slice()
+        let tempItems = items.slice()
+        let allRows = this.searchCSV(tempKeys, tempItems)
+        let catCount = new Map()
+        let catRow = 2
+        for(let i = 0; i < allRows.length; i++){
+            //if the category exists, increment
+            if(catCount.has(allRows[i][catRow])){
+                catCount.set(allRows[i][catRow], catCount.get(allRows[i][catRow]) + 1)
+            }
+            //else initialize with 1
+            else{
+                catCount.set(allRows[i][catRow], 1)
+            }
+        }
+        //console.log(...catCount)
+        let arrayCat = [...catCount]
+        arrayCat.sort(function(a,b){
+            return b[1] - a[1]
+        })
+        //console.log(arrayCat)
+        return arrayCat.slice(0,5)
+    }
+
+    richCountriesCSV(keys, items){
+        let tempKeys = keys.slice()
+        let tempItems = items.slice()
+        let allRows = this.searchCSV(tempKeys, tempItems)
+        let countries = new Map()
+        let contRow = 11
+        let pledgeRealRow = 13
+        for(let i = 0; i < allRows.length; i++){
+            //if the category exists, increment
+            if(countries.has(allRows[i][contRow])){
+                countries.set(allRows[i][contRow], parseFloat(countries.get(allRows[i][contRow])) + parseFloat(allRows[i][pledgeRealRow]))
+            }
+            //else initialize with first number
+            else{
+                countries.set(allRows[i][contRow], parseFloat(allRows[i][pledgeRealRow]))
+            }
+        }
+        //convert to an array of pairs
+        let arrayCountries = [...countries]
+        arrayCountries.sort(function(a,b){
+            return b[1] - a[1]
+        })
+        //console.log(arrayCountries)
+        return arrayCountries.slice(0,5)
+    }
+
+    topMainCatergoryCSV(keys, items){
+        let tempKeys = keys.slice()
+        let tempItems = items.slice()
+        let allRows = this.searchCSV(tempKeys, tempItems)
+        let MainCat = new Map()
+        let contRow = 3
+        let pledgeRealRow = 13
+        for(let i = 0; i < allRows.length; i++){
+            //if the category exists, increment
+            if(MainCat.has(allRows[i][contRow])){
+                MainCat.set(allRows[i][contRow], MainCat.get(allRows[i][contRow]) + parseFloat(allRows[i][pledgeRealRow]))
+            }
+            //else initialize with first number
+            else{
+                MainCat.set(allRows[i][contRow], parseFloat(allRows[i][pledgeRealRow]))
+            }
+        }
+        //convert to an array of pairs
+        let arrayMainCat = [...MainCat]
+        arrayMainCat.sort(function(a,b){
+            return b[1] - a[1]
+        })
+        console.log(arrayMainCat)
+        return arrayMainCat.slice(0,5)
+    }
+
 }
 exports.KickStarter = KickStarter
