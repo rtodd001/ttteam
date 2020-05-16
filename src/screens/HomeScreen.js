@@ -1,30 +1,48 @@
 import React from 'react';
-import {Button, useState, Text, View, StyleSheet, Image, Dimensions} from 'react-native';
+import { Button, useState, Text, View, StyleSheet, Image, Dimensions } from 'react-native';
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({ navigation }) => {
+    console.log(Dimensions.get('window').width);
+    return <View style={styles.container}>
 
-    return <View>
-        <Image style={{resizeMode: 'center', width:Dimensions.get('window').width, height:200}}source={require('../../assets/ttteamLogo.jpg')}/>
-
-        {/* <Text style={styles.title}>TTTEAM KickStarter Projects Analytics</Text> */}
-
-        <Button
-            title="Search"
-            onPress={() => navigation.navigate('Search')}
+        <Image style={styles.logo}
+            source={require('../../assets/ttteamLogo.jpg')}
         />
-        <Button
-            title="Analysis"
-            onPress={() => navigation.navigate('Analysis')}
-        />
+
+        <View style={{ paddingHorizontal: 20, paddingVertical: 5 }}>
+            <Button style={styles.button}
+                title="Search"
+                onPress={() => navigation.navigate('Search')}
+            />
+        </View>
+
+        <View style={{ paddingHorizontal: 20, paddingVertical: 5 }}>
+            <Button style={styles.button}
+                title="Analysis"
+                onPress={() => navigation.navigate('Analysis')}
+            />
+        </View>
+
+
     </View>
 };
 
 const styles = StyleSheet.create({
-    title: {
-        fontSize: 20,
-        textAlign: "center",
-        paddingVertical: 15,
-        backgroundColor: 'rgb(153, 102, 255)'
+    container: {
+        flex: 1,
+        flexDirection: 'column',
+        alignItems: 'stretch',
+        padding: 10,
+    },
+    logo: {
+        flex: 1,
+        resizeMode: 'center',
+        maxHeight: 200,
+    },
+    button: {
+        flex: 1,
+        height: 30,
+        maxWidth: 150
     }
 });
 export default HomeScreen;

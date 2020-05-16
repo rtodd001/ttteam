@@ -1,11 +1,13 @@
 import React, { useState, useEffect, Fragment } from 'react'
-import { Text, Alert, View, ScrollView, StyleSheet, Button, TextInput, Picker } from 'react-native'
+import { Text, Alert, View, ScrollView, StyleSheet, Button, TextInput, Picker, Dimensions } from 'react-native'
 import { Table, TableWrapper, Row } from 'react-native-table-component';
 import { PieChart, FullOption } from 'react-minimal-pie-chart'
 import { Feather } from '@expo/vector-icons';
 import Input from '../components/Input'
 import SearchBar from '../components/SearchBar'
 import { globalArray } from '../components/Global'
+import DropdownList from '../components/DropdownList'
+import { Dropdown } from 'react-native-material-dropdown';
 import { searchItem, insertItem, deleteItem, updateItem, importFile, storeFile, a_top10 } from '../components/fetch'
 
 const SearchScreen = () => {
@@ -28,7 +30,7 @@ const SearchScreen = () => {
     const [results, setResults] = useState([]);
     const [text, setText] = useState('');
     const [sortOrder, setSortOrder] = useState('');
-
+    
 
 
     async function search() {
@@ -107,15 +109,16 @@ const SearchScreen = () => {
         }
     }
     // console.log('67', results);
-
+    console.log(Dimensions.get('window').width);
+    const titleCss =  (Dimensions.get('window').width > 600) ? styles.title : styles.title2;
     return (
         <ScrollView>
-            <View style={styles.container}>
-                <Feather name="search" style={styles.title} />
+            <View title='root' style={styles.container}>
+                <Feather name="search" style={titleCss} />
                 <Text style={styles.title}>Search Fields</Text>
             </View>
             <View class='search-bar-container'>
-                <View style={styles.container}>
+                <View title='IDButton' style={styles.container}>
                     <SearchBar
                         title="ID"
                         ID={ID}
@@ -500,6 +503,7 @@ const SearchScreen = () => {
                 </ScrollView>
 
             </View>
+
         </ScrollView>
 
     );
@@ -508,7 +512,14 @@ const SearchScreen = () => {
 const styles = StyleSheet.create({
     title: {
         justifyContent: 'center',
-        fontSize: 40
+        fontSize: 40,
+        fontColor: 'red',
+        backgroundColor: 'red',
+    },
+    title2: {
+        fontSize: 20,
+        fontColor: 'blue',
+        backgroundColor: 'blue',
     },
     container: {
         flex: 2,
