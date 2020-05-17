@@ -12,7 +12,11 @@ const HomeScreen = ({ navigation }) => {
         <View style={{ paddingHorizontal: 20, paddingVertical: 5 }}>
             <Button style={styles.button}
                 title="Search"
-                onPress={() => navigation.navigate('Search')}
+                onPress={(e) => {
+                    console.log(e);
+                    e.preventDefault();
+                  return  navigation.navigate('Search')
+                }}
             />
         </View>
 
