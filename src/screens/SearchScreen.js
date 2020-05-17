@@ -33,9 +33,7 @@ const SearchScreen = () => {
     const [results, setResults] = useState([]);
     const [text, setText] = useState('');
     const [sortOrder, setSortOrder] = useState('');
-    const [toggleCheckBox, setToggleCheckBox] = useState(false)
-
-
+    const [checkBoxSet, setCheckBoxSet] = useState(new Set())
 
 
     async function search() {
@@ -117,8 +115,21 @@ const SearchScreen = () => {
     console.log(Dimensions.get('window').width);
     const titleCss = (Dimensions.get('window').width > 600) ? styles.title : styles.title2;
 
-    const categoryList = ['Art', 'Food', 'Techonology'];
+    const subCategoryList = ['Apparel', 'Apps', 'Art', 'Comics', 'Documentary', 'Fashion', 'Fiction',
+        'Film & Video', 'Games', 'Product Design', 'Rock', 'Video Games'];
+    const currencyList = ['AUD','CAD','EUR','GBP','MXN','USD'];
+    const stateList = ['failed', 'successful', 'canceled'];
 
+    function toggleCheckBox(id) {
+        console.log(checkBoxSet);
+        const clonedSet = new Set(checkBoxSet);
+        if (clonedSet.has(id)) {
+            clonedSet.delete(id);
+        } else {
+            clonedSet.add(id);
+        }
+        setCheckBoxSet(clonedSet);
+    }
 
     return (
         <View style={styles.container1}>
@@ -157,39 +168,38 @@ const SearchScreen = () => {
                 <View style={{ paddingHorizontal: 20, paddingVertical: 5 }}>
 
                     <View style={styles.searchField}>
-                        <SearchBar
-                            title="Name"
-                            name={name}
-                            onTermChange={setName}
+                        <TextInput style={{fontSize: 18, backgroundColor:'#deddd9'}}
+                            placeholder='Search Name'
+                            value={name}
+                            onChangeText={setName}
                         // onTermSubmit={console.log("submit term")}
                         />
                     </View>
 
-
                     <View style={styles.searchField}>
                         <PickerList
-
+                            title="Category"
                             activeLabel={category}
-                            listLabels={categoryList}
+                            listLabels={subCategoryList}
                             onChange={setCategory}
                         />
                     </View>
 
                     <View style={styles.searchField}>
-                        <SearchBar
-                            title="Category"
-                            category={category}
-                            onTermChange={setCategory}
-                        // onTermSubmit={console.log("submit term")}
+                        <PickerList
+                            title="Currency"
+                            activeLabel={currency}
+                            listLabels={currencyList}
+                            onChange={setCurrency}
                         />
                     </View>
 
                     <View style={styles.searchField}>
-                        <SearchBar
+                        <PickerList
                             title="State"
-                            state={state}
-                            onTermChange={setState}
-                        // onTermSubmit={console.log("submit term")}
+                            activeLabel={state}
+                            listLabels={stateList}
+                            onChange={setState}
                         />
                     </View>
 
@@ -335,6 +345,7 @@ const SearchScreen = () => {
                         <Button style={styles.buttons}
                             title="Insert"
                             disabled={name.length < 1}
+                            color='green'
                             onPress={() => {
                                 insert()
                                 alert('INSERT SUMITTED');
@@ -344,7 +355,8 @@ const SearchScreen = () => {
                     <View style={{ flex: 1, padding: 5 }}>
                         <Button style={styles.buttons}
                             title="Delete"
-                            disabled={!toggleCheckBox}
+                            color='red'
+                            disabled={checkBoxSet.size < 1}
                             onPress={() => {
                                 delete_()
                             }}
@@ -579,10 +591,9 @@ const SearchScreen = () => {
                                     results.map((item, index) => (
                                         <tr key={index} >
                                             <td>
-                                               <CheckBox
-                                                    value={toggleCheckBox}
-                                                    onValueChange={setToggleCheckBox}
-                                                    // style={styles.checkbox}
+                                                <CheckBox
+                                                    value={checkBoxSet.has(item[0])}
+                                                    onValueChange={() => toggleCheckBox(item[0])}
                                                 />
                                             </td>
                                             <td>{item[1]}</td>
@@ -661,7 +672,6 @@ const styles = StyleSheet.create({
         height: 30,
         border: 1
     },
-
 });
 
 export default SearchScreen;
