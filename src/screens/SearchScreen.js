@@ -157,9 +157,20 @@ const SearchScreen = () => {
                         <Button
                             color="#1B2669"
                             title="Store"
+                            disabled
                             onPress={() => {
                                 store_()
                                 alert('Stored the File');
+                            }}
+                        />
+                    </View>
+                    <View style={{ flex: 1, padding: 5 }}>
+                        <Button
+                            color='orange'
+                            title="Update"
+                            onPress={() => {
+                                update_()
+                                alert('Updated the File');
                             }}
                         />
                     </View>
@@ -437,7 +448,9 @@ const SearchScreen = () => {
                                 <tr>
                                     <th>
                                         <Button
-                                            title='ID:'
+                                            title='☑'
+                                            
+                                            disabled
                                             onPress={() => {
                                                 console.log("pushed!")
                                                 sortBy('ID')
@@ -630,8 +643,8 @@ const SearchScreen = () => {
 const styles = StyleSheet.create({
     title2: {
         fontSize: 20,
-        fontColor: 'blue',
-        backgroundColor: 'blue',
+        // fontColor: '#2834b8',
+        backgroundColor: '#2834b8',
     },
     container: {
         flex: 2,
@@ -670,7 +683,7 @@ const styles = StyleSheet.create({
     buttons: {
         flex: 1,
         height: 30,
-        border: 1
+        // border: 1
     },
 });
 
