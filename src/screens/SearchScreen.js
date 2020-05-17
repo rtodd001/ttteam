@@ -6,8 +6,8 @@ import { Feather } from '@expo/vector-icons';
 import Input from '../components/Input'
 import SearchBar from '../components/SearchBar'
 import { globalArray } from '../components/Global'
-import DropdownList from '../components/DropdownList'
-import { Dropdown } from 'react-native-material-dropdown';
+// import DropdownList from '../components/DropdownList'
+// import { Dropdown } from 'react-native-material-dropdown';
 import { searchItem, insertItem, deleteItem, updateItem, importFile, storeFile, a_top10 } from '../components/fetch'
 
 const SearchScreen = () => {
@@ -30,7 +30,7 @@ const SearchScreen = () => {
     const [results, setResults] = useState([]);
     const [text, setText] = useState('');
     const [sortOrder, setSortOrder] = useState('');
-    
+
 
 
     async function search() {
@@ -110,117 +110,186 @@ const SearchScreen = () => {
     }
     // console.log('67', results);
     console.log(Dimensions.get('window').width);
-    const titleCss =  (Dimensions.get('window').width > 600) ? styles.title : styles.title2;
+    const titleCss = (Dimensions.get('window').width > 600) ? styles.title : styles.title2;
+
     return (
-        <ScrollView>
-            <View title='root' style={styles.container}>
-                <Feather name="search" style={titleCss} />
-                <Text style={styles.title}>Search Fields</Text>
-            </View>
-            <View class='search-bar-container'>
-                <View title='IDButton' style={styles.container}>
-                    <SearchBar
-                        title="ID"
-                        ID={ID}
-                        onTermChange={setID}
-                    // onTermSubmit={console.log("submit term")}
-                    />
-                    <SearchBar
-                        title="Name"
-                        name={name}
-                        onTermChange={setName}
-                    // onTermSubmit={console.log("submit term")}
-                    />
+        <View style={styles.container1}>
+
+            <ScrollView>
+
+                <View style={styles.header1}>
+                    {/* <Feather style={{flex: 1, fontSize: 40, alignSelf: 'right'}}name="search"/> */}
+                    <Text style={styles.headerText}>Search</Text>
                 </View>
-                <View style={styles.container}>
-                    <SearchBar
-                        title="Category"
-                        category={category}
-                        onTermChange={setCategory}
-                    // onTermSubmit={console.log("submit term")}
-                    />
-                    <SearchBar
-                        title="MainCategory"
-                        mainCategory={mainCategory}
-                        onTermChange={setMainCategory}
-                    // onTermSubmit={console.log("submit term")}
-                    />
+                <View style={{ flexDirection: 'row' }}>
+                    <View style={{ flex: 1, padding: 5 }}>
+                        <Button
+                            color="#1B2669"
+                            title="Import"
+                            onPress={() => {
+                                console.log(text)
+                                import_()
+                                alert('Imported the File');
+                            }}
+                        />
+                    </View>
+
+                    <View style={{ flex: 1, padding: 5 }}>
+                        <Button
+                            color="#1B2669"
+                            title="Store"
+                            onPress={() => {
+                                store_()
+                                alert('Stored the File');
+                            }}
+                        />
+                    </View>
                 </View>
 
-                <View style={styles.container}>
-                    <SearchBar
-                        title="Currency"
-                        currency={currency}
-                        onTermChange={setCurrency}
-                    // onTermSubmit={console.log("submit term")}
-                    />
-                    <SearchBar
-                        title="Deadline"
-                        deadline={deadline}
-                        onTermChange={setDeadline}
-                    // onTermSubmit={console.log("submit term")}
-                    />
+                <View style={{ paddingHorizontal: 20, paddingVertical: 5 }}>
+
+                    <View style={styles.searchField}>
+                        <SearchBar
+                            title="MainCategory"
+                            mainCategory={mainCategory}
+                            onTermChange={setMainCategory}
+                        // onTermSubmit={console.log("submit term")}
+                        />
+                    </View>
+
+                    <View style={styles.searchField}>
+                        <SearchBar
+                            title="Category"
+                            category={category}
+                            onTermChange={setCategory}
+                        // onTermSubmit={console.log("submit term")}
+                        />
+                    </View>
+
+                    <View style={styles.searchField}>
+                        <SearchBar
+                            title="State"
+                            state={state}
+                            onTermChange={setState}
+                        // onTermSubmit={console.log("submit term")}
+                        />
+                    </View>
+
+                    <View style={styles.searchField}>
+                        <SearchBar
+                            title="Backers"
+                            backers={backers}
+                            onTermChange={setBackers}
+                        // onTermSubmit={console.log("submit term")}
+                        />
+                    </View>
                 </View>
 
-                <View style={styles.container}>
-                    <SearchBar
-                        title="Goal"
-                        goal={goal}
-                        onTermChange={setGoal}
-                    // onTermSubmit={console.log("submit term")}
-                    />
-                    <SearchBar
-                        title="Launched"
-                        launched={launched}
-                        onTermChange={setLaunched}
-                    // onTermSubmit={console.log("submit term")}
-                    />
-                </View>
 
-                <View style={styles.container}>
-                    <SearchBar
-                        title="Pledged"
-                        pledged={pledged}
-                        onTermChange={setPledged}
-                    // onTermSubmit={console.log("submit term")}
-                    />
-                    <SearchBar
-                        title="State"
-                        state={state}
-                        onTermChange={setState}
-                    // onTermSubmit={console.log("submit term")}
-                    />
-                </View>
+                {/* <View class='search-bar-container'>
+                    <View title='IDButton' style={styles.container}>
+                        <SearchBar
+                            title="ID"
+                            ID={ID}
+                            onTermChange={setID}
+                        // onTermSubmit={console.log("submit term")}
+                        />
+                        <SearchBar
+                            title="Name"
+                            name={name}
+                            onTermChange={setName}
+                        // onTermSubmit={console.log("submit term")}
+                        />
+                    </View>
+                    <View style={styles.container}>
+                        <SearchBar
+                            title="Category"
+                            category={category}
+                            onTermChange={setCategory}
+                        // onTermSubmit={console.log("submit term")}
+                        />
+                        <SearchBar
+                            title="MainCategory"
+                            mainCategory={mainCategory}
+                            onTermChange={setMainCategory}
+                        // onTermSubmit={console.log("submit term")}
+                        />
+                    </View>
 
-                <View style={styles.container}>
-                    <SearchBar
-                        title="Country"
-                        country={country}
-                        onTermChange={setCountry}
-                    // onTermSubmit={console.log("submit term")}
-                    />
-                    <SearchBar
-                        title="Backers"
-                        backers={backers}
-                        onTermChange={setBackers}
-                    // onTermSubmit={console.log("submit term")}
-                    />
-                </View>
+                    <View style={styles.container}>
+                        <SearchBar
+                            title="Currency"
+                            currency={currency}
+                            onTermChange={setCurrency}
+                        // onTermSubmit={console.log("submit term")}
+                        />
+                        <SearchBar
+                            title="Deadline"
+                            deadline={deadline}
+                            onTermChange={setDeadline}
+                        // onTermSubmit={console.log("submit term")}
+                        />
+                    </View>
 
-                <View style={styles.container}>
-                    <SearchBar
-                        title="UsdPledged"
-                        usdPledged={usdPledged}
-                        onTermChange={setUsdPledged}
-                    // onTermSubmit={console.log("submit term")}
-                    />
-                    <SearchBar
-                        title="UsdPledgedReal"
-                        usdPledgedReal={usdPledgedReal}
-                        onTermChange={setUsdPledgedReal}
-                    // onTermSubmit={console.log("submit term")}
-                    />
-                </View>
+                    <View style={styles.container}>
+                        <SearchBar
+                            title="Goal"
+                            goal={goal}
+                            onTermChange={setGoal}
+                        // onTermSubmit={console.log("submit term")}
+                        />
+                        <SearchBar
+                            title="Launched"
+                            launched={launched}
+                            onTermChange={setLaunched}
+                        // onTermSubmit={console.log("submit term")}
+                        />
+                    </View>
+
+                    <View style={styles.container}>
+                        <SearchBar
+                            title="Pledged"
+                            pledged={pledged}
+                            onTermChange={setPledged}
+                        // onTermSubmit={console.log("submit term")}
+                        />
+                        <SearchBar
+                            title="State"
+                            state={state}
+                            onTermChange={setState}
+                        // onTermSubmit={console.log("submit term")}
+                        />
+                    </View>
+
+                    <View style={styles.container}>
+                        <SearchBar
+                            title="Country"
+                            country={country}
+                            onTermChange={setCountry}
+                        // onTermSubmit={console.log("submit term")}
+                        />
+                        <SearchBar
+                            title="Backers"
+                            backers={backers}
+                            onTermChange={setBackers}
+                        // onTermSubmit={console.log("submit term")}
+                        />
+                    </View>
+
+                    <View style={styles.container}>
+                        <SearchBar
+                            title="UsdPledged"
+                            usdPledged={usdPledged}
+                            onTermChange={setUsdPledged}
+                        // onTermSubmit={console.log("submit term")}
+                        />
+                        <SearchBar
+                            title="UsdPledgedReal"
+                            usdPledgedReal={usdPledgedReal}
+                            onTermChange={setUsdPledgedReal}
+                        // onTermSubmit={console.log("submit term")}
+                        />
+                    </View> */}
                 {/*
                 <View style={styles.container}>
                     <Picker
@@ -233,34 +302,54 @@ const SearchScreen = () => {
                     </Picker>
                 </View>
                 */}
-            </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                <Button
-                    title="Search"
-                    onPress={() => {
-                        search()
-                        console.log('Button clicked!');
-                    }
-                    }
-                />
-            </View>
-            {/* Commenting out all other buttons */}
-            {/*
-            <Button
-                title="Insert"
-                onPress={() => {
-                    insert()
-                    alert('INSERT SUMITTED');
-                }
-            }
-            />
-            <Button
-                title="Update"
-                onPress={() => {
-                    update()
-                }
-            }
-            />
+
+                <View style={{ flexDirection: 'row' }}>
+                    <View style={{ flex: 1, padding: 5 }}>
+                        <Button style={styles.buttons}
+                            title="Search"
+                            onPress={() => {
+                                search()
+                                console.log('Button clicked!');
+                            }}
+                        />
+                    </View>
+                    <View style={{ flex: 1, padding: 5 }}>
+                        <Button style={styles.buttons}
+                            title="Insert"
+                            onPress={() => {
+                                insert()
+                                alert('INSERT SUMITTED');
+                            }}
+                        />
+                    </View>
+                    <View style={{ flex: 1, padding: 5 }}>
+                        <Button style={styles.buttons}
+                            title="Delete"
+                            disabled
+                            onPress={() => {
+                                delete_()
+                            }}
+                        />
+                    </View>
+
+                </View>
+
+                {/* <Button style={styles.buttons}
+                        title="Insert"
+                        onPress={() => {
+                            insert()
+                            alert('INSERT SUMITTED');
+                        }}
+                    />
+                    
+                    
+                     */}
+
+
+                {/* Commenting out all other buttons */}
+                {/*
+            
+            <
     
             <Text>Enter Delete Fields</Text>
             <SearchBar
@@ -269,13 +358,7 @@ const SearchScreen = () => {
                 onTermChange={setID}
                 // onTermSubmit={console.log("submit term")}
             />
-            <Button
-                title="Delete"
-                onPress={() => {
-                    delete_()
-                }
-            }
-        />
+            
             <TextInput
                 style={{height: 40}}
                 placeholder="File Name"
@@ -301,8 +384,8 @@ const SearchScreen = () => {
             />
             */}
 
-            <View>
-                {/* {results.length > 0 && <PieChart
+                <View>
+                    {/* {results.length > 0 && <PieChart
                     animate
                     animationDuration={1000}
                     animationEasing="ease-out"
@@ -316,206 +399,201 @@ const SearchScreen = () => {
                         { title: 'Three', value: 20, color: '#6A2135' },
                     ]}
                 />} */}
-                <ScrollView horizontal={true} scrollEnabled={true}>
+                    <ScrollView horizontal={true} scrollEnabled={true}>
 
-                    {results.length > 0 && <table>
-                        <tbody>
-                            <tr>
-                                <th>
-                                    <Button
-                                        title='ID:'
-                                        onPress={() => {
-                                            console.log("pushed!")
-                                            sortBy('ID')
-                                        }
-                                        }
-                                    />
-                                </th>
+                        {results.length > 0 && <table>
+                            <tbody>
+                                <tr>
+                                    <th>
+                                        <Button
+                                            title='ID:'
+                                            onPress={() => {
+                                                console.log("pushed!")
+                                                sortBy('ID')
+                                            }
+                                            }
+                                        />
+                                    </th>
 
-                                <th>
-                                    <Button
-                                        title='NAME:'
-                                        onPress={() => {
-                                            console.log("pushed!")
-                                            sortBy('NAME')
-                                        }
-                                        }
-                                    />
-                                </th>
-                                <th>
-                                    <Button
-                                        title='CATEGORY:'
-                                        onPress={() => {
-                                            console.log("pushed!")
-                                            sortBy('CATEGORY')
-                                        }
-                                        }
-                                    />
-                                </th>
-                                <th>
-                                    <Button
-                                        title='MAIN_CATEGORY:'
-                                        onPress={() => {
-                                            console.log("pushed!")
-                                            sortBy('MAIN_CATEGORY')
-                                        }
-                                        }
-                                    />
-                                </th>
-                                <th>
-                                    <Button
-                                        title='CURRENCY:'
-                                        onPress={() => {
-                                            console.log("pushed!")
-                                            sortBy('CURRENCY')
-                                        }
-                                        }
-                                    />
-                                </th>
-                                <th>
-                                    <Button
-                                        title='DEADLINE:'
-                                        onPress={() => {
-                                            console.log("pushed!")
-                                            sortBy('DEADLINE')
-                                        }
-                                        }
-                                    />
-                                </th>
-                                <th>
-                                    <Button
-                                        title='GOAL:'
-                                        onPress={() => {
-                                            console.log("pushed!")
-                                            sortBy('GOAL')
-                                        }
-                                        }
-                                    />
-                                </th>
-                                <th>
-                                    <Button
-                                        title='LAUNCHED:'
-                                        onPress={() => {
-                                            console.log("pushed!")
-                                            sortBy('LAUNCHED')
-                                        }
-                                        }
-                                    />
-                                </th>
-                                <th>
-                                    <Button
-                                        title='PLEDGED:'
-                                        onPress={() => {
-                                            console.log("pushed!")
-                                            sortBy('PLEDGED')
-                                        }
-                                        }
-                                    />
-                                </th>
-                                <th>
-                                    <Button
-                                        title='STATE:'
-                                        onPress={() => {
-                                            console.log("pushed!")
-                                            sortBy('STATE')
-                                        }
-                                        }
-                                    />
-                                </th>
-                                <th>
-                                    <Button
-                                        title='BACKERS:'
-                                        onPress={() => {
-                                            console.log("pushed!")
-                                            sortBy('BACKERS')
-                                        }
-                                        }
-                                    />
-                                </th>
-                                <th>
-                                    <Button
-                                        title='COUNTRY:'
-                                        onPress={() => {
-                                            console.log("pushed!")
-                                            sortBy('COUNTRY')
-                                        }
-                                        }
-                                    />
-                                </th>
-                                <th>
-                                    <Button
-                                        title='USD PLEDGE:'
-                                        onPress={() => {
-                                            console.log("pushed!")
-                                            sortBy('USD_PLEDGE')
-                                        }
-                                        }
-                                    />
-                                </th>
-                                <th>
-                                    <Button
-                                        title='USD PLEDGE REAL:'
-                                        onPress={() => {
-                                            console.log("pushed!")
-                                            sortBy('USD_PLEDGE_REAL')
-                                        }
-                                        }
-                                    />
-                                </th>
-                                <th>
-                                    <Button
-                                        title='USD GOAL REAL:'
-                                        onPress={() => {
-                                            console.log("pushed!")
-                                            sortBy('USD_GOAL_REAL')
-                                        }
-                                        }
-                                    />
-                                </th>
-                            </tr>
-                            {
-                                results.map((item, index) => (
-                                    <tr key={index} >
-                                        <td>
-                                            <TextInput value={item[0]} /*onChange={}*/ />
-                                        </td>
-                                        <td>{item[1]}</td>
-                                        <td>{item[2]}</td>
-                                        <td>{item[3]}</td>
-                                        <td>{item[4]}</td>
-                                        <td>{item[5]}</td>
-                                        <td>{item[6]}</td>
-                                        <td>{item[7]}</td>
-                                        <td>{item[8]}</td>
-                                        <td>{item[9]}</td>
-                                        <td>{item[10]}</td>
-                                        <td>{item[11]}</td>
-                                        <td>{item[12]}</td>
-                                        <td>{item[13]}</td>
-                                        <td>{item[14]}</td>
-                                    </tr>
-                                ))
-                            }
-                        </tbody>
+                                    <th>
+                                        <Button
+                                            title='NAME:'
+                                            onPress={() => {
+                                                console.log("pushed!")
+                                                sortBy('NAME')
+                                            }
+                                            }
+                                        />
+                                    </th>
+                                    <th>
+                                        <Button
+                                            title='CATEGORY:'
+                                            onPress={() => {
+                                                console.log("pushed!")
+                                                sortBy('CATEGORY')
+                                            }
+                                            }
+                                        />
+                                    </th>
+                                    <th>
+                                        <Button
+                                            title='MAIN_CATEGORY:'
+                                            onPress={() => {
+                                                console.log("pushed!")
+                                                sortBy('MAIN_CATEGORY')
+                                            }
+                                            }
+                                        />
+                                    </th>
+                                    <th>
+                                        <Button
+                                            title='CURRENCY:'
+                                            onPress={() => {
+                                                console.log("pushed!")
+                                                sortBy('CURRENCY')
+                                            }
+                                            }
+                                        />
+                                    </th>
+                                    <th>
+                                        <Button
+                                            title='DEADLINE:'
+                                            onPress={() => {
+                                                console.log("pushed!")
+                                                sortBy('DEADLINE')
+                                            }
+                                            }
+                                        />
+                                    </th>
+                                    <th>
+                                        <Button
+                                            title='GOAL:'
+                                            onPress={() => {
+                                                console.log("pushed!")
+                                                sortBy('GOAL')
+                                            }
+                                            }
+                                        />
+                                    </th>
+                                    <th>
+                                        <Button
+                                            title='LAUNCHED:'
+                                            onPress={() => {
+                                                console.log("pushed!")
+                                                sortBy('LAUNCHED')
+                                            }
+                                            }
+                                        />
+                                    </th>
+                                    <th>
+                                        <Button
+                                            title='PLEDGED:'
+                                            onPress={() => {
+                                                console.log("pushed!")
+                                                sortBy('PLEDGED')
+                                            }
+                                            }
+                                        />
+                                    </th>
+                                    <th>
+                                        <Button
+                                            title='STATE:'
+                                            onPress={() => {
+                                                console.log("pushed!")
+                                                sortBy('STATE')
+                                            }
+                                            }
+                                        />
+                                    </th>
+                                    <th>
+                                        <Button
+                                            title='BACKERS:'
+                                            onPress={() => {
+                                                console.log("pushed!")
+                                                sortBy('BACKERS')
+                                            }
+                                            }
+                                        />
+                                    </th>
+                                    <th>
+                                        <Button
+                                            title='COUNTRY:'
+                                            onPress={() => {
+                                                console.log("pushed!")
+                                                sortBy('COUNTRY')
+                                            }
+                                            }
+                                        />
+                                    </th>
+                                    <th>
+                                        <Button
+                                            title='USD PLEDGE:'
+                                            onPress={() => {
+                                                console.log("pushed!")
+                                                sortBy('USD_PLEDGE')
+                                            }
+                                            }
+                                        />
+                                    </th>
+                                    <th>
+                                        <Button
+                                            title='USD PLEDGE REAL:'
+                                            onPress={() => {
+                                                console.log("pushed!")
+                                                sortBy('USD_PLEDGE_REAL')
+                                            }
+                                            }
+                                        />
+                                    </th>
+                                    <th>
+                                        <Button
+                                            title='USD GOAL REAL:'
+                                            onPress={() => {
+                                                console.log("pushed!")
+                                                sortBy('USD_GOAL_REAL')
+                                            }
+                                            }
+                                        />
+                                    </th>
+                                </tr>
+                                {
+                                    results.map((item, index) => (
+                                        <tr key={index} >
+                                            <td>
+                                                <TextInput value={item[0]} /*onChange={}*/ />
+                                            </td>
+                                            <td>{item[1]}</td>
+                                            <td>{item[2]}</td>
+                                            <td>{item[3]}</td>
+                                            <td>{item[4]}</td>
+                                            <td>{item[5]}</td>
+                                            <td>{item[6]}</td>
+                                            <td>{item[7]}</td>
+                                            <td>{item[8]}</td>
+                                            <td>{item[9]}</td>
+                                            <td>{item[10]}</td>
+                                            <td>{item[11]}</td>
+                                            <td>{item[12]}</td>
+                                            <td>{item[13]}</td>
+                                            <td>{item[14]}</td>
+                                        </tr>
+                                    ))
+                                }
+                            </tbody>
 
-                    </table>}
+                        </table>}
 
-                </ScrollView>
+                    </ScrollView>
 
-            </View>
+                </View>
 
-        </ScrollView>
+            </ScrollView>
+        </View>
 
     );
 }
 
 const styles = StyleSheet.create({
-    title: {
-        justifyContent: 'center',
-        fontSize: 40,
-        fontColor: 'red',
-        backgroundColor: 'red',
-    },
     title2: {
         fontSize: 20,
         fontColor: 'blue',
@@ -533,7 +611,31 @@ const styles = StyleSheet.create({
     header: { height: 50, backgroundColor: '#537791' },
     text: { textAlign: 'center', fontWeight: '100' },
     dataWrapper: { marginTop: -1 },
-    row: { height: 40, backgroundColor: '#E7E6E1' }
+    row: { height: 40, backgroundColor: '#E7E6E1' },
+
+    container1: {
+        flex: 1,
+        flexDirection: 'column',
+        alignItems: 'stretch',
+        padding: 10,
+    },
+    header1: {
+        flex: 1,
+        flexDirection: 'row'
+    },
+    headerText: {
+        textAlign: 'center',
+        fontSize: 40,
+        flex: 1,
+    },
+    searchField: {
+        flex: 1,
+        height: 30,
+    },
+    buttons: {
+        flex: 1,
+        height: 30,
+    }
 });
 
 export default SearchScreen;
