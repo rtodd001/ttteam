@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react'
-import { Text, Alert, View, ScrollView, StyleSheet, Button, TextInput, Picker, Dimensions } from 'react-native'
+import { Text, Alert, View, ScrollView, StyleSheet, Button, TextInput, Dimensions, CheckBox } from 'react-native'
 import { Table, TableWrapper, Row } from 'react-native-table-component';
 import { PieChart, FullOption } from 'react-minimal-pie-chart'
 import { Feather } from '@expo/vector-icons';
@@ -9,6 +9,9 @@ import { globalArray } from '../components/Global'
 // import DropdownList from '../components/DropdownList'
 // import { Dropdown } from 'react-native-material-dropdown';
 import { searchItem, insertItem, deleteItem, updateItem, importFile, storeFile, a_top10 } from '../components/fetch'
+import PickerList from '../components/PickerList';
+// import CheckBox from '@react-native-community/checkbox';
+
 
 const SearchScreen = () => {
 
@@ -30,6 +33,8 @@ const SearchScreen = () => {
     const [results, setResults] = useState([]);
     const [text, setText] = useState('');
     const [sortOrder, setSortOrder] = useState('');
+    const [toggleCheckBox, setToggleCheckBox] = useState(false)
+
 
 
 
@@ -112,6 +117,9 @@ const SearchScreen = () => {
     console.log(Dimensions.get('window').width);
     const titleCss = (Dimensions.get('window').width > 600) ? styles.title : styles.title2;
 
+    const categoryList = ['Art', 'Food', 'Techonology'];
+
+
     return (
         <View style={styles.container1}>
 
@@ -150,10 +158,20 @@ const SearchScreen = () => {
 
                     <View style={styles.searchField}>
                         <SearchBar
-                            title="MainCategory"
-                            mainCategory={mainCategory}
-                            onTermChange={setMainCategory}
+                            title="Name"
+                            name={name}
+                            onTermChange={setName}
                         // onTermSubmit={console.log("submit term")}
+                        />
+                    </View>
+
+
+                    <View style={styles.searchField}>
+                        <PickerList
+
+                            activeLabel={category}
+                            listLabels={categoryList}
+                            onChange={setCategory}
                         />
                     </View>
 
@@ -175,14 +193,14 @@ const SearchScreen = () => {
                         />
                     </View>
 
-                    <View style={styles.searchField}>
+                    {/* <View style={styles.searchField}>
                         <SearchBar
                             title="Backers"
                             backers={backers}
                             onTermChange={setBackers}
                         // onTermSubmit={console.log("submit term")}
                         />
-                    </View>
+                    </View> */}
                 </View>
 
 
@@ -316,6 +334,7 @@ const SearchScreen = () => {
                     <View style={{ flex: 1, padding: 5 }}>
                         <Button style={styles.buttons}
                             title="Insert"
+                            disabled={name.length < 1}
                             onPress={() => {
                                 insert()
                                 alert('INSERT SUMITTED');
@@ -325,7 +344,7 @@ const SearchScreen = () => {
                     <View style={{ flex: 1, padding: 5 }}>
                         <Button style={styles.buttons}
                             title="Delete"
-                            disabled
+                            disabled={!toggleCheckBox}
                             onPress={() => {
                                 delete_()
                             }}
@@ -560,7 +579,11 @@ const SearchScreen = () => {
                                     results.map((item, index) => (
                                         <tr key={index} >
                                             <td>
-                                                <TextInput value={item[0]} /*onChange={}*/ />
+                                               <CheckBox
+                                                    value={toggleCheckBox}
+                                                    onValueChange={setToggleCheckBox}
+                                                    // style={styles.checkbox}
+                                                />
                                             </td>
                                             <td>{item[1]}</td>
                                             <td>{item[2]}</td>
@@ -631,11 +654,14 @@ const styles = StyleSheet.create({
     searchField: {
         flex: 1,
         height: 30,
+        padding: 2,
     },
     buttons: {
         flex: 1,
         height: 30,
-    }
+        border: 1
+    },
+
 });
 
 export default SearchScreen;
