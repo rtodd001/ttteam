@@ -35,6 +35,7 @@ const SearchScreen = () => {
     const [text, setText] = useState('');
     const [sortOrder, setSortOrder] = useState('');
     const [checkBoxSet, setCheckBoxSet] = useState(new Set())
+    const [projectName, setProjectName] = useState('')
 
 
     async function search() {
@@ -52,7 +53,7 @@ const SearchScreen = () => {
     }
 
     async function delete_() {
-        const fetchResults = await deleteItem(checkBoxSet)
+        const fetchResults = await deleteItem(Array.from(checkBoxSet))
     }
 
     async function import_() {
