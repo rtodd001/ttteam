@@ -159,7 +159,7 @@ const SearchScreen = () => {
                         <Button
                             color="#1B2669"
                             title="Store"
-                            disabled
+                            // disabled
                             onPress={() => {
                                 store_()
                                 alert('Stored the File');
@@ -370,7 +370,7 @@ const SearchScreen = () => {
                             title="Delete"
                             color='red'
                             disabled={checkBoxSet.size < 1}
-                            onPress={() => {delete_(),alert("DELETE")}}
+                            onPress={() => {delete_(),alert("DELETE"),search()}}
                         />
                     </View>
 
