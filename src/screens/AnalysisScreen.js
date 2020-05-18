@@ -4,8 +4,8 @@ import { Feather } from '@expo/vector-icons';
 import SearchBar from '../components/SearchBar'
 import AwesomeButton from 'react-native-really-awesome-button';
 import { a_top5, a_state_cnt, pledgeBacker, popCat, topCountries, topMainCategory } from '../components/fetch'
-import { PieChart, FullOption } from 'react-minimal-pie-chart'
-import { BarChart, LineChart, bezier } from 'react-native-chart-kit'
+//import { PieChart, FullOption } from 'react-minimal-pie-chart'
+import { PieChart, BarChart, LineChart, bezier } from 'react-native-chart-kit'
 
 const AnalysisScreen = ({navigation}) => {
 
@@ -73,299 +73,343 @@ const AnalysisScreen = ({navigation}) => {
     }
 
     return (
-        <ScrollView
-            alignItems = 'center'
-        >
-            <View style={styles.container}>
-                <Feather name="search" style={styles.title} />
-                <Text style={styles.title}>Analysis</Text>
-            </View>
-            <View class='search-bar-container'>
-                <View style={styles.container}>
-                    <SearchBar
-                        title="Category"
-                        category={category}
-                        onTermChange={setCategory}
-                    // onTermSubmit={console.log("submit term")}
-                    />
-                    <SearchBar
-                        title="MainCategory"
-                        mainCategory={mainCategory}
-                        onTermChange={setMainCategory}
-                    // onTermSubmit={console.log("submit term")}
-                    />
+        <View style={styles.container1}>
+            <ScrollView
+                alignItems = 'center'
+            >
+                <View style={styles.header1}>
+                    <Text style={styles.headerText}>Analysis</Text>
+                </View>
+                <View class='search-bar-container'>
+                    <View style={styles.container}>
+                        <SearchBar
+                            title="Category"
+                            category={category}
+                            onTermChange={setCategory}
+                        // onTermSubmit={console.log("submit term")}
+                        />
+                        <SearchBar
+                            title="MainCategory"
+                            mainCategory={mainCategory}
+                            onTermChange={setMainCategory}
+                        // onTermSubmit={console.log("submit term")}
+                        />
+                    </View>
+
+                    <View style={styles.container}>
+                        <SearchBar
+                            title="Country"
+                            country={country}
+                            onTermChange={setCountry}
+                        // onTermSubmit={console.log("submit term")}
+                        />
+                        <SearchBar
+                            title="State"
+                            cyrrency={state}
+                            onTermChange={setState}
+                        // onTermSubmit={console.log("submit term")}
+                        />
+                    </View>
                 </View>
 
-                <View style={styles.container}>
-                    <SearchBar
-                        title="Country"
-                        country={country}
-                        onTermChange={setCountry}
-                    // onTermSubmit={console.log("submit term")}
-                    />
-                    <SearchBar
-                        title="State"
-                        cyrrency={state}
-                        onTermChange={setState}
-                    // onTermSubmit={console.log("submit term")}
-                    />
+                <View style={{flex: 1, width: 500, height: 500, alignSelf: 'center', flexDirection: 'row', alignItems: 'flex-start'}}>
+                    <View style={{ flex: 1, width: 100, margin: 10, flexGrow: 1, }}>
+                        <View style={{flex: 1,height: 100,maxHeight: 100,margin: 10,flexGrow: 1,}} />
+                        <Button
+                            title="Top 5 Successful Categories"
+                            backgroundColor = '#1F618D'
+                            backgroundProgress = '#154360'
+                            onPress={() => {
+                                setResults('');
+                                setArray('');
+                                setResPledge('');
+                                setTopCo('');
+                                setTopMainCa('');
+                                popularCat();
+                            }
+                        }/>
+                        <View style={{flex: 1, height: 100, maxHeight: 100,margin: 10, }} />
+                        <Button
+                            title="Top 5 Pledged USD"
+                            backgroundColor = '#1F618D'
+                            backgroundProgress = '#154360'
+                            onPress={() => {
+                                setResults('');
+                                setResPledge('');
+                                setPopCategory('');
+                                setTopCo('');
+                                setTopMainCa('');
+                                top5();
+                            }
+                        }/>
+                        <View style={{flex: 1, height: 100,margin: 10,}} />
+                        <Button
+                            title="Success VS Fail"
+                            backgroundColor = '#1F618D'
+                            backgroundProgress = '#154360'
+                            onPress={() => {
+                                setArray('');
+                                setResPledge('');
+                                setPopCategory('');
+                                setTopCo('');
+                                setTopMainCa('');
+                                stateCount();
+                            }
+                        }/>
+                    </View>
+                    <View style={{flex: 1, width: 100, margin: 10, flexGrow: 1,}}>
+                        <View style={{flex: 1,height: 100,maxHeight: 100,margin: 10,}} />
+                        <Button
+                            title="Top 5 MainCategory"
+                            backgroundColor = '#1F618D'
+                            backgroundProgress = '#154360'
+                            onPress={() => {
+                                setResults('');
+                                setArray('');
+                                setPopCategory('');
+                                setResPledge('');
+                                setTopCo('');
+                                topMainCat()
+                            }
+                        }/>
+                        <View style={{flex: 1,height: 100,maxHeight: 100,margin: 10,}} />
+                        <Button
+                            title="Top 5 Coutries"
+                            backgroundColor = '#1F618D'
+                            backgroundProgress = '#154360'
+                            onPress={() => {
+                                setResults('');
+                                setArray('');
+                                setPopCategory('');
+                                setResPledge('');
+                                setTopMainCa('');
+                                topCountry();
+                            }
+                        }/>
+                        <View style={{flex: 1,height: 100,maxHeight: 100,margin: 10,}} />
+                        <Button
+                            title="Backers VS Pledged"s
+                            backgroundColor = '#1F618D'
+                            backgroundProgress = '#154360'
+                            onPress={() => {
+                                setResults('');
+                                setArray('');
+                                setPopCategory('');
+                                setTopCo('');
+                                setTopMainCa('');
+                                pledgeBackers()
+                            }
+                        }/>
+                    </View>
                 </View>
-            </View>
+                <View style={styles.container1}>
+                    <br />
+                    {(results.length > 0) && <PieChart
+                        //animate 
+                        //animationDuration={1000}
+                        //animationEasing="ease-out"
+                        //label={({ dataEntry }) => `${Math.round(dataEntry.percentage)} %`}
+                        //center={[50,50]}
+                        data={[
+                            { name: 'success', population: success, color: '#5680BF', 
+                            legendFontColor: "#7F7F7F",
+                            legendFontSize: 15 },
+                            { name: 'fail', population: fail, color: '#B8C0C9',
+                            legendFontColor: "#7F7F7F",
+                            legendFontSize: 15 },
+                        ]}
+                        width={Dimensions.get('window').width}
+                        height={220}
+                        chartConfig={{ 
+                            backgroundColor: '#1cc910',
+                            backgroundGradientFrom: '#eff3ff',
+                            backgroundGradientTo: '#efefef',
+                            color: (opacity = 2) => `rgba(0, 0, 0, ${opacity})`,
+                        }}
+                        accessor="population"
+                        backgroundColor="transparent"
+                        paddingLeft="15"
+                        absolute
+                    />    
+                    
+                    }    
+                </View>
+      
+                {<View> 
+                {array.length > 0 && <BarChart
+                        data={{
+                            labels: array.map(col => col[2]),
+                            datasets: [{
+                                data: array.map(col => (col[/*7*/13]/1000))
+                            }]
+                        }}
+                        width={Dimensions.get('window').width} // from react-native
+                        height={300}
+                        style={{ paddingLeft: 20, backgroundColor:'#eff3ff' }}
+                        yAxisLabel={'$'}
+                        yAxisSuffix={'k'}
+                        chartConfig={{
+                            backgroundColor: '#1cc910',
+                            backgroundGradientFrom: '#eff3ff',
+                            backgroundGradientTo: '#efefef',
+                            color: (opacity = 2) => `rgba(0, 0, 0, ${opacity})`,
+                        }}
+                    />}
+                </View>}
 
-            <View style={{flex: 1, width: 500, height: 500, alignSelf: 'center', flexDirection: 'row', alignItems: 'flex-start'}}>
-            <View style={{ flex: 1, width: 100, margin: 10, flexGrow: 1, }}>
-            <View style={{flex: 1,height: 100,maxHeight: 100,margin: 10,flexGrow: 1,}} />
-            <Button
-                title="Top 5 Successful Categories"
-                backgroundColor = '#1F618D'
-                backgroundProgress = '#154360'
-                onPress={() => {
-                    setResults('');
-                    setArray('');
-                    setResPledge('');
-                    setTopCo('');
-                    setTopMainCa('');
-                    popularCat();
-                }
-            }/>
-            <View style={{flex: 1, height: 100, maxHeight: 100,margin: 10, }} />
-            <Button
-                title="Top 5 Pledged USD"
-                backgroundColor = '#1F618D'
-                backgroundProgress = '#154360'
-                onPress={() => {
-                    setResults('');
-                    setResPledge('');
-                    setPopCategory('');
-                    setTopCo('');
-                    setTopMainCa('');
-                    top5();
-                }
-            }/>
-            <View style={{flex: 1, height: 100,margin: 10,}} />
-            <Button
-                title="Success VS Fail"
-                backgroundColor = '#1F618D'
-                backgroundProgress = '#154360'
-                onPress={() => {
-                    setArray('');
-                    setResPledge('');
-                    setPopCategory('');
-                    setTopCo('');
-                    setTopMainCa('');
-                    stateCount();
-                }
-            }/>
-            </View>
-            <View style={{flex: 1, width: 100, margin: 10, flexGrow: 1,}}>
-            <View style={{flex: 1,height: 100,maxHeight: 100,margin: 10,}} />
-            <Button
-                title="Top 5 MainCategory"
-                backgroundColor = '#1F618D'
-                backgroundProgress = '#154360'
-                onPress={() => {
-                    setResults('');
-                    setArray('');
-                    setPopCategory('');
-                    setResPledge('');
-                    setTopCo('');
-                    topMainCat()
-                }
-            }/>
-            <View style={{flex: 1,height: 100,maxHeight: 100,margin: 10,}} />
-            <Button
-                title="Top 5 Coutries"
-                backgroundColor = '#1F618D'
-                backgroundProgress = '#154360'
-                onPress={() => {
-                    setResults('');
-                    setArray('');
-                    setPopCategory('');
-                    setResPledge('');
-                    setTopMainCa('');
-                    topCountry();
-                }
-            }/>
-            <View style={{flex: 1,height: 100,maxHeight: 100,margin: 10,}} />
-            <Button
-                title="Backers VS Pledged"s
-                backgroundColor = '#1F618D'
-                backgroundProgress = '#154360'
-                onPress={() => {
-                    setResults('');
-                    setArray('');
-                    setPopCategory('');
-                    setTopCo('');
-                    setTopMainCa('');
-                    pledgeBackers()
-                }
-            }/>
-            </View>
-            </View>
-            <View>
-                <br />
-                {(results.length > 0) && <PieChart
-                    animate 
-                    animationDuration={1000}
-                    animationEasing="ease-out"
-                    label={({ dataEntry }) => `${Math.round(dataEntry.percentage)} %`}
-                    center={[50,50]}
-                    data={[
-                        { name: 'success', value: success, color: '#5680BF' },
-                        { name: 'fail', value: fail, color: '#B8C0C9' },
-                    ]}
-                />              
-                }    
-            </View>
-            <View>{results.length>0 &&  <Text style={{color:'#5680BF',  textAlign: 'center'}}>SUCCESS %</Text>}</View>
-            <View>{results.length>0 &&  <Text style={{color:'#B8C0C9',  textAlign: 'center'}}>FAIL %</Text>}</View>
-            {<View> 
-               {array.length > 0 && <BarChart
-                    data={{
-                        labels: array.map(col => col[2]),
-                        datasets: [{
-                            data: array.map(col => (col[7]/1000))
-                        }]
-                    }}
-                    width={Dimensions.get('window').width} // from react-native
-                    height={300}
-                    style={{ paddingLeft: 20, backgroundColor:'#eff3ff' }}
-                    yAxisLabel={'$'}
-                    yAxisSuffix={'k'}
-                    chartConfig={{
-                        backgroundColor: '#1cc910',
-                        backgroundGradientFrom: '#eff3ff',
-                        backgroundGradientTo: '#efefef',
-                        color: (opacity = 2) => `rgba(0, 0, 0, ${opacity})`,
-                      }}
-                />}
-            </View>}
+                <View>
+                    {resPledge.length>0 && <LineChart
+                        data={{
+                            labels: resPledge.map(item => item[1]),
+                            datasets: [{
+                                data: resPledge.map(item => item[0]/1000)
+                            }]
+                        }}
+                        width={Dimensions.get('window').width}
+                        height={500}
+                        yAxisSuffix={'k'}
+                        yAxisLabel={'$'}
+                        xAxisLabel={' backers'}
+                        chartConfig={{
+                            backgroundColor: '#1cc910',
+                            backgroundGradientFrom: '#eff3ff',
+                            backgroundGradientTo: '#efefef',
+                            color: (opacity = 2) => `rgba(0, 0, 0, ${opacity})`,
+                        }}
+                    />}
+                </View>
 
-            <View>
-                {resPledge.length>0 && <LineChart
-                    data={{
-                        labels: resPledge.map(item => item[1]),
-                        datasets: [{
-                            data: resPledge.map(item => item[0]/1000)
-                        }]
-                    }}
-                    width={Dimensions.get('window').width}
-                    height={500}
-                    yAxisSuffix={'k'}
-                    yAxisLabel={'$'}
-                    xAxisLabel={' backers'}
-                    chartConfig={{
-                        backgroundColor: '#1cc910',
-                        backgroundGradientFrom: '#eff3ff',
-                        backgroundGradientTo: '#efefef',
-                        color: (opacity = 2) => `rgba(0, 0, 0, ${opacity})`,
-                      }}
-                />}
-            </View>
+                <View>
+                    {popCategory.length>0 && <LineChart
+                        data={{
+                            labels: popCategory.map(col => col[0]),
+                            datasets: [{
+                                data: popCategory.map(col => col[1])
+                            }]
+                        }}
+                        width={Dimensions.get('window').width}
+                        height={300}
+                        yAxisLabel={'#'}
+                        chartConfig={{
+                            backgroundColor: '#1cc910',
+                            backgroundGradientFrom: '#eff3ff',
+                            backgroundGradientTo: '#efefef',
+                            color: (opacity = 2) => `rgba(0, 0, 0, ${opacity})`,
+                        }}     
+                        bezier
+                    />}
+                </View>
 
-            <View>
-                {popCategory.length>0 && <LineChart
-                    data={{
-                        labels: popCategory.map(col => col[0]),
-                        datasets: [{
-                            data: popCategory.map(col => col[1])
-                        }]
-                    }}
-                    width={Dimensions.get('window').width}
-                    height={300}
-                    yAxisLabel={'#'}
-                    chartConfig={{
-                        backgroundColor: '#1cc910',
-                        backgroundGradientFrom: '#eff3ff',
-                        backgroundGradientTo: '#efefef',
-                        color: (opacity = 2) => `rgba(0, 0, 0, ${opacity})`,
-                      }}     
-                    bezier
-                />}
-            </View>
+                <View>
+                    {topCo.length>0 && <LineChart
+                        data={{
+                            labels: topCo.map(item => item[0]),
+                            datasets: [{
+                                data: topCo.map(item => item[1]/1000)
+                            }]
+                        }}
+                        width={Dimensions.get('window').width}
+                        height={400}
+                        yAxisSuffix={'k'}
+                        yAxisLabel={'$'}
+                        chartConfig={{
+                            backgroundColor: '#1cc910',
+                            backgroundGradientFrom: '#eff3ff',
+                            backgroundGradientTo: '#efefef',
+                            color: (opacity = 2) => `rgba(0, 0, 0, ${opacity})`,
+                        }}
+                    />}
+                </View>
 
-            <View>
-                {topCo.length>0 && <LineChart
-                    data={{
-                        labels: topCo.map(item => item[0]),
-                        datasets: [{
-                            data: topCo.map(item => item[1]/1000)
-                        }]
-                    }}
-                    width={Dimensions.get('window').width}
-                    height={400}
-                    yAxisSuffix={'k'}
-                    yAxisLabel={'$'}
-                    chartConfig={{
-                        backgroundColor: '#1cc910',
-                        backgroundGradientFrom: '#eff3ff',
-                        backgroundGradientTo: '#efefef',
-                        color: (opacity = 2) => `rgba(0, 0, 0, ${opacity})`,
-                      }}
-                />}
-            </View>
-
-            <View>
-                {topMainCa.length>0 && <LineChart
-                    data={{
-                        labels: topMainCa.map(col => col[0]),
-                        datasets: [{
-                            data: topMainCa.map(col => col[1]/1000)
-                        }]
-                    }}
-                    width={Dimensions.get('window').width}
-                    height={300}
-                    yAxisSuffix={'k'}
-                    yAxisLabel={'$'}                    
-                    chartConfig={{
-                        backgroundColor: '#1cc910',
-                        backgroundGradientFrom: '#eff3ff',
-                        backgroundGradientTo: '#efefef',
-                        color: (opacity = 2) => `rgba(0, 0, 0, ${opacity})`,
-                      }}     
-                    bezier
-                />}
-            </View>
+                <View>
+                    {topMainCa.length>0 && <LineChart
+                        data={{
+                            labels: topMainCa.map(col => col[0]),
+                            datasets: [{
+                                data: topMainCa.map(col => col[1]/1000)
+                            }]
+                        }}
+                        width={Dimensions.get('window').width}
+                        height={300}
+                        yAxisSuffix={'k'}
+                        yAxisLabel={'$'}                    
+                        chartConfig={{
+                            backgroundColor: '#1cc910',
+                            backgroundGradientFrom: '#eff3ff',
+                            backgroundGradientTo: '#efefef',
+                            color: (opacity = 2) => `rgba(0, 0, 0, ${opacity})`,
+                        }}     
+                        bezier
+                    />}
+                </View>
         </ScrollView>
+    </View>
     );
 }
 
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    button: {
-      backgroundColor: "#333",
-      width: 100,
-      height: 50,
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    text: {
-      color: "#FFF"
-    }
-  });
-  
 // const styles = StyleSheet.create({
-//     title: {
-//         justifyContent: 'center',
-//         fontSize: 40
-//     },
 //     container: {
-//         flex: 2,
-//         flexDirection: 'row',
-//         justifyContent: 'center'
+//       flex: 1,
+//       justifyContent: 'center',
+//       alignItems: 'center',
 //     },
-//     tableRow: {
-//         fontSize: 11
+//     button: {
+//       backgroundColor: "#333",
+//       width: 100,
+//       height: 50,
+//       alignItems: "center",
+//       justifyContent: "center",
 //     },
-//     container2: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
-//         header: { height: 50, backgroundColor: '#537791' },
-//         text: { textAlign: 'center', fontWeight: '100' },
-//         dataWrapper: { marginTop: -1 },
-//         row: { height: 40, backgroundColor: '#E7E6E1' }
-// });
+//     text: {
+//       color: "#FFF"
+//     }
+//   });
+
+  const styles = StyleSheet.create({
+    title2: {
+        fontSize: 20,
+        // fontColor: '#2834b8',
+        backgroundColor: '#2834b8',
+    },
+    container: {
+        flex: 2,
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
+    tableRow: {
+        fontSize: 11
+    },
+    container2: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
+    header: { height: 50, backgroundColor: '#537791' },
+    text: { textAlign: 'center', fontWeight: '100' },
+    dataWrapper: { marginTop: -1 },
+    row: { height: 40, backgroundColor: '#E7E6E1' },
+
+    container1: {
+        flex: 1,
+        flexDirection: 'column',
+        alignItems: 'stretch',
+        padding: 10,
+    },
+    header1: {
+        flex: 1,
+        flexDirection: 'row'
+    },
+    headerText: {
+        textAlign: 'center',
+        fontSize: 40,
+        flex: 1,
+    },
+    searchField: {
+        flex: 1,
+        height: 30,
+        padding: 2,
+    },
+    buttons: {
+        flex: 1,
+        height: 30,
+    },
+});
+
 
 export default AnalysisScreen;
