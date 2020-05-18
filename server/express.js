@@ -154,7 +154,7 @@ app.get('/analysis/top5', (req, res) => {
             top = cache[number]
         }
         else{
-            //console.log("cache[number] miss")
+            //console.log("cache miss")
             parameters[number] = []
             parameters[number].push(keys)
             parameters[number].push(items)
@@ -195,7 +195,7 @@ app.get('/analysis/stateCount', (req, res) => {
             count = cache[number]
         }
         else{
-            //console.log("cache[number] miss")
+            //console.log("cache miss")
             parameters[number] = []
             parameters[number].push(keys)
             parameters[number].push(items)
@@ -236,7 +236,7 @@ app.get('/analysis/pledgeBack', (req, res) => {
             PB = cache[number]
         }
         else{
-            //console.log("cache[number] miss")
+            //console.log("cache miss")
             parameters[number] = []
             parameters[number].push(keys)
             parameters[number].push(items)
@@ -246,7 +246,7 @@ app.get('/analysis/pledgeBack', (req, res) => {
         }
     }
     else{
-        //console.log("compulsory miss")
+        ////console.log("compulsory miss")
         parameters[number] = []
         parameters[number].push(keys)
         parameters[number].push(items)
@@ -277,7 +277,7 @@ app.get('/analysis/popCat', (req, res) => {
             catCount = cache[number]
         }
         else{
-            //console.log("cache[number] miss")
+            //console.log("cache miss")
             parameters[number] = []
             parameters[number].push(keys)
             parameters[number].push(items)
@@ -318,7 +318,7 @@ app.get('/analysis/topCountries', (req, res) => {
             countries = cache[number]
         }
         else{
-            //console.log("cache[number] miss")
+            //console.log("cache miss")
             parameters[number] = []
             parameters[number].push(keys)
             parameters[number].push(items)
@@ -359,7 +359,7 @@ app.get('/analysis/topMainCategory', (req, res) => {
             mainCat = cache[number]
         }
         else{
-            //console.log("cache[number] miss")
+            //console.log("cache miss")
             parameters[number] = []
             parameters[number].push(keys)
             parameters[number].push(items)
