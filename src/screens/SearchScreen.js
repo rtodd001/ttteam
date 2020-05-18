@@ -370,7 +370,7 @@ const SearchScreen = () => {
                             title="Delete"
                             color='red'
                             disabled={checkBoxSet.size < 1}
-                            onPress={() => {delete_(),alert("DELETE"),search()}}
+                            onPress={() => {delete_(),alert("DELETE"),search(), checkBoxSet.clear()}}
                         />
                     </View>
 
