@@ -155,7 +155,7 @@ async function a_top5(ID, name, category, mainCategory, state, backers, country,
     return array[0]; 
 }
 
-async function a_state_cnt(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal) {
+async function a_state_cnt(ID, name, category, mainCategory, state, backers, country, usdPledgedReal, usdGoalReal) {
     // var url = new URL('http://192.168.1.8:5000/search')
     console.log("fetch 127")
     var url = new URL('http://localhost:5000/analysis/stateCount')
@@ -165,15 +165,9 @@ async function a_state_cnt(ID, name, category, mainCategory, currency, deadline,
         'name' : name,
         'category' : category,
         'main_category': mainCategory,
-        'currency' : currency,
-        'deadline' : deadline,
-        'goal' : goal,
-        'launched' : launched,
-        'pledged' : pledged,
         'state' : state,
         'backers' : backers,
         'country' : country,
-        'usd pledged' : usdPledged,
         'usd_pledged_real' : usdPledgedReal,
         'usd_goal_real' : usdGoalReal
     } 
