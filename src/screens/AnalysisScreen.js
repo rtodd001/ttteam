@@ -3,7 +3,7 @@ import { Dimensions, Text, Alert, View, ScrollView, StyleSheet, Button, TextInpu
 import { Feather } from '@expo/vector-icons';
 import SearchBar from '../components/SearchBar'
 import AwesomeButton from 'react-native-really-awesome-button';
-import { a_top10, a_state_cnt, pledgeBacker, popCat, topCountries, topMainCategory } from '../components/fetch'
+import { a_top5, a_state_cnt, pledgeBacker, popCat, topCountries, topMainCategory } from '../components/fetch'
 import { PieChart, FullOption } from 'react-minimal-pie-chart'
 import { BarChart, LineChart, bezier } from 'react-native-chart-kit'
 
@@ -33,8 +33,8 @@ const AnalysisScreen = ({navigation}) => {
     const [topCo, setTopCo] = useState('');
     const [topMainCa, setTopMainCa] = useState('');
 
-    async function top10() {
-        const topResults = await a_top10(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
+    async function top5() {
+        const topResults = await a_top5(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
         setArray(topResults)
         console.log(topResults);
     }
@@ -139,7 +139,7 @@ const AnalysisScreen = ({navigation}) => {
                     setPopCategory('');
                     setTopCo('');
                     setTopMainCa('');
-                    top10();
+                    top5();
                 }
             }/>
             <View style={{flex: 1, height: 100,margin: 10,}} />

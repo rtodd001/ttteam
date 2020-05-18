@@ -330,4 +330,4 @@ async function topMainCategory(ID, name, category, mainCategory, currency, deadl
     return array[0]; 
 }
 
-export { searchItem, insertItem, deleteItem, updateItem, importFile, storeFile, a_top10, a_state_cnt, pledgeBacker, popCat, topCountries, topMainCategory };
+export { searchItem, insertItem, deleteItem, updateItem, importFile, storeFile, a_top5, a_state_cnt, pledgeBacker, popCat, topCountries, topMainCategory };
