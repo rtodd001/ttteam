@@ -91,15 +91,32 @@ async function updateItem(updateID, name, category, mainCategory, currency, dead
 }
 
 async function deleteItem(ID) {
-    let params = {
-        'ID' : ID
-    }    
+    var params = {
+        'ID' : ID,
+        'name' : '',
+        'category' : '',
+        'main_category': '',
+        'currency' : '',
+        'deadline' : '',
+        'goal' : '',
+        'launched' : '',
+        'pledged' : '',
+        'state' : '',
+        'backers' : '',
+        'country' : '',
+        'usd pledged' : '',
+        'usd_pledged_real' : '',
+        'usd_goal_real' : ''
+    }
+    console.log(params)
     let url = new URL('http://localhost:5000/delete')
     url.search = new URLSearchParams(params).toString();   
     let response = await fetch(url, {
         method: 'DELETE'
-    });         
+    });
+    console.log("waiting for Delete call")         
     let result = await response.json();
+    console.log(result)
 }
 
 

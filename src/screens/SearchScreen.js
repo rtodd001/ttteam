@@ -10,6 +10,7 @@ import { globalArray } from '../components/Global'
 // import { Dropdown } from 'react-native-material-dropdown';
 import { searchItem, insertItem, deleteItem, updateItem, importFile, storeFile, a_top10 } from '../components/fetch'
 import PickerList from '../components/PickerList';
+import AlertCustom from '../components/Alert';
 // import CheckBox from '@react-native-community/checkbox';
 
 
@@ -34,6 +35,7 @@ const SearchScreen = () => {
     const [text, setText] = useState('');
     const [sortOrder, setSortOrder] = useState('');
     const [checkBoxSet, setCheckBoxSet] = useState(new Set())
+    const [projectName, setProjectName] = useState('')
 
 
     async function search() {
@@ -51,7 +53,7 @@ const SearchScreen = () => {
     }
 
     async function delete_() {
-        const fetchResults = await deleteItem(ID)
+        const fetchResults = await deleteItem(Array.from(checkBoxSet))
     }
 
     async function import_() {
@@ -117,7 +119,7 @@ const SearchScreen = () => {
 
     const subCategoryList = ['Apparel', 'Apps', 'Art', 'Comics', 'Documentary', 'Fashion', 'Fiction',
         'Film & Video', 'Games', 'Product Design', 'Rock', 'Video Games'];
-    const currencyList = ['AUD','CAD','EUR','GBP','MXN','USD'];
+    const countryList = ['AU', 'CA', 'DE', 'FR', 'GB', 'MX', 'US'];
     const stateList = ['failed', 'successful', 'canceled'];
 
     function toggleCheckBox(id) {
@@ -157,7 +159,7 @@ const SearchScreen = () => {
                         <Button
                             color="#1B2669"
                             title="Store"
-                            disabled
+                            // disabled
                             onPress={() => {
                                 store_()
                                 alert('Stored the File');
@@ -179,7 +181,7 @@ const SearchScreen = () => {
                 <View style={{ paddingHorizontal: 20, paddingVertical: 5 }}>
 
                     <View style={styles.searchField}>
-                        <TextInput style={{fontSize: 18, backgroundColor:'#deddd9'}}
+                        <TextInput style={{ fontSize: 18, backgroundColor: '#deddd9' }}
                             placeholder='Search Name'
                             value={name}
                             onChangeText={setName}
@@ -198,10 +200,10 @@ const SearchScreen = () => {
 
                     <View style={styles.searchField}>
                         <PickerList
-                            title="Currency"
-                            activeLabel={currency}
-                            listLabels={currencyList}
-                            onChange={setCurrency}
+                            title="Country"
+                            activeLabel={country}
+                            listLabels={countryList}
+                            onChange={setCountry}
                         />
                     </View>
 
@@ -368,9 +370,7 @@ const SearchScreen = () => {
                             title="Delete"
                             color='red'
                             disabled={checkBoxSet.size < 1}
-                            onPress={() => {
-                                delete_()
-                            }}
+                            onPress={() => {delete_(),alert("DELETE"),search()}}
                         />
                     </View>
 
@@ -449,7 +449,7 @@ const SearchScreen = () => {
                                     <th>
                                         <Button
                                             title='☑'
-                                            
+
                                             disabled
                                             onPress={() => {
                                                 console.log("pushed!")
@@ -683,7 +683,6 @@ const styles = StyleSheet.create({
     buttons: {
         flex: 1,
         height: 30,
-        // border: 1
     },
 });
 
