@@ -334,7 +334,12 @@ class KickStarter {
     deleteCSV(keys, items){
         //console.log("here", keys, items[0])
         //We are now finding the index of the target of deletion
-        
+        if(!Array.isArray(items[0])){
+            let tempid = items[0]
+            items[0] = []
+            items[0].push(tempid)
+        }
+
         let retUpdate = []
         
         //allow for multi deletion
@@ -458,9 +463,9 @@ class KickStarter {
             }
         }
         let ret = []
-        console.log("success", success)
+        //console.log("success", success)
         ret.push(success)
-        console.log("fail", fail)
+        //console.log("fail", fail)
         ret.push(fail)
         return ret
     }
@@ -478,7 +483,7 @@ class KickStarter {
             temp.push(topRows[i][backCol])
             ret.push(temp)
         }
-        console.log(ret)
+        //console.log(ret)
         return ret
     }
 
@@ -555,7 +560,7 @@ class KickStarter {
         arrayMainCat.sort(function(a,b){
             return b[1] - a[1]
         })
-        console.log(arrayMainCat)
+        //console.log(arrayMainCat)
         return arrayMainCat.slice(0,5)
     }
 
