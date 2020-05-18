@@ -62,6 +62,7 @@ async function updateItem(updateID, name, category, mainCategory, state, backers
 }
 
 async function deleteItem(ID) {
+    console.log(ID)
     var params = {
         'ID' : ID,
         'name' : '',

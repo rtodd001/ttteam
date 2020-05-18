@@ -41,13 +41,13 @@ const SearchScreen = () => {
         setResults(fetchResults);
     }
 
-    async function insert() {
-        const fetchResults = await insertItem(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
-    }
+    // async function insert() {
+    //     const fetchResults = await insertItem(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
+    // }
 
-    async function update() {
-        const fetchResults = await updateItem(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
-    }
+    // async function update() {
+    //     const fetchResults = await updateItem(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
+    // }
 
     async function delete_() {
         const fetchResults = await deleteItem(Array.from(checkBoxSet))
