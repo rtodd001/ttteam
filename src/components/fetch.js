@@ -130,7 +130,7 @@ async function storeFile(fileName) {
     let result = await response.json();
 }
 
-async function a_top10(ID, name, category, mainCategory, state, backers, country, usdPledgedReal, usdGoalReal) {
+async function a_top5(ID, name, category, mainCategory, state, backers, country, usdPledgedReal, usdGoalReal) {
     // var url = new URL('http://192.168.1.8:5000/search')
     console.log("fetch 127")
     var url = new URL('http://localhost:5000/analysis/top5')
