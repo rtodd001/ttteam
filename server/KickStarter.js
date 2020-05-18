@@ -3,12 +3,11 @@ const Promise = require('promise')
 
 class KickStarter {
     constructor(){
-        this.columns = 15
-        //console.log(this.getCSV())
+        //new column lenght is 10 after column removal
+        this.columns = 10
+        this.originalCol = 15
         this.tableData =  this.getCSV()
-        //console.log(this.tableData)
         this.mappedData = this.createData()
-        //console.log(this.mappedData)
     }
 
     get col(){
@@ -21,19 +20,28 @@ class KickStarter {
 
     getCSV() {
         //var path = './../data/ks-projects-201801.csv'
-        //var path = './../data/CommaTest.csv'
+        var path = './../data/CommaTest.csv'
         //var path = './../data/SmallCommaTest.csv'
-        var path = './../data/500.csv'
+        //var path = './../data/500.csv'
         let content = fs.readFileSync(path, 'utf8')
         let lst = this.parseCSV(content)
-        //console.log(lst)
+        console.log(lst)
         return lst
     };
 
+    //new implementation will have reduced columns
+    //Removing the following from the csv
+    //currency: 4
+    //deadline: 5
+    //goal: 6
+    //launched: 7
+    //usd pledge:12
     parseCSV(text) {
         let ret = []
+        let counter = 0
         //console.log data[0])
         for(let  i = 0; i < text.length; i++){
+            //console.log(i)
             let temp = ""
             if(text[i] === ','){
                 i--
@@ -64,6 +72,12 @@ class KickStarter {
                 text = text.slice(temp.length)
             }
             if(temp.length !== 0){
+                if(counter% this.originalCol === 4 || counter% this.originalCol === 5 || counter% this.originalCol === 6 ||counter% this.originalCol === 7 || counter% this.originalCol === 12){
+                    //console.log("Skipping")
+                    counter++
+                    continue
+                }
+                counter++
                 ret.push(temp)
             }
             if(text[i] === ','){
@@ -76,45 +90,32 @@ class KickStarter {
         return ret
     }
 
+    //Create the mapped data structure using the table data
     createData() {
-        //console.log("Col:", this.col)
         if(this.tableData.length === 0){
             return []
         }
-        let newSize = 0
-        let totalElem = 0
         let title = new Map()
-        //console.log("Columns:", columns, "| Rows:", Math.floor(this.tableData.length/columns), "Size:", this.tableData.length)
         for(let i = 0; i < this.columns; i++){
-            title.set(this.tableData[i], new Set())
-            //console.log("title:" , this.tableData[i])
-    
+            title.set(this.tableData[i], new Set())    
             let item = new Map()
-            //console.log("Size:", this.tableData.length, "I", i)
             for(let k = Math.floor(i + this.columns); k < Math.floor(this.tableData.length); k+=this.columns){
-                //console.log("Loop index", k,"| Title:",this.tableData[i])
                 let row = Math.floor(k / this.columns)
                 let name = this.tableData[k]
                 if(item.has(name)){
                     let temp = item.get(name)
                     temp.add(row)
-                    //console.log("Updating:","Name:", name, "| Rows:", temp)
                     item.set(name, temp)
                 }
                 else{
                     let temp = new Set()
                     temp.add(row)
-                    //console.log("Creating:","Name:", name, "| index:", row)
                     item.set(name, temp)
                 }
-                //console.log("Adding to :", this.tableData[k%this.columns])
                 title.set(this.tableData[k%this.columns], item)
-                //console.log("Col:", this.tableData[i])
-            }
-            //newSize += title.get(this.tableData[i]).size
+            } 
         }
-        //console.log("New Size:", newSize)
-        //console.log("Full Map", title)
+        console.log("Full Map", title)
         return title
     }
 
