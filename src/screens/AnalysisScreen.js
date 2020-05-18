@@ -73,7 +73,7 @@ const AnalysisScreen = ({navigation}) => {
     }
 
     return (
-        <View style={styles.container1}>
+        <View>
             <ScrollView
                 alignItems = 'center'
             >
@@ -202,7 +202,7 @@ const AnalysisScreen = ({navigation}) => {
                         }/>
                     </View>
                 </View>
-                <View style={styles.container1}>
+                <View>
                     <br />
                     {(results.length > 0) && <PieChart
                         //animate 
@@ -219,7 +219,7 @@ const AnalysisScreen = ({navigation}) => {
                             legendFontSize: 15 },
                         ]}
                         width={Dimensions.get('window').width}
-                        height={220}
+                        height={200}
                         chartConfig={{ 
                             backgroundColor: '#1cc910',
                             backgroundGradientFrom: '#eff3ff',
@@ -228,34 +228,36 @@ const AnalysisScreen = ({navigation}) => {
                         }}
                         accessor="population"
                         backgroundColor="transparent"
-                        paddingLeft="15"
+                        paddingLeft="5"
                         absolute
                     />    
                     
                     }    
                 </View>
       
-                {<View> 
-                {array.length > 0 && <BarChart
-                        data={{
-                            labels: array.map(col => col[2]),
-                            datasets: [{
-                                data: array.map(col => (col[/*7*/13]/1000))
-                            }]
-                        }}
-                        width={Dimensions.get('window').width} // from react-native
-                        height={300}
-                        style={{ paddingLeft: 20, backgroundColor:'#eff3ff' }}
-                        yAxisLabel={'$'}
-                        yAxisSuffix={'k'}
-                        chartConfig={{
-                            backgroundColor: '#1cc910',
-                            backgroundGradientFrom: '#eff3ff',
-                            backgroundGradientTo: '#efefef',
-                            color: (opacity = 2) => `rgba(0, 0, 0, ${opacity})`,
-                        }}
-                    />}
-                </View>}
+                <View> 
+                    {
+                        array.length>0 && <BarChart
+                            data={{
+                                labels: array.map(col => col[2]),
+                                datasets: [{
+                                    data: array.map(col => (col[7]/1000))
+                                }]
+                            }}
+                            width={Dimensions.get('window').width} // from react-native
+                            height={300}
+                            style={{ paddingLeft: 10, backgroundColor:'#eff3ff' }}
+                            yAxisLabel={'$'}
+                            yAxisSuffix={'k'}
+                            chartConfig={{
+                                backgroundColor: '#1cc910',
+                                backgroundGradientFrom: '#eff3ff',
+                                backgroundGradientTo: '#efefef',
+                                color: (opacity = 2) => `rgba(0, 0, 0, ${opacity})`,
+                            }}
+                        />
+                    }
+                </View>
 
                 <View>
                     {resPledge.length>0 && <LineChart
