@@ -214,7 +214,7 @@ async function pledgeBacker(ID, name, category, mainCategory, state, backers, co
     return array[0]; 
 }
 
-async function popCat(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal) {
+async function popCat(ID, name, category, mainCategory, state, backers, country, usdPledgedReal, usdGoalReal) {
     // var url = new URL('http://192.168.1.8:5000/search')
     var url = new URL('http://localhost:5000/analysis/popCat')
     var params = {
@@ -222,15 +222,9 @@ async function popCat(ID, name, category, mainCategory, currency, deadline, goal
         'name' : name,
         'category' : category,
         'main_category': mainCategory,
-        'currency' : currency,
-        'deadline' : deadline,
-        'goal' : goal,
-        'launched' : launched,
-        'pledged' : pledged,
         'state' : state,
         'backers' : backers,
         'country' : country,
-        'usd pledged' : usdPledged,
         'usd_pledged_real' : usdPledgedReal,
         'usd_goal_real' : usdGoalReal
     } 
