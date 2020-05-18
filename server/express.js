@@ -3,10 +3,13 @@ const KickStarter = require('./KickStarter').KickStarter
 const cors = require('cors')
 const app = express()
 const port = 5000
+const {performance} = require('perf_hooks');
 
 console.log("Reading")
+const t0 = performance.now()
 let KS = new KickStarter()
-console.log("Loaded")
+const t1 = performance.now()
+console.log(`Data creation ${t1 - t0} milliseconds.`)
 //console.log("Class", KS.mapData)
 
 const isPreflight = (req) => {
@@ -75,7 +78,7 @@ app.delete('/delete', (req, res) => {
     }
     console.log("In express:", keys, items)
     let deletedValue = KS.deleteCSV(keys, items)
-    console.log("Deleted items", deletedValue)
+    //console.log("Deleted items", deletedValue)
     res.status(200).json({"item":[{"data": "Deleted!"}]})
 });
 
