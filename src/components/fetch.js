@@ -8,15 +8,9 @@ async function searchItem(ID, name, category, mainCategory, state, backers, coun
         'name' : name,
         'category' : category,
         'main_category': mainCategory,
-        // 'currency' : currency,
-        // 'deadline' : deadline,
-        // 'goal' : goal,
-        // 'launched' : launched,
-        // 'pledged' : pledged,
         'state' : state,
         'backers' : backers,
         'country' : country,
-        // 'usd pledged' : usdPledged,
         'usd_pledged_real' : usdPledgedReal,
         'usd_goal_real' : usdGoalReal
     } 
