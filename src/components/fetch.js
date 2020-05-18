@@ -130,7 +130,7 @@ async function storeFile(fileName) {
     let result = await response.json();
 }
 
-async function a_top10(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal) {
+async function a_top10(ID, name, category, mainCategory, state, backers, country, usdPledgedReal, usdGoalReal) {
     // var url = new URL('http://192.168.1.8:5000/search')
     console.log("fetch 127")
     var url = new URL('http://localhost:5000/analysis/top5')
@@ -140,15 +140,9 @@ async function a_top10(ID, name, category, mainCategory, currency, deadline, goa
         'name' : name,
         'category' : category,
         'main_category': mainCategory,
-        'currency' : currency,
-        'deadline' : deadline,
-        'goal' : goal,
-        'launched' : launched,
-        'pledged' : pledged,
         'state' : state,
         'backers' : backers,
         'country' : country,
-        'usd pledged' : usdPledged,
         'usd_pledged_real' : usdPledgedReal,
         'usd_goal_real' : usdGoalReal
     } 
@@ -158,11 +152,6 @@ async function a_top10(ID, name, category, mainCategory, currency, deadline, goa
     let array = [];
     
     array.push(result.item[0].data);
-    array.forEach(elements => {
-        elements.forEach(item => {
-            globalArray.push(item);
-        })
-    })
     return array[0]; 
 }
 
