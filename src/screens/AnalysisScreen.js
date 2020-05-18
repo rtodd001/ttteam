@@ -6,6 +6,8 @@ import AwesomeButton from 'react-native-really-awesome-button';
 import { a_top5, a_state_cnt, pledgeBacker, popCat, topCountries, topMainCategory } from '../components/fetch'
 //import { PieChart, FullOption } from 'react-minimal-pie-chart'
 import { PieChart, BarChart, LineChart, bezier } from 'react-native-chart-kit'
+import PickerList from '../components/PickerList';
+
 
 const AnalysisScreen = ({ navigation }) => {
 
@@ -71,6 +73,11 @@ const AnalysisScreen = ({ navigation }) => {
         console.log(fetchResults);
         setTopMainCa(fetchResults);
     }
+    
+    const subCategoryList = ['Apparel', 'Apps', 'Art', 'Comics', 'Documentary', 'Fashion', 'Fiction',
+        'Film & Video', 'Games', 'Product Design', 'Rock', 'Video Games'];
+    const countryList = ['AU', 'CA', 'DE', 'FR', 'GB', 'MX', 'US'];
+    const stateList = ['failed', 'successful', 'canceled'];
 
     return (
         <View style={styles.container1}>
@@ -83,36 +90,36 @@ const AnalysisScreen = ({ navigation }) => {
 
                 <View class='search-bar-container' style={{ paddingHorizontal: 20, paddingVertical: 5 }}>
                     <View style={styles.searchField}>
-                        <SearchBar
+                    <PickerList
                             title="Category"
-                            category={category}
-                            onTermChange={setCategory}
-                        // onTermSubmit={console.log("submit term")}
+                            activeLabel={category}
+                            listLabels={subCategoryList}
+                            onChange={setCategory}
                         />
                     </View>
-                    <View style={styles.searchField}>
+                    {/* <View style={styles.searchField}>
                         <SearchBar
                             title="MainCategory"
                             mainCategory={mainCategory}
                             onTermChange={setMainCategory}
                         // onTermSubmit={console.log("submit term")}
                         />
-                    </View>
+                    </View> */}
 
                     <View style={styles.searchField}>
-                        <SearchBar
+                    <PickerList
                             title="Country"
-                            country={country}
-                            onTermChange={setCountry}
-                        // onTermSubmit={console.log("submit term")}
+                            activeLabel={country}
+                            listLabels={countryList}
+                            onChange={setCountry}
                         />
                     </View>
                     <View style={styles.searchField}>
-                        <SearchBar
+                    <PickerList
                             title="State"
-                            cyrrency={state}
-                            onTermChange={setState}
-                        // onTermSubmit={console.log("submit term")}
+                            activeLabel={state}
+                            listLabels={stateList}
+                            onChange={setState}
                         />
                     </View>
                 </View>
