@@ -21,10 +21,10 @@ const InsertScreen = () => {
         )
      }
     async function insert() {
-        const fetchResults = await insertItem(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
+        const fetchResults = await insertItem(ID, name, category, mainCategory, state, backers, country, usdPledgedReal)
     }
     async function update() {
-        const fetchResults = await updateItem(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
+        const fetchResults = await updateItem(ID, name, category, mainCategory, state, backers, country, usdPledgedReal)
     }
     return <ScrollView>
         <Text>Enter Input Fields</Text>
@@ -87,6 +87,16 @@ const InsertScreen = () => {
             onPress={() => {
                 if (ID!='' && name!='' && category!='' && mainCategory!='' && state!='', backers!='', country!='', usdPledgedReal!='') {
                     insert()
+                }
+                else alert('PLEASE SUBMIT ALL BOXES');
+            }
+        }
+        />
+        <Button
+            title="UPDATE"
+            onPress={() => {
+                if (ID!='' && name!='' && category!='' && mainCategory!='' && state!='', backers!='', country!='', usdPledgedReal!='') {
+                    update()
                 }
                 else alert('PLEASE SUBMIT ALL BOXES');
             }

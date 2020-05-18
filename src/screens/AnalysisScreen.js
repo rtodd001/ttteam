@@ -34,13 +34,13 @@ const AnalysisScreen = ({navigation}) => {
     const [topMainCa, setTopMainCa] = useState('');
 
     async function top5() {
-        const topResults = await a_top5(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
+        const topResults = await a_top5(ID, name, category, mainCategory, state, backers, country, usdPledged, usdPledgedReal)
         setArray(topResults)
         console.log(topResults);
     }
 
     async function stateCount() {
-        const fetchResults = await a_state_cnt(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
+        const fetchResults = await a_state_cnt(ID, name, category, mainCategory, state, backers, country, usdPledged, usdPledgedReal)
         console.log(fetchResults);
         setSuccess(fetchResults[0])
         setFail(fetchResults[1])
@@ -49,25 +49,25 @@ const AnalysisScreen = ({navigation}) => {
     }
 
     async function pledgeBackers() {
-        const fetchResults = await pledgeBacker(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
+        const fetchResults = await pledgeBacker(ID, name, category, mainCategory, state, backers, country, usdPledged, usdPledgedReal)
         console.log(fetchResults);
         setResPledge(fetchResults);
     }
 
     async function popularCat() {
-        const fetchResults = await popCat(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
+        const fetchResults = await popCat(ID, name, category, mainCategory, state, backers, country, usdPledged, usdPledgedReal)
         console.log(fetchResults);
         setPopCategory(fetchResults);
     }
 
     async function topCountry() {
-        const fetchResults = await topCountries(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
+        const fetchResults = await topCountries(ID, name, category, mainCategory, state, backers, country, usdPledged, usdPledgedReal)
         console.log(fetchResults);
         setTopCo(fetchResults);
     }
 
     async function topMainCat() {
-        const fetchResults = await topMainCategory(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
+        const fetchResults = await topMainCategory(ID, name, category, mainCategory, state, backers, country, usdPledged, usdPledgedReal)
         console.log(fetchResults);
         setTopMainCa(fetchResults);
     }
@@ -205,11 +205,6 @@ const AnalysisScreen = ({navigation}) => {
                 <View>
                     <br />
                     {(results.length > 0) && <PieChart
-                        //animate 
-                        //animationDuration={1000}
-                        //animationEasing="ease-out"
-                        //label={({ dataEntry }) => `${Math.round(dataEntry.percentage)} %`}
-                        //center={[50,50]}
                         data={[
                             { name: 'success', population: success, color: '#5680BF', 
                             legendFontColor: "#7F7F7F",
@@ -230,8 +225,7 @@ const AnalysisScreen = ({navigation}) => {
                         backgroundColor="transparent"
                         paddingLeft="5"
                         absolute
-                    />    
-                    
+                    />             
                     }    
                 </View>
       
