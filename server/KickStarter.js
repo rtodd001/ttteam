@@ -353,16 +353,11 @@ class KickStarter {
                 bottomRow.push(this.tableData[this.tableData.length- this.columns + i])
             }
             //find the index of the bottom element
-            let delIndex = this.mappedData.get(keys[0]).get(bottomRow[0]).values().next().value
-            //console.log("Bottom Index:", delIndex)
-            //CHANGE TO THIS FOR THE TIMING PART
-            //console.log("Also Bottom Index:", this.tableData.length/this.columns - 1)
-    
+            let delIndex = this.tableData.length/this.columns - 1
+
             //now we must delete this bottom row before replacing it to avoid having
             //duplicate IDs. We must preserve uniqueness for ID
             this.tableData.splice(this.tableData.length- this.columns, this.columns)
-    
-            //console.log("Map Before:", this.mappedData)
 
             //iterate through all the column names to ensure that every
             //part of its data row is deleted from the map
