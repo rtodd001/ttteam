@@ -36,7 +36,8 @@ const SearchScreen = () => {
 
 
     async function search() {
-        const fetchResults = await searchItem(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
+        // const fetchResults = await searchItem(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal)
+        const fetchResults = await searchItem(ID, name, category, mainCategory, state, backers, country, usdGoalReal)
         // console.log(fetchResults);
         setResults(fetchResults);
     }
@@ -72,18 +73,28 @@ const SearchScreen = () => {
             NAME: 1,
             CATEGORY: 2,
             MAIN_CATEGORY: 3,
-            CURRENCY: 4,
-            DEADLINE: 5,
-            GOAL: 6,
-            LAUNCHED: 7,
-            PLEDGED: 8,
-            STATE: 9,
-            BACKERS: 10,
-            COUNTRY: 11,
-            USD_PLEDGE: 12,
-            USD_PLEDGE_REAL: 13,
-            USD_GOAL_REAL: 14
+            STATE: 4,
+            BACKERS: 5,
+            COUNTRY: 6,
+            USD_GOAL_REAL: 7,
         }
+        // const sortEnum = {
+        //     ID: 0, //this is a number must consider type
+        //     NAME: 1,
+        //     CATEGORY: 2,
+        //     MAIN_CATEGORY: 3,
+        //     CURRENCY: 4,
+        //     DEADLINE: 5,
+        //     GOAL: 6,
+        //     LAUNCHED: 7,
+        //     PLEDGED: 8,
+        //     STATE: 9,
+        //     BACKERS: 10,
+        //     COUNTRY: 11,
+        //     USD_PLEDGE: 12,
+        //     USD_PLEDGE_REAL: 13,
+        //     USD_GOAL_REAL: 14
+        // }
         if (sortOrder === '' || sortOrder === 'desc') {
             setSortOrder('asc');
             setResults([...results.sort((a, b) => {
@@ -301,45 +312,45 @@ const SearchScreen = () => {
                                     </th>
                                     <th>
                                         <Button
-                                            title='CURRENCY:'
+                                            title='STATE:'
                                             onPress={() => {
                                                 console.log("pushed!")
-                                                sortBy('CURRENCY')
+                                                sortBy('STATE')
                                             }
                                             }
                                         />
                                     </th>
                                     <th>
                                         <Button
-                                            title='DEADLINE:'
+                                            title='BACKERS:'
                                             onPress={() => {
                                                 console.log("pushed!")
-                                                sortBy('DEADLINE')
+                                                sortBy('BACKERS')
                                             }
                                             }
                                         />
                                     </th>
                                     <th>
                                         <Button
-                                            title='GOAL:'
+                                            title='COUNTRY:'
                                             onPress={() => {
                                                 console.log("pushed!")
-                                                sortBy('GOAL')
+                                                sortBy('COUNTRY')
                                             }
                                             }
                                         />
                                     </th>
                                     <th>
                                         <Button
-                                            title='LAUNCHED:'
+                                            title='USD GOAL REAL:'
                                             onPress={() => {
                                                 console.log("pushed!")
-                                                sortBy('LAUNCHED')
+                                                sortBy('USD_GOAL_REAL')
                                             }
                                             }
                                         />
                                     </th>
-                                    <th>
+                                    {/* <th>
                                         <Button
                                             title='PLEDGED:'
                                             onPress={() => {
@@ -408,7 +419,7 @@ const SearchScreen = () => {
                                             }
                                             }
                                         />
-                                    </th>
+                                    </th> */}
                                 </tr>
                                 {
                                     results.map((item, index) => (
@@ -426,13 +437,13 @@ const SearchScreen = () => {
                                             <td>{item[5]}</td>
                                             <td>{item[6]}</td>
                                             <td>{item[7]}</td>
-                                            <td>{item[8]}</td>
+                                            {/* <td>{item[8]}</td>
                                             <td>{item[9]}</td>
                                             <td>{item[10]}</td>
                                             <td>{item[11]}</td>
                                             <td>{item[12]}</td>
                                             <td>{item[13]}</td>
-                                            <td>{item[14]}</td>
+                                            <td>{item[14]}</td> */}
                                         </tr>
                                     ))
                                 }
