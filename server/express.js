@@ -10,7 +10,28 @@ const t0 = performance.now()
 let KS = new KickStarter()
 const t1 = performance.now()
 console.log(`Data creation ${t1 - t0} milliseconds.`)
+//set to true if there is an instance in the 'cache'
+let cacheReady = true
+let cache = []
+let parameters = []
 //console.log("Class", KS.mapData)
+
+function equal(array1, array2) {
+    if (!Array.isArray(array1) && !Array.isArray(array2)) {
+        return array1 === array2;
+    }
+
+    if (array1.length !== array2.length) {
+        return false;
+    }
+
+    for (var i = 0, len = array1.length; i < len; i++) {
+        if (!equal(array1[i], array2[i])) {
+            return false;
+        }
+    }
+    return true;
+}
 
 const isPreflight = (req) => {
     return (
@@ -53,6 +74,7 @@ app.post('/insert', (req, res) => {
         keys.push(key)
         items.push(req.query[key])
     }
+    cacheReady = false
     let inserted = KS.insertCSV(keys, items)
     res.status(200).json({"item":[{"data": inserted}]})
 });
@@ -64,6 +86,7 @@ app.put('/update', (req, res) => {
         keys.push(key)
         items.push(req.query[key])
     }
+    cacheReady = false
     let newValue = KS.updateCSV(keys,items)
     res.status(200).json({"item":[{"data": newValue}]})
     //let newValue = update.updateCSV(keys,values,mappedData,data)
@@ -76,6 +99,7 @@ app.delete('/delete', (req, res) => {
         keys.push(key)
         items.push(req.query[key])
     }
+    cacheReady = false
     //console.log("In express:", keys, items)
     let deletedValue = KS.deleteCSV(keys, items)
     //console.log("Deleted items", deletedValue)
@@ -183,8 +207,32 @@ app.get('/analysis/topMainCategory', (req, res) => {
         keys.push(key)
         items.push(req.query[key])
     }
+    let mainCat = []
     const t0 = performance.now()
-    let mainCat = KS.topMainCatergoryCSV(keys,items)
+    if(parameters.length > 0){
+        //console.log(parameters)
+        if(equal(parameters[0], keys) && equal(parameters[1], items) && cacheReady){
+            //console.log("cache hit")
+            mainCat = cache
+        }
+        else{
+            //console.log("cache miss")
+            parameters = []
+            parameters.push(keys)
+            parameters.push(items)
+            mainCat = KS.topMainCatergoryCSV(keys,items)
+            cache = mainCat
+            cacheReady = true
+        }
+    }
+    else{
+        //console.log("compulsory miss")
+        parameters.push(keys)
+        parameters.push(items)
+        mainCat = KS.topMainCatergoryCSV(keys,items)
+        cache = mainCat
+        cacheReady = true
+    }
     const t1 = performance.now()
     console.log(`topMainCategory took ${t1 - t0} milliseconds.`)
     res.status(200).json({"item":[{"data": mainCat}]})
