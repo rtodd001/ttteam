@@ -3,8 +3,8 @@ const Promise = require('promise')
 
 class KickStarter {
     constructor(){
-        //new column lenght is 10 after column removal
-        this.columns = 10
+        //new column lenght is 8 after column removal
+        this.columns = 8
         this.originalCol = 15
         this.tableData =  this.getCSV()
         this.mappedData = this.createData()
@@ -20,12 +20,12 @@ class KickStarter {
 
     getCSV() {
         //var path = './../data/ks-projects-201801.csv'
-        var path = './../data/CommaTest.csv'
+        //var path = './../data/CommaTest.csv'
         //var path = './../data/SmallCommaTest.csv'
-        //var path = './../data/500.csv'
+        var path = './../data/500.csv'
         let content = fs.readFileSync(path, 'utf8')
         let lst = this.parseCSV(content)
-        console.log(lst)
+        //console.log(lst)
         return lst
     };
 
@@ -35,13 +35,15 @@ class KickStarter {
     //deadline: 5
     //goal: 6
     //launched: 7
-    //usd pledge:12
+    //pledge: 8
+    //usd pledge: 12
+    //usd_goal_real: 14
     parseCSV(text) {
         let ret = []
         let counter = 0
         //console.log data[0])
         for(let  i = 0; i < text.length; i++){
-            //console.log(i)
+            console.log(i)
             let temp = ""
             if(text[i] === ','){
                 i--
@@ -67,17 +69,20 @@ class KickStarter {
             //console.log("While:" , temp)
             if(text[i] === '\"'){
                 let re = RegExp('\".+\"','g')
+                //let re = RegExp('\".+\"')
                 temp = re.exec(text)[0]
-                //console.log("\nREGEX:", temp)
+                console.log("\nREGEX:", temp)
                 text = text.slice(temp.length)
             }
             if(temp.length !== 0){
-                if(counter% this.originalCol === 4 || counter% this.originalCol === 5 || counter% this.originalCol === 6 ||counter% this.originalCol === 7 || counter% this.originalCol === 12){
-                    //console.log("Skipping")
+                if(counter% this.originalCol === 4 || counter% this.originalCol === 5 || counter% this.originalCol === 6 || counter% this.originalCol === 7 || counter% this.originalCol === 8 || counter% this.originalCol === 12 || counter% this.originalCol === 14){
+                    console.log("Skipping", counter% this.originalCol)
                     counter++
+                    //i--
                     continue
                 }
                 counter++
+                console.log("Table",temp)
                 ret.push(temp)
             }
             if(text[i] === ','){
@@ -95,6 +100,7 @@ class KickStarter {
         if(this.tableData.length === 0){
             return []
         }
+        console.log("Size",this.tableData.length)
         let title = new Map()
         for(let i = 0; i < this.columns; i++){
             title.set(this.tableData[i], new Set())    
@@ -436,13 +442,12 @@ class KickStarter {
     analysisCSV(keys,items){
         let tempKeys = keys.slice()
         let tempItems = items.slice()
-        //console.log(tempKeys, tempItems)
         let allRows = this.searchCSV(tempKeys, tempItems)
-        //console.log("Unsorted", allRows)
-        //the usd_pledge_real is on column 13
 
+        //original usd_pledge_real is on column 13
+        //original usd_pledge_real is on column 8
         allRows.sort(function(a,b){
-            return b[13] - a[13]
+            return b[8] - a[8]
         })
         //console.log("Sorted", allRows)
         return allRows.slice(0,5)
@@ -454,12 +459,13 @@ class KickStarter {
         let allRows = this.searchCSV(tempKeys, tempItems)
         let success = 0
         let fail = 0
-        //console.log(allRows[0])
+        //old state was 9
+        //new state is 5
         for (let i = 0; i < allRows.length; i++){
-            if (allRows[i][9] === 'successful'){
+            if (allRows[i][5] === 'successful'){
                 success += 1
             }
-            else if (allRows[i][9] === 'failed'){
+            else if (allRows[i][5] === 'failed'){
                 fail += 1
             }
         }
@@ -476,8 +482,12 @@ class KickStarter {
         let tempItems = items.slice()
         let topRows = this.analysisCSV(tempKeys, tempItems)
         let ret = []
-        let backCol = 10
-        let pledgeCol = 13
+        //old backers: 10
+        //new backers: 6
+        let backCol = 6
+        //old pledge: 13
+        //new pledge: 8
+        let pledgeCol = 8
         for(let i = 0; i < topRows.length; i++){
             let temp = []
             temp.push(topRows[i][pledgeCol])
@@ -493,6 +503,7 @@ class KickStarter {
         let tempItems = items.slice()
         let allRows = this.searchCSV(tempKeys, tempItems)
         let catCount = new Map()
+        //category col number did not change
         let catRow = 2
         for(let i = 0; i < allRows.length; i++){
             //if the category exists, increment
@@ -518,8 +529,12 @@ class KickStarter {
         let tempItems = items.slice()
         let allRows = this.searchCSV(tempKeys, tempItems)
         let countries = new Map()
-        let contRow = 11
-        let pledgeRealRow = 13
+        //old country: 11
+        //new country: 7
+        let contRow = 7
+        //old pledge: 13
+        //new pledge: 8
+        let pledgeRealRow = 8
         for(let i = 0; i < allRows.length; i++){
             //if the category exists, increment
             if(countries.has(allRows[i][contRow])){
@@ -544,16 +559,19 @@ class KickStarter {
         let tempItems = items.slice()
         let allRows = this.searchCSV(tempKeys, tempItems)
         let MainCat = new Map()
-        let contRow = 3
-        let pledgeRealRow = 13
+        //main category did not change
+        let mainCRow = 3
+        //old pledge: 13
+        //new pledge: 8
+        let pledgeRealRow = 8
         for(let i = 0; i < allRows.length; i++){
             //if the category exists, increment
-            if(MainCat.has(allRows[i][contRow])){
-                MainCat.set(allRows[i][contRow], MainCat.get(allRows[i][contRow]) + parseFloat(allRows[i][pledgeRealRow]))
+            if(MainCat.has(allRows[i][mainCRow])){
+                MainCat.set(allRows[i][mainCRow], MainCat.get(allRows[i][mainCRow]) + parseFloat(allRows[i][pledgeRealRow]))
             }
             //else initialize with first number
             else{
-                MainCat.set(allRows[i][contRow], parseFloat(allRows[i][pledgeRealRow]))
+                MainCat.set(allRows[i][mainCRow], parseFloat(allRows[i][pledgeRealRow]))
             }
         }
         //convert to an array of pairs
