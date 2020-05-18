@@ -219,13 +219,12 @@ const AnalysisScreen = ({navigation}) => {
             </View>
             <View>{results.length>0 &&  <Text style={{color:'#5680BF',  textAlign: 'center'}}>SUCCESS %</Text>}</View>
             <View>{results.length>0 &&  <Text style={{color:'#B8C0C9',  textAlign: 'center'}}>FAIL %</Text>}</View>
-            {<View>
+            {<View> 
                {array.length > 0 && <BarChart
-                    // style={graphStyle}
                     data={{
                         labels: array.map(col => col[2]),
                         datasets: [{
-                            data: array.map(col => (col[13]/1000))
+                            data: array.map(col => (col[7]/1000))
                         }]
                     }}
                     width={Dimensions.get('window').width} // from react-native
