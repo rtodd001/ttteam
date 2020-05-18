@@ -73,7 +73,7 @@ app.delete('/delete', (req, res) => {
         keys.push(key)
         items.push(req.query[key])
     }
-    //console.log("In express:", keys, items)
+    console.log("In express:", keys, items)
     let deletedValue = KS.deleteCSV(keys, items)
     console.log("Deleted items", deletedValue)
     res.status(200).json({"item":[{"data": "Deleted!"}]})
