@@ -15,6 +15,7 @@ const navigator = createStackNavigator(
     Home: HomeScreen,
     Search: SearchScreen,
     Analysis: AnalysisScreen,
+    Insert: InsertScreen,
     Result: ResultScreen
   },
   

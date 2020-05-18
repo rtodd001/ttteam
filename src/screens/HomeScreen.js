@@ -26,7 +26,12 @@ const HomeScreen = ({ navigation }) => {
                 onPress={() => navigation.navigate('Analysis')}
             />
         </View>
-
+        <View style={{ paddingHorizontal: 20, paddingVertical: 5 }}>
+            <Button style={styles.button}
+                title="INSERT/UPDATE"
+                onPress={() => navigation.navigate('Insert')}
+            />
+        </View>
 
     </View>
 };
