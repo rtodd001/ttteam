@@ -6,12 +6,9 @@ import { Feather } from '@expo/vector-icons';
 import Input from '../components/Input'
 import SearchBar from '../components/SearchBar'
 import { globalArray } from '../components/Global'
-// import DropdownList from '../components/DropdownList'
-// import { Dropdown } from 'react-native-material-dropdown';
 import { searchItem, insertItem, deleteItem, updateItem, importFile, storeFile, a_top10 } from '../components/fetch'
 import PickerList from '../components/PickerList';
 import AlertCustom from '../components/Alert';
-// import CheckBox from '@react-native-community/checkbox';
 
 
 const SearchScreen = () => {
@@ -115,7 +112,6 @@ const SearchScreen = () => {
     }
     // console.log('67', results);
     console.log(Dimensions.get('window').width);
-    const titleCss = (Dimensions.get('window').width > 600) ? styles.title : styles.title2;
 
     const subCategoryList = ['Apparel', 'Apps', 'Art', 'Comics', 'Documentary', 'Fashion', 'Fiction',
         'Film & Video', 'Games', 'Product Design', 'Rock', 'Video Games'];
@@ -166,7 +162,7 @@ const SearchScreen = () => {
                             }}
                         />
                     </View>
-                    <View style={{ flex: 1, padding: 5 }}>
+                    {/* <View style={{ flex: 1, padding: 5 }}>
                         <Button
                             color='orange'
                             title="Update"
@@ -175,7 +171,7 @@ const SearchScreen = () => {
                                 alert('Updated the File');
                             }}
                         />
-                    </View>
+                    </View> */}
                 </View>
 
                 <View style={{ paddingHorizontal: 20, paddingVertical: 5 }}>
@@ -216,133 +212,7 @@ const SearchScreen = () => {
                         />
                     </View>
 
-                    {/* <View style={styles.searchField}>
-                        <SearchBar
-                            title="Backers"
-                            backers={backers}
-                            onTermChange={setBackers}
-                        // onTermSubmit={console.log("submit term")}
-                        />
-                    </View> */}
                 </View>
-
-
-                {/* <View class='search-bar-container'>
-                    <View title='IDButton' style={styles.container}>
-                        <SearchBar
-                            title="ID"
-                            ID={ID}
-                            onTermChange={setID}
-                        // onTermSubmit={console.log("submit term")}
-                        />
-                        <SearchBar
-                            title="Name"
-                            name={name}
-                            onTermChange={setName}
-                        // onTermSubmit={console.log("submit term")}
-                        />
-                    </View>
-                    <View style={styles.container}>
-                        <SearchBar
-                            title="Category"
-                            category={category}
-                            onTermChange={setCategory}
-                        // onTermSubmit={console.log("submit term")}
-                        />
-                        <SearchBar
-                            title="MainCategory"
-                            mainCategory={mainCategory}
-                            onTermChange={setMainCategory}
-                        // onTermSubmit={console.log("submit term")}
-                        />
-                    </View>
-
-                    <View style={styles.container}>
-                        <SearchBar
-                            title="Currency"
-                            currency={currency}
-                            onTermChange={setCurrency}
-                        // onTermSubmit={console.log("submit term")}
-                        />
-                        <SearchBar
-                            title="Deadline"
-                            deadline={deadline}
-                            onTermChange={setDeadline}
-                        // onTermSubmit={console.log("submit term")}
-                        />
-                    </View>
-
-                    <View style={styles.container}>
-                        <SearchBar
-                            title="Goal"
-                            goal={goal}
-                            onTermChange={setGoal}
-                        // onTermSubmit={console.log("submit term")}
-                        />
-                        <SearchBar
-                            title="Launched"
-                            launched={launched}
-                            onTermChange={setLaunched}
-                        // onTermSubmit={console.log("submit term")}
-                        />
-                    </View>
-
-                    <View style={styles.container}>
-                        <SearchBar
-                            title="Pledged"
-                            pledged={pledged}
-                            onTermChange={setPledged}
-                        // onTermSubmit={console.log("submit term")}
-                        />
-                        <SearchBar
-                            title="State"
-                            state={state}
-                            onTermChange={setState}
-                        // onTermSubmit={console.log("submit term")}
-                        />
-                    </View>
-
-                    <View style={styles.container}>
-                        <SearchBar
-                            title="Country"
-                            country={country}
-                            onTermChange={setCountry}
-                        // onTermSubmit={console.log("submit term")}
-                        />
-                        <SearchBar
-                            title="Backers"
-                            backers={backers}
-                            onTermChange={setBackers}
-                        // onTermSubmit={console.log("submit term")}
-                        />
-                    </View>
-
-                    <View style={styles.container}>
-                        <SearchBar
-                            title="UsdPledged"
-                            usdPledged={usdPledged}
-                            onTermChange={setUsdPledged}
-                        // onTermSubmit={console.log("submit term")}
-                        />
-                        <SearchBar
-                            title="UsdPledgedReal"
-                            usdPledgedReal={usdPledgedReal}
-                            onTermChange={setUsdPledgedReal}
-                        // onTermSubmit={console.log("submit term")}
-                        />
-                    </View> */}
-                {/*
-                <View style={styles.container}>
-                    <Picker
-                        title="UsdGoalReal"
-                        selectedValue={usdGoalReal}
-                        onValueChange={setUsdGoalReal}
-                    >
-                    <Picker.Item label="test1" value='test1'/>
-                    <Picker.Item label='test2' value='test2'/>
-                    </Picker>
-                </View>
-                */}
 
                 <View style={{ flexDirection: 'row' }}>
                     <View style={{ flex: 1, padding: 5 }}>
@@ -354,7 +224,7 @@ const SearchScreen = () => {
                             }}
                         />
                     </View>
-                    <View style={{ flex: 1, padding: 5 }}>
+                    {/* <View style={{ flex: 1, padding: 5 }}>
                         <Button style={styles.buttons}
                             title="Insert"
                             disabled={name.length < 1}
@@ -364,83 +234,21 @@ const SearchScreen = () => {
                                 alert('INSERT SUMITTED');
                             }}
                         />
-                    </View>
+                    </View> */}
                     <View style={{ flex: 1, padding: 5 }}>
                         <Button style={styles.buttons}
                             title="Delete"
                             color='red'
                             disabled={checkBoxSet.size < 1}
-                            onPress={() => {delete_(),alert("DELETE"),search(), checkBoxSet.clear()}}
+                            onPress={() => { delete_(), alert("DELETE"), search(), checkBoxSet.clear() }}
                         />
                     </View>
 
                 </View>
 
-                {/* <Button style={styles.buttons}
-                        title="Insert"
-                        onPress={() => {
-                            insert()
-                            alert('INSERT SUMITTED');
-                        }}
-                    />
-                    
-                    
-                     */}
-
-
-                {/* Commenting out all other buttons */}
-                {/*
-            
-            <
-    
-            <Text>Enter Delete Fields</Text>
-            <SearchBar
-                title="ID"
-                ID={ID}
-                onTermChange={setID}
-                // onTermSubmit={console.log("submit term")}
-            />
-            
-            <TextInput
-                style={{height: 40}}
-                placeholder="File Name"
-                onChangeText={text => setText(text)}
-                defaultValue={text}
-            />
-            <Button
-                color="#1B2669"
-                title="Import"
-                onPress={() => {
-                    console.log(text)
-                    import_()
-                    alert('Imported the File');
-                }}
-            />
-            <Button
-                color="#1B2669"
-                title="Store"
-                onPress={() => {
-                    store_()
-                    alert('Stored the File');
-                }}
-            />
-            */}
 
                 <View>
-                    {/* {results.length > 0 && <PieChart
-                    animate
-                    animationDuration={1000}
-                    animationEasing="ease-out"
-                    center={[
-                        50,
-                        50
-                    ]}
-                    data={[
-                        { title: 'One', value: 10, color: '#E38627' },
-                        { title: 'Two', value: 15, color: '#C13C37' },
-                        { title: 'Three', value: 20, color: '#6A2135' },
-                    ]}
-                />} */}
+
                     <ScrollView horizontal={true} scrollEnabled={true}>
 
                         {results.length > 0 && <table>
@@ -641,24 +449,6 @@ const SearchScreen = () => {
 }
 
 const styles = StyleSheet.create({
-    title2: {
-        fontSize: 20,
-        // fontColor: '#2834b8',
-        backgroundColor: '#2834b8',
-    },
-    container: {
-        flex: 2,
-        flexDirection: 'row',
-        justifyContent: 'center'
-    },
-    tableRow: {
-        fontSize: 11
-    },
-    container2: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
-    header: { height: 50, backgroundColor: '#537791' },
-    text: { textAlign: 'center', fontWeight: '100' },
-    dataWrapper: { marginTop: -1 },
-    row: { height: 40, backgroundColor: '#E7E6E1' },
 
     container1: {
         flex: 1,
