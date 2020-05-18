@@ -1,6 +1,6 @@
 import {globalArray} from './Global'
 
-async function searchItem(ID, name, category, mainCategory, state, backers, country, usdPledgedReal, usdGoalReal) {
+async function searchItem(ID, name, category, mainCategory, state, backers, country, usdPledgedReal) {
     // var url = new URL('http://192.168.1.8:5000/search')
     var url = new URL('http://localhost:5000/search')
     var params = {
@@ -12,7 +12,6 @@ async function searchItem(ID, name, category, mainCategory, state, backers, coun
         'backers' : backers,
         'country' : country,
         'usd_pledged_real' : usdPledgedReal,
-        'usd_goal_real' : usdGoalReal
     } 
     url.search = new URLSearchParams(params).toString();            
     let response = await fetch(url);
@@ -24,7 +23,7 @@ async function searchItem(ID, name, category, mainCategory, state, backers, coun
     return array[0]; 
 }
 
-async function insertItem(ID, name, category, mainCategory, state, backers, country, usdPledgedReal, usdGoalReal) {
+async function insertItem(ID, name, category, mainCategory, state, backers, country, usdPledgedReal) {
     var url = new URL('http://localhost:5000/insert')
     var params = {
         'ID' : ID,
@@ -35,7 +34,6 @@ async function insertItem(ID, name, category, mainCategory, state, backers, coun
         'backers' : backers,
         'country' : country,
         'usd_pledged_real' : usdPledgedReal,
-        'usd_goal_real' : usdGoalReal
     }
     url.search = new URLSearchParams(params).toString();   
     let response = await fetch(url, {
@@ -44,7 +42,7 @@ async function insertItem(ID, name, category, mainCategory, state, backers, coun
     let result = await response.json();
 }
 
-async function updateItem(updateID, name, category, mainCategory, state, backers, country, usdPledgedReal, usdGoalReal) {
+async function updateItem(updateID, name, category, mainCategory, state, backers, country, usdPledgedReal) {
     var url = new URL('http://localhost:5000/update')
     var params = {
         'ID' : updateID,
@@ -55,7 +53,6 @@ async function updateItem(updateID, name, category, mainCategory, state, backers
         'backers' : backers,
         'country' : country,
         'usd_pledged_real' : usdPledgedReal,
-        'usd_goal_real' : usdGoalReal
     }
     url.search = new URLSearchParams(params).toString();   
     let response = await fetch(url, {
@@ -74,7 +71,6 @@ async function deleteItem(ID) {
         'backers' : '',
         'country' : '',
         'usd_pledged_real' : '',
-        'usd_goal_real' : ''
     }
     console.log(params)
     let url = new URL('http://localhost:5000/delete')
@@ -106,7 +102,7 @@ async function storeFile(fileName) {
     let result = await response.json();
 }
 
-async function a_top5(ID, name, category, mainCategory, state, backers, country, usdPledgedReal, usdGoalReal) {
+async function a_top5(ID, name, category, mainCategory, state, backers, country, usdPledgedReal) {
     // var url = new URL('http://192.168.1.8:5000/search')
     console.log("fetch 127")
     var url = new URL('http://localhost:5000/analysis/top5')
@@ -120,7 +116,6 @@ async function a_top5(ID, name, category, mainCategory, state, backers, country,
         'backers' : backers,
         'country' : country,
         'usd_pledged_real' : usdPledgedReal,
-        'usd_goal_real' : usdGoalReal
     } 
     url.search = new URLSearchParams(params).toString();    
     let response = await fetch(url);
@@ -131,7 +126,7 @@ async function a_top5(ID, name, category, mainCategory, state, backers, country,
     return array[0]; 
 }
 
-async function a_state_cnt(ID, name, category, mainCategory, state, backers, country, usdPledgedReal, usdGoalReal) {
+async function a_state_cnt(ID, name, category, mainCategory, state, backers, country, usdPledgedReal) {
     // var url = new URL('http://192.168.1.8:5000/search')
     console.log("fetch 127")
     var url = new URL('http://localhost:5000/analysis/stateCount')
@@ -145,7 +140,6 @@ async function a_state_cnt(ID, name, category, mainCategory, state, backers, cou
         'backers' : backers,
         'country' : country,
         'usd_pledged_real' : usdPledgedReal,
-        'usd_goal_real' : usdGoalReal
     } 
     url.search = new URLSearchParams(params).toString();    
     let response = await fetch(url);
@@ -162,7 +156,7 @@ async function a_state_cnt(ID, name, category, mainCategory, state, backers, cou
 }
 
 
-async function pledgeBacker(ID, name, category, mainCategory, state, backers, country, usdPledgedReal, usdGoalReal) {
+async function pledgeBacker(ID, name, category, mainCategory, state, backers, country, usdPledgedReal) {
     // var url = new URL('http://192.168.1.8:5000/search')
     var url = new URL('http://localhost:5000/analysis/pledgeBack')
     var params = {
@@ -174,7 +168,6 @@ async function pledgeBacker(ID, name, category, mainCategory, state, backers, co
         'backers' : backers,
         'country' : country,
         'usd_pledged_real' : usdPledgedReal,
-        'usd_goal_real' : usdGoalReal
     } 
     url.search = new URLSearchParams(params).toString();    
     let response = await fetch(url);
@@ -190,7 +183,7 @@ async function pledgeBacker(ID, name, category, mainCategory, state, backers, co
     return array[0]; 
 }
 
-async function popCat(ID, name, category, mainCategory, state, backers, country, usdPledgedReal, usdGoalReal) {
+async function popCat(ID, name, category, mainCategory, state, backers, country, usdPledgedReal) {
     // var url = new URL('http://192.168.1.8:5000/search')
     var url = new URL('http://localhost:5000/analysis/popCat')
     var params = {
@@ -202,7 +195,6 @@ async function popCat(ID, name, category, mainCategory, state, backers, country,
         'backers' : backers,
         'country' : country,
         'usd_pledged_real' : usdPledgedReal,
-        'usd_goal_real' : usdGoalReal
     } 
     url.search = new URLSearchParams(params).toString();    
     let response = await fetch(url);
@@ -218,7 +210,7 @@ async function popCat(ID, name, category, mainCategory, state, backers, country,
     return array[0]; 
 }
 
-async function topCountries(ID, name, category, mainCategory, state, backers, country, usdPledgedReal, usdGoalReal) {
+async function topCountries(ID, name, category, mainCategory, state, backers, country, usdPledgedReal) {
     // var url = new URL('http://192.168.1.8:5000/search')
     var url = new URL('http://localhost:5000/analysis/topCountries')
     var params = {
@@ -230,7 +222,6 @@ async function topCountries(ID, name, category, mainCategory, state, backers, co
         'backers' : backers,
         'country' : country,
         'usd_pledged_real' : usdPledgedReal,
-        'usd_goal_real' : usdGoalReal
     } 
     url.search = new URLSearchParams(params).toString();    
     let response = await fetch(url);
@@ -247,7 +238,7 @@ async function topCountries(ID, name, category, mainCategory, state, backers, co
     return array[0]; 
 }
 
-async function topMainCategory(ID, name, category, mainCategory, state, backers, country, usdPledgedReal, usdGoalReal) {
+async function topMainCategory(ID, name, category, mainCategory, state, backers, country, usdPledgedReal) {
     // var url = new URL('http://192.168.1.8:5000/search')
     var url = new URL('http://localhost:5000/analysis/topMainCategory')
     var params = {
@@ -259,7 +250,6 @@ async function topMainCategory(ID, name, category, mainCategory, state, backers,
         'backers' : backers,
         'country' : country,
         'usd_pledged_real' : usdPledgedReal,
-        'usd_goal_real' : usdGoalReal
     } 
     url.search = new URLSearchParams(params).toString();    
     let response = await fetch(url);
