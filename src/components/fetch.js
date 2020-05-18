@@ -24,22 +24,16 @@ async function searchItem(ID, name, category, mainCategory, state, backers, coun
     return array[0]; 
 }
 
-async function insertItem(ID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal) {
+async function insertItem(ID, name, category, mainCategory, state, backers, country, usdPledgedReal, usdGoalReal) {
     var url = new URL('http://localhost:5000/insert')
     var params = {
         'ID' : ID,
         'name' : name,
         'category' : category,
         'main_category': mainCategory,
-        'currency' : currency,
-        'deadline' : deadline,
-        'goal' : goal,
-        'launched' : launched,
-        'pledged' : pledged,
         'state' : state,
         'backers' : backers,
         'country' : country,
-        'usd pledged' : usdPledged,
         'usd_pledged_real' : usdPledgedReal,
         'usd_goal_real' : usdGoalReal
     }
@@ -50,22 +44,16 @@ async function insertItem(ID, name, category, mainCategory, currency, deadline, 
     let result = await response.json();
 }
 
-async function updateItem(updateID, name, category, mainCategory, currency, deadline, goal, launched, pledged, state, backers, country, usdPledged, usdPledgedReal, usdGoalReal) {
+async function updateItem(updateID, name, category, mainCategory, state, backers, country, usdPledgedReal, usdGoalReal) {
     var url = new URL('http://localhost:5000/update')
     var params = {
         'ID' : updateID,
         'name' : name,
         'category' : category,
         'main_category': mainCategory,
-        'currency' : currency,
-        'deadline' : deadline,
-        'goal' : goal,
-        'launched' : launched,
-        'pledged' : pledged,
         'state' : state,
         'backers' : backers,
         'country' : country,
-        'usd pledged' : usdPledged,
         'usd_pledged_real' : usdPledgedReal,
         'usd_goal_real' : usdGoalReal
     }
@@ -82,15 +70,9 @@ async function deleteItem(ID) {
         'name' : '',
         'category' : '',
         'main_category': '',
-        'currency' : '',
-        'deadline' : '',
-        'goal' : '',
-        'launched' : '',
-        'pledged' : '',
         'state' : '',
         'backers' : '',
         'country' : '',
-        'usd pledged' : '',
         'usd_pledged_real' : '',
         'usd_goal_real' : ''
     }
