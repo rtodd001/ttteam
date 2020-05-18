@@ -43,7 +43,7 @@ class KickStarter {
         let counter = 0
         //console.log data[0])
         for(let  i = 0; i < text.length; i++){
-            console.log(i)
+            //console.log(i)
             let temp = ""
             if(text[i] === ','){
                 i--
@@ -71,18 +71,24 @@ class KickStarter {
                 let re = RegExp('\".+\"','g')
                 //let re = RegExp('\".+\"')
                 temp = re.exec(text)[0]
-                console.log("\nREGEX:", temp)
+                //console.log("\nREGEX:", temp)
                 text = text.slice(temp.length)
             }
             if(temp.length !== 0){
                 if(counter% this.originalCol === 4 || counter% this.originalCol === 5 || counter% this.originalCol === 6 || counter% this.originalCol === 7 || counter% this.originalCol === 8 || counter% this.originalCol === 12 || counter% this.originalCol === 14){
-                    console.log("Skipping", counter% this.originalCol)
+                    //console.log("Skipping", counter% this.originalCol)
                     counter++
                     //i--
+                     if(text[i] === ','){
+                        i--
+                        //console.log("\nComma\n")
+                        text = text.slice(1)
+                        //i++
+                    }
                     continue
                 }
                 counter++
-                console.log("Table",temp)
+                //console.log("Table",temp)
                 ret.push(temp)
             }
             if(text[i] === ','){
@@ -100,7 +106,7 @@ class KickStarter {
         if(this.tableData.length === 0){
             return []
         }
-        console.log("Size",this.tableData.length)
+        //console.log("Size",this.tableData.length)
         let title = new Map()
         for(let i = 0; i < this.columns; i++){
             title.set(this.tableData[i], new Set())    
@@ -121,7 +127,7 @@ class KickStarter {
                 title.set(this.tableData[k%this.columns], item)
             } 
         }
-        console.log("Full Map", title)
+        //console.log("Full Map", title)
         return title
     }
 
@@ -439,15 +445,15 @@ class KickStarter {
         //console.log(this.mappedData)
     }
 
-    analysisCSV(keys,items){
+    top5CSV(keys,items){
         let tempKeys = keys.slice()
         let tempItems = items.slice()
         let allRows = this.searchCSV(tempKeys, tempItems)
 
         //original usd_pledge_real is on column 13
-        //original usd_pledge_real is on column 8
+        //original usd_pledge_real is on column 7
         allRows.sort(function(a,b){
-            return b[8] - a[8]
+            return b[7] - a[7]
         })
         //console.log("Sorted", allRows)
         return allRows.slice(0,5)
@@ -460,12 +466,12 @@ class KickStarter {
         let success = 0
         let fail = 0
         //old state was 9
-        //new state is 5
+        //new state is 4
         for (let i = 0; i < allRows.length; i++){
-            if (allRows[i][5] === 'successful'){
+            if (allRows[i][4] === 'successful'){
                 success += 1
             }
-            else if (allRows[i][5] === 'failed'){
+            else if (allRows[i][4] === 'failed'){
                 fail += 1
             }
         }
@@ -480,14 +486,14 @@ class KickStarter {
     pledgeBackerCSV(keys, items){
         let tempKeys = keys.slice()
         let tempItems = items.slice()
-        let topRows = this.analysisCSV(tempKeys, tempItems)
+        let topRows = this.top5CSV(tempKeys, tempItems)
         let ret = []
         //old backers: 10
-        //new backers: 6
-        let backCol = 6
+        //new backers: 4
+        let backCol = 5
         //old pledge: 13
-        //new pledge: 8
-        let pledgeCol = 8
+        //new pledge: 7
+        let pledgeCol = 7
         for(let i = 0; i < topRows.length; i++){
             let temp = []
             temp.push(topRows[i][pledgeCol])
@@ -530,11 +536,11 @@ class KickStarter {
         let allRows = this.searchCSV(tempKeys, tempItems)
         let countries = new Map()
         //old country: 11
-        //new country: 7
-        let contRow = 7
+        //new country: 6
+        let contRow = 6
         //old pledge: 13
-        //new pledge: 8
-        let pledgeRealRow = 8
+        //new pledge: 7
+        let pledgeRealRow = 7
         for(let i = 0; i < allRows.length; i++){
             //if the category exists, increment
             if(countries.has(allRows[i][contRow])){
@@ -562,8 +568,8 @@ class KickStarter {
         //main category did not change
         let mainCRow = 3
         //old pledge: 13
-        //new pledge: 8
-        let pledgeRealRow = 8
+        //new pledge: 7
+        let pledgeRealRow = 7
         for(let i = 0; i < allRows.length; i++){
             //if the category exists, increment
             if(MainCat.has(allRows[i][mainCRow])){

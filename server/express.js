@@ -114,7 +114,7 @@ app.get('/analysis/top5', (req, res) => {
     //console.log(req.query)
     //console.log(keys, items)
     const t0 = performance.now()
-    let top = KS.analysisCSV(keys,items)
+    let top = KS.top5CSV(keys,items)
     const t1 = performance.now()
     console.log(`Top5 took ${t1 - t0} milliseconds.`)
     res.status(200).json({"item":[{"data": top}]})
