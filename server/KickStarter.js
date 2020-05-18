@@ -332,70 +332,75 @@ class KickStarter {
     }
 
     deleteCSV(keys, items){
+        //console.log("here", keys, items[0])
         //We are now finding the index of the target of deletion
-        if(!this.mappedData.get(keys[0]).has(items[0])){
-            return []
-        }
-        //console.log(keys, items)
-
-        //get the last data item in the tableData
-        //we will be using this to replace the target of deletion
-        //not doing so will offset all indices stored in the mappedData
-        //not replacing will require an entire rebuild
-        let bottomRow = []
-        //for(let i = Math.floor(this.tableData.length/this.columns); i < this.tableData.length; i++){
-        for(let i = 0; i < this.columns;i++){
-            bottomRow.push(this.tableData[this.tableData.length- this.columns + i])
+        if(!Array.isArray(items[0])){
+            let tempid = items[0]
+            items[0] = []
+            items[0].push(tempid)
         }
 
-        let delIndex = this.mappedData.get(keys[0]).get(bottomRow[0]).values().next().value
-        //console.log("Bottom Index:", delIndex)
-
-        //now we must delete this bottom row before replacing it to avoid having
-        //duplicate IDs. We must preserve uniqueness for ID
-        this.tableData.splice(this.tableData.length- this.columns, this.columns)
-        //for(let k = 0; k < bottomRow.length; k++){}
-        //this.tableData.splice((deleteIndex*this.columns), this.columns,bottomRow[k])
-        //console.log("Map Before:", this.mappedData)
-        for(let i = 0; i < keys.length; i++){
-            let tempMap = this.mappedData.get(keys[i])
-            //console.log(this.mappedData.get(keys[i]),"To Delete: ",bottomRow[0][i], "Key: ",keys[i], '\n')
-            if(this.mappedData.get(keys[i]).has(bottomRow[i])){
-                let old = this.mappedData.get(keys[i]).get(bottomRow[i])
-                //console.log("old", old)
-                if(old.size === 1){
-                    let oldKey = this.mappedData.get(keys[i])
-                    oldKey.delete(bottomRow[i])
-                    //console.log("oldkey",oldKey)
-                    //this.mappedData.get(keys[i]).delete(deleteIndex)
-                    //console.log("Size 1: ", this.mappedData.get(keys[i]), deleteIndex)
-                }
-                else{
-                    //console.log("old", old)
-                    //old.delete(items[i])
-                    
-                    this.mappedData.get(keys[i]).get(bottomRow[i]).delete(delIndex)
-                    //console.log("old after", old)
-                }
-                //tempMap.get(bottomRow[0][i]).values().next().value.delete(deleteIndex)
+        let retUpdate = []
+        
+        //allow for multi deletion
+        //the ID's will be passed in as an iterable set
+        for (let k = 0; k < items[0].length; k++){
+            //console.log("Loop:", items[0][k])
+            if(!this.mappedData.get(keys[0]).has(items[0][k])){
+                continue
             }
-        }
+            //get the last data row in the tableData
+            //we will be using this to replace the target of deletion
+            //not doing so will offset all indices stored in the mappedData
+            //not replacing will require an entire rebuild
+            let bottomRow = []
+            for(let i = 0; i < this.columns;i++){
+                bottomRow.push(this.tableData[this.tableData.length- this.columns + i])
+            }
+            //find the index of the bottom element
+            let delIndex = this.tableData.length/this.columns - 1
 
-        //now must use the deleted bottom row to replace/update the original target for deletion
-        //create shallow copies of parameters in case they get modified
-        let tempKeys = keys.slice()
-        let tempItems = []
-        tempKeys.splice(0,0,keys[0])
-        tempItems.push(items[0])
-        //add the ID of the bottom row to use as a key
-        for(let i = 0; i < bottomRow.length; i++){
-            tempItems.push(bottomRow[i])
-        }
+            //now we must delete this bottom row before replacing it to avoid having
+            //duplicate IDs. We must preserve uniqueness for ID
+            this.tableData.splice(this.tableData.length- this.columns, this.columns)
 
-        //console.log("Before Update:",tempKeys,tempItems)
-        //console.log("Before Update: ",this.mappedData)
-        let retUpdate = this.updateCSV(tempKeys,tempItems)
-        //console.log("Full Table: ",this.tableData)
+            //iterate through all the column names to ensure that every
+            //part of its data row is deleted from the map
+            for(let i = 0; i < keys.length; i++){
+                //console.log(this.mappedData.get(keys[i]),"To Delete: ",bottomRow[0][i], "Key: ",keys[i], '\n')
+                if(this.mappedData.get(keys[i]).has(bottomRow[i])){
+                    let old = this.mappedData.get(keys[i]).get(bottomRow[i])
+                    //console.log("old", old)
+                    //if the set only contains one index, we remove the whole entry
+                    if(old.size === 1){
+                        let oldKey = this.mappedData.get(keys[i])
+                        oldKey.delete(bottomRow[i])
+                        //console.log("oldkey",oldKey)
+                    }
+                    //if the set has more than one, we remove the index element from the set
+                    else{
+                        //console.log("old", old)                    
+                        this.mappedData.get(keys[i]).get(bottomRow[i]).delete(delIndex)
+                    }
+                }
+            }
+    
+            //now must use the deleted bottom row to replace/update the original target for deletion
+            //create shallow copies of parameters in case they get modified
+            let tempKeys = keys.slice()
+            let tempItems = []
+            tempKeys.splice(0,0,keys[0])
+            tempItems.push(items[0][k])
+            //add the ID of the bottom row to use as a key
+            for(let i = 0; i < bottomRow.length; i++){
+                tempItems.push(bottomRow[i])
+            }
+    
+            //update the target of deletion with the bottom row
+            retUpdate.push(this.updateCSV(tempKeys,tempItems))
+            //console.log("Full Table: ",this.tableData)
+            
+        }
         //console.log("Full Map: ",this.mappedData)
         return retUpdate
     }
@@ -458,9 +463,9 @@ class KickStarter {
             }
         }
         let ret = []
-        console.log("success", success)
+        //console.log("success", success)
         ret.push(success)
-        console.log("fail", fail)
+        //console.log("fail", fail)
         ret.push(fail)
         return ret
     }
@@ -478,7 +483,7 @@ class KickStarter {
             temp.push(topRows[i][backCol])
             ret.push(temp)
         }
-        console.log(ret)
+        //console.log(ret)
         return ret
     }
 
@@ -555,7 +560,7 @@ class KickStarter {
         arrayMainCat.sort(function(a,b){
             return b[1] - a[1]
         })
-        console.log(arrayMainCat)
+        //console.log(arrayMainCat)
         return arrayMainCat.slice(0,5)
     }
 

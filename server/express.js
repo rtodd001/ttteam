@@ -3,10 +3,13 @@ const KickStarter = require('./KickStarter').KickStarter
 const cors = require('cors')
 const app = express()
 const port = 5000
+const {performance} = require('perf_hooks');
 
 console.log("Reading")
+const t0 = performance.now()
 let KS = new KickStarter()
-console.log("Loaded")
+const t1 = performance.now()
+console.log(`Data creation ${t1 - t0} milliseconds.`)
 //console.log("Class", KS.mapData)
 
 const isPreflight = (req) => {
@@ -73,7 +76,9 @@ app.delete('/delete', (req, res) => {
         keys.push(key)
         items.push(req.query[key])
     }
+    //console.log("In express:", keys, items)
     let deletedValue = KS.deleteCSV(keys, items)
+    //console.log("Deleted items", deletedValue)
     res.status(200).json({"item":[{"data": "Deleted!"}]})
 });
 
@@ -108,7 +113,10 @@ app.get('/analysis/top5', (req, res) => {
     }
     //console.log(req.query)
     //console.log(keys, items)
+    const t0 = performance.now()
     let top = KS.analysisCSV(keys,items)
+    const t1 = performance.now()
+    console.log(`Top5 took ${t1 - t0} milliseconds.`)
     res.status(200).json({"item":[{"data": top}]})
 });
 
@@ -119,7 +127,10 @@ app.get('/analysis/stateCount', (req, res) => {
         keys.push(key)
         items.push(req.query[key])
     }
+    const t0 = performance.now()
     let count = KS.stateCountCSV(keys,items)
+    const t1 = performance.now()
+    console.log(`stateCount took ${t1 - t0} milliseconds.`)
     res.status(200).json({"item":[{"data": count}]})
 });
 
@@ -130,7 +141,10 @@ app.get('/analysis/pledgeBack', (req, res) => {
         keys.push(key)
         items.push(req.query[key])
     }
+    const t0 = performance.now()
     let PB = KS.pledgeBackerCSV(keys,items)
+    const t1 = performance.now()
+    console.log(`pledgeBack took ${t1 - t0} milliseconds.`)
     res.status(200).json({"item":[{"data": PB}]})
 });
 
@@ -141,7 +155,10 @@ app.get('/analysis/popCat', (req, res) => {
         keys.push(key)
         items.push(req.query[key])
     }
+    const t0 = performance.now()
     let catCount = KS.popCatCSV(keys,items)
+    const t1 = performance.now()
+    console.log(`popCat took ${t1 - t0} milliseconds.`)
     res.status(200).json({"item":[{"data": catCount}]})
 });
 
@@ -152,7 +169,10 @@ app.get('/analysis/topCountries', (req, res) => {
         keys.push(key)
         items.push(req.query[key])
     }
+    const t0 = performance.now()
     let countries = KS.richCountriesCSV(keys,items)
+    const t1 = performance.now()
+    console.log(`topCountries took ${t1 - t0} milliseconds.`)
     res.status(200).json({"item":[{"data": countries}]})
 });
 
@@ -163,7 +183,10 @@ app.get('/analysis/topMainCategory', (req, res) => {
         keys.push(key)
         items.push(req.query[key])
     }
+    const t0 = performance.now()
     let mainCat = KS.topMainCatergoryCSV(keys,items)
+    const t1 = performance.now()
+    console.log(`topMainCategory took ${t1 - t0} milliseconds.`)
     res.status(200).json({"item":[{"data": mainCat}]})
 });
 
