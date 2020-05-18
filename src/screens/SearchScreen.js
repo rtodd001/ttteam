@@ -54,11 +54,11 @@ const SearchScreen = () => {
     }
 
     async function import_() {
-        const fetchResults = await importFile(text)
+        const fetchResults = await importFile(name)
     }
 
     async function store_() {
-        const fetchResults = await storeFile(text)
+        const fetchResults = await storeFile(name)
     }
 
     async function analysis_() {
@@ -143,6 +143,7 @@ const SearchScreen = () => {
                         <Button
                             color="#1B2669"
                             title="Import"
+                            disabled={name.length < 1}
                             onPress={() => {
                                 console.log(text)
                                 import_()
@@ -155,6 +156,7 @@ const SearchScreen = () => {
                         <Button
                             color="#1B2669"
                             title="Store"
+                            disabled={name.length < 1}
                             // disabled
                             onPress={() => {
                                 store_()
@@ -178,7 +180,7 @@ const SearchScreen = () => {
 
                     <View style={styles.searchField}>
                         <TextInput style={{ fontSize: 18, backgroundColor: '#deddd9' }}
-                            placeholder='Search Name'
+                            placeholder='File Name'
                             value={name}
                             onChangeText={setName}
                         // onTermSubmit={console.log("submit term")}
