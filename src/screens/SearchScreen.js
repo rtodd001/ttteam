@@ -191,7 +191,7 @@ const SearchScreen = () => {
 
                     <View style={styles.searchField}>
                         <TextInput style={{ fontSize: 18, backgroundColor: '#deddd9' }}
-                            placeholder='File Name'
+                            placeholder='Enter File Name to Store/Import'
                             value={name}
                             onChangeText={setName}
                         // onTermSubmit={console.log("submit term")}
