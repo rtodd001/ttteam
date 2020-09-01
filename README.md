@@ -1,4 +1,4 @@
-# ttteam
+# ttteam - Analytic Data App
 
 <img src="/assets/ttteamLogo.jpg" width=400 align=middle>
 
