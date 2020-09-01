@@ -9,6 +9,12 @@ Welcome to the TTTEAM application, our app is to design with a react native as t
 
 To run application in localhost environment:
 
+Install packages:
+
+`npm install`
+
+Run app:
+
 `npm start`
 
 Turn on server:
