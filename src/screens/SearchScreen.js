@@ -270,7 +270,6 @@ const SearchScreen = () => {
                                     <th>
                                         <Button
                                             title='☑'
-
                                             disabled
                                             onPress={() => {
                                                 console.log("pushed!")
@@ -279,7 +278,16 @@ const SearchScreen = () => {
                                             }
                                         />
                                     </th>
-
+                                    <th>
+                                        <Button
+                                            title='ID:'
+                                            onPress={() => {
+                                                console.log("pushed!")
+                                                sortBy('ID')
+                                            }
+                                            }
+                                        />
+                                    </th>
                                     <th>
                                         <Button
                                             title='NAME:'
@@ -430,6 +438,7 @@ const SearchScreen = () => {
                                                     onValueChange={() => toggleCheckBox(item[0])}
                                                 />
                                             </td>
+                                            <td>{item[0]}</td>
                                             <td>{item[1]}</td>
                                             <td>{item[2]}</td>
                                             <td>{item[3]}</td>

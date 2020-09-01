@@ -35,7 +35,7 @@ const InsertScreen = () => {
     }
 
     function fieldsEntered(){
-        if(ID.length < 1 && name.length < 1){
+        if(ID.length < 1 || name.length < 1 || category.length < 1 || mainCategory.length < 1 || state.length < 1 || backers.length < 1 || country.length < 1 || usdGoalReal.length < 1 || usdPledgedReal.length < 1){
             return true;
         }
         else
@@ -49,7 +49,7 @@ const InsertScreen = () => {
                 <View style={styles.header}>
                     <Text style={styles.headerText}>Enter Input Fields</Text>
                 </View>
-                <View style={{ flexDirection: 'row' }}>
+                {/* <View style={{ flexDirection: 'row' }}>
                     <View style={{ flex: 1, padding: 5 }}>
                         <Button
                             color="#1B2669"
@@ -73,7 +73,7 @@ const InsertScreen = () => {
                             }}
                         />
                     </View>
-                </View>
+                </View> */}
                 <SearchBar
                     title="ID"
                     ID={ID}
@@ -137,6 +137,7 @@ const InsertScreen = () => {
                             onPress={() => {
                                 if (ID != '' && name != '' && category != '' && mainCategory != '' && state != '', backers != '', country != '', usdPledgedReal != '') {
                                     insert()
+                                    alert('Inserted')
                                 }
                                 else alert('PLEASE SUBMIT ALL BOXES');
                             }
@@ -151,6 +152,7 @@ const InsertScreen = () => {
                             onPress={() => {
                                 if (ID != '' && name != '' && category != '' && mainCategory != '' && state != '', backers != '', country != '', usdPledgedReal != '') {
                                     update()
+                                    alert('Updated')
                                 }
                                 else alert('PLEASE SUBMIT ALL BOXES');
                             }

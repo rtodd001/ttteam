@@ -130,7 +130,7 @@ const AnalysisScreen = ({ navigation }) => {
                 <View style={{ flexDirection: 'row' }}>
                     <View style={{ flex: 1, padding: 5 }}>
                         <Button style={styles.buttons}
-                            title="Top 5 Successful Categories"
+                            title="Top 5 Categories"
                             backgroundColor='#1F618D'
                             backgroundProgress='#154360'
                             onPress={() => {
@@ -198,7 +198,7 @@ const AnalysisScreen = ({ navigation }) => {
                     {/* <View style={{ flex: 1, height: 100, maxHeight: 100, margin: 10, }} /> */}
                     <View style={{ flex: 1, padding: 5 }}>
                         <Button style={styles.buttons}
-                            title="Top 5 Coutries"
+                            title="Top 5 Countries"
                             backgroundColor='#1F618D'
                             backgroundProgress='#154360'
                             onPress={() => {
@@ -286,7 +286,7 @@ const AnalysisScreen = ({ navigation }) => {
                 </View>
 
                 <View>
-                    {resPledge.length > 0 && <LineChart
+                    {resPledge.length > 0 && <BarChart
                         data={{
                             labels: resPledge.map(item => item[1]),
                             datasets: [{
@@ -308,7 +308,7 @@ const AnalysisScreen = ({ navigation }) => {
                 </View>
 
                 <View>
-                    {popCategory.length > 0 && <LineChart
+                    {popCategory.length > 0 && <BarChart
                         data={{
                             labels: popCategory.map(col => col[0]),
                             datasets: [{
@@ -329,7 +329,7 @@ const AnalysisScreen = ({ navigation }) => {
                 </View>
 
                 <View>
-                    {topCo.length > 0 && <LineChart
+                    {topCo.length > 0 && <BarChart
                         data={{
                             labels: topCo.map(item => item[0]),
                             datasets: [{
@@ -350,7 +350,7 @@ const AnalysisScreen = ({ navigation }) => {
                 </View>
 
                 <View>
-                    {topMainCa.length > 0 && <LineChart
+                    {topMainCa.length > 0 && <BarChart
                         data={{
                             labels: topMainCa.map(col => col[0]),
                             datasets: [{
