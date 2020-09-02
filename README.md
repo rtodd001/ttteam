@@ -14,4 +14,3 @@ To run application in localhost environment:
 Turn on server:
 
 `cd ./server node express.js`
-
