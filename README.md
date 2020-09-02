@@ -1,4 +1,4 @@
-# ttteam
+# ttteam - Analytic Data App
 
 <img src="/assets/ttteamLogo.jpg" width=400 align=middle>
 
@@ -8,6 +8,12 @@ Welcome to the TTTEAM application, our app is to design with a react native as t
 ## Quickstart
 
 To run application in localhost environment:
+
+Install packages:
+
+`npm install`
+
+Run app:
 
 `npm start`
 
